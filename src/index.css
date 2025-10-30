@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+/* =============================
+   🧠 Font Imports
+============================= */
+
+/* Local HankenGrotesk font */
+@font-face {
+  font-family: 'HankenGrotesk';
+  src: url('./assets/Fonts/HankenGrotesk-Variable (1).ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Google Retro Font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* =============================
+   🎨 Root Theme Variables
+============================= */
+:root {
+  /* 🌞 Light Mode Colors */
+  --color-bg: #ffffff;
+  --color-text: #1a1a1a;
+  --color-secondary-text: #444444;
+  --color-accent: #000000;
+  --color-muted: #f2f2f2;
+  --color-border: #e5e7eb;
+
+  /* 🌈 Brand Colors */
+  --color-react: #61dafb;
+  --color-next: #000000;
+  --color-ts: #3178c6;
+  --color-bun: #f5b342;
+  --color-three: #ffffff;
+  --color-postgres: #336791;
+
+  /* 💬 Fonts */
+  --font-main: 'HankenGrotesk', sans-serif;
+  --font-heading: 'Press Start 2P', monospace;
+
+  /* ⚡ Transitions */
+  --transition-speed: 0.4s;
+}
+
+/* =============================
+   🌙 Dark Theme
+============================= */
+:root.dark {
+  --color-bg: #0A0A0A;
+  --color-text: #f5f5f5;
+  --color-secondary-text: #9ca3af;
+  --color-accent: #ffffff;
+  --color-muted: #1f1f1f;
+  --color-border: #2a2a2a;
+}
+
+/* =============================
+   🌐 Base Styles
+============================= */
+* {
+  font-family: var(--font-main);
+  /* transition: all .5s ease-in-out; */
+
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition:
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
+}
+
+/* =============================
+   🧱 Headings
+============================= */
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  letter-spacing: 1px;
+}
+
+h1 {
+  font-size: 1.25rem;
+  color: var(--color-text);
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 1rem;
+  color: var(--color-accent);
+}
+
+h3 {
+  font-size: 0.875rem;
+  color: var(--color-secondary-text);
+}
+
+/* =============================
+   🔘 Buttons
+============================= */
+.btnDarkMode {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all var(--transition-speed) ease;
+}
+
+/* =============================
+   🏷️ Tags (Tech Stack)
+============================= */
+.tag {
+  display: inline-block;
+  background-color: var(--color-muted);
+  color: var(--color-text);
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-right: 0.5rem;
+  transition: all var(--transition-speed) ease;
+}
+
+:root.dark .tag {
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.tag.react {
+  background-color: var(--color-react);
+  color: #000;
+}
+
+.tag.next {
+  background-color: var(--color-next);
+  color: #fff;
+}
+
+.tag.ts {
+  background-color: var(--color-ts);
+  color: #fff;
+}
+
+.tag.bun {
+  background-color: var(--color-bun);
+  color: #000;
+}
+
+.tag.postgres {
+  background-color: var(--color-postgres);
+  color: #fff;
+}
+
+/* =============================
+   💬 Text
+============================= */
+p {
+  color: var(--color-secondary-text);
+  line-height: 1.7;
+}
+
+/* =============================
+   🌓 Theme Toggle
+============================= */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+
+/* =============================
+   💡 Reusable Inner Shadow Button
+============================= */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* .animate-fade-in {
+  animation: fade-in 0.6s ease-in ;
+} */
