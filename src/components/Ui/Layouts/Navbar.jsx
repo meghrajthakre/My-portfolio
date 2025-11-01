@@ -28,7 +28,7 @@ const Navbar = () => {
       <CircleCanvas className="absolute left-2" isDark={isDark} />
 
       {/* 🌟 Navbar Section */}
-      <div className="container mx-auto max-w-3xl px-4 sticky top-0 z-50 rounded-md py-4 backdrop-blur-sm transition-all duration-500">
+      <div className="container mx-auto max-w-3xl px-3 sticky top-0 z-50 rounded-md py-4 backdrop-blur-sm transition-all duration-500">
         <div className="w-full flex justify-between items-center px-5">
           {/* ---------- Left: Logo + Links ---------- */}
           <div className="flex items-baseline gap-4 text-[var(--color-text)]">
