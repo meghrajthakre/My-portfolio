@@ -9,9 +9,9 @@ const DarkModeButton = () => {
           shadow-[inset_0_2px_6px_rgba(0,0,0,0.08)]
           hover:shadow-[inset_0_3px_8px_rgba(0,0,0,0.12)]
           active:shadow-[inset_0_4px_10px_rgba(0,0,0,0.18)]
-          cursor-pointer transition-all duration-500 ease-in-out
+          cursor-pointer transition-all duration-1000 ease-in-out
           active:scale-110 hover:scale-105
-          relative overflow-hidden cursor-pointer
+          relative overflow-hidden 
         "
       >
         {/* subtle warm glow on hover */}
@@ -19,7 +19,7 @@ const DarkModeButton = () => {
           className="
             absolute inset-0 bg-gradient-to-tr from-yellow-400/30 to-transparent
             rounded-xl opacity-0 hover:opacity-100 
-            transition-opacity duration-700 ease-in-out
+            transition-opacity duration-1000 ease-in-out
           "
         ></span>
 

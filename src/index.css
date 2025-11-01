@@ -61,22 +61,22 @@
 ============================= */
 * {
   font-family: var(--font-main);
-  /* transition: all .5s ease-in-out; */
 
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  transition:
-    background-color var(--transition-speed) ease,
-    color var(--transition-speed) ease;
+  transition: background-color var(--transition-speed) ease,
+  color var(--transition-speed) ease;
 }
 
 /* =============================
    🧱 Headings
 ============================= */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-heading);
   letter-spacing: 1px;
 }
@@ -178,10 +178,12 @@ p {
 ============================= */
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-/* .animate-fade-in {
-  animation: fade-in 0.6s ease-in ;
-} */
