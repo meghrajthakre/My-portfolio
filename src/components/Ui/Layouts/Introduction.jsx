@@ -2,7 +2,7 @@ import React from 'react'
 
 const Introduction = () => {
     return (
-        <div className='mx-auto max-w-3xl px-8 py-10'>
+        <div className='mx-auto max-w-3xl px-8 py-14'>
             <div>
                 <div className='inline-block'>
                     <img
@@ -13,13 +13,16 @@ const Introduction = () => {
                     />
                 </div>
 
-                <div className='text-center'>
-                    <h1 className='text-[36px] font-bold py-8 text-[var(--color-text)]  '>
+                <div className='text-center py-8'>
+                    <span className='text-[34px] font-bold   text-[var(--color-text)]  '>
                         Hi, I'm Meghraj
-                        <span className='text-[var(--color-secondary-text)]'>
-                            — I Make Softwares For Web.
+                        <span className='px-2'>
+                             — 
                         </span>
-                    </h1>
+                        <span className='text-[var(--color-secondary-text)]'>
+                           I Make Softwares For Web.
+                        </span>
+                    </span>
                 </div>
             </div>
         </div>
