@@ -26,7 +26,7 @@ const DarkModeToggle = ({ isDark, onClickMethod }) => {
       style={{
         position: "absolute",
         top: "-20px",
-        right: "8px",
+        right: "10px",
         background: "none",
         borderColor: isDark ? "#fff" : "#111",
         cursor: "pointer",
