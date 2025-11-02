@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../src/components/Ui/Layouts/Navbar";
 import Home from "./Pages/Home";
-import CircleCanvas from "./components/Ui/CircleCanvas";
-import DarkModeToggle from "./components/Ui/DarkModeToggle";
-import DogFollower from "./components/Ui/DogFollower";
-import Introduction from "./components/Ui/Layouts/Introduction";
+import Hero from "./Sections/Hero";
+import DogFollower from './components/Ui/DogFollower';
+import { Route, Router, Routes } from "react-router-dom";
+import Work from './Pages/Work';
+import Projects from './Pages/Projects';
+import Blog from './Pages/Blog';
 
 function App() {
   const [loader, setLoader] = useState(true);
@@ -17,23 +19,30 @@ function App() {
   }, []);
 
   return (
-    <div className="relative overflow-hidden  ">
+    <div className="relative ">
       {/* 🔹 Pure Transparent Blur Overlay */}
       <div
         style={{ backdropFilter: "blur(10px)" }}
         className={`fixed inset-0 z-[999] transition-all duration-500 ${loader
-            ? "opacity-100"
-            : "opacity-0 backdrop-blur-0 pointer-events-none"
+          ? "opacity-100"
+          : "opacity-0 backdrop-blur-0 pointer-events-none"
           }`}
       ></div>
 
       {/* Main Content */}
       <div
       >
-        {/* <DogFollower /> */}
+        {/* <DogFollower/> */}
         <Navbar />
-        <Introduction/>
-        {/* <Home /> */}
+
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/work" element={<Work />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/projects" element={<Projects />} />
+        </Routes>
+
+
       </div>
     </div>
   );

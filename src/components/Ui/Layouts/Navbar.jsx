@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CircleCanvas from "../CircleCanvas";
 import DarkModeToggle from "../DarkModeToggle";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isDark, setIsDark] = useState(false);
@@ -32,7 +33,8 @@ const Navbar = () => {
         <div className="w-full flex justify-between items-center px-5">
           {/* ---------- Left: Logo + Links ---------- */}
           <div className="flex items-baseline gap-4 text-[var(--color-text)]">
-            <a href="#">
+            {/* 🧿 Logo */}
+            <NavLink to="/">
               <img
                 className={`h-12 w-12 rounded-md border border-gray-200 transition-all duration-300 ease-in-out hover:scale-90 ${
                   isDark ? "bg-yellow-300" : "bg-blue-300"
@@ -41,16 +43,47 @@ const Navbar = () => {
                 alt="Logo"
                 loading="lazy"
               />
-            </a>
-            <a className="hover:underline hover:decoration-2 hover:underline-offset-4 transition-all duration-300 ease-in-out" href="#">
+            </NavLink>
+
+            {/* 🌐 Navigation Links */}
+            <NavLink
+              to="/work"
+              className={({ isActive }) =>
+                `transition-all duration-300  ease-in-out ${
+                  isActive
+                    ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
+                    : "hover:underline hover:decoration-2 hover:underline-offset-4"
+                }`
+              }
+            >
               Work
-            </a>
-            <a className="hover:underline hover:decoration-2 hover:underline-offset-4 transition-all duration-300 ease-in-out" href="#">
+            </NavLink>
+
+            <NavLink
+              to="/blogs"
+              className={({ isActive }) =>
+                `transition-all duration-300 ease-in-out ${
+                  isActive
+                    ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
+                    : "hover:underline hover:decoration-2 hover:underline-offset-4"
+                }`
+              }
+            >
               Blogs
-            </a>
-            <a className="hover:underline hover:decoration-2 hover:underline-offset-4 transition-all duration-300 ease-in-out" href="#">
+            </NavLink>
+
+            <NavLink
+              to="/projects"
+              className={({ isActive }) =>
+                `transition-all duration-300 ease-in-out ${
+                  isActive
+                    ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
+                    : "hover:underline hover:decoration-2 hover:underline-offset-4"
+                }`
+              }
+            >
               Projects
-            </a>
+            </NavLink>
           </div>
 
           {/* ---------- Right: Mode Toggle ---------- */}

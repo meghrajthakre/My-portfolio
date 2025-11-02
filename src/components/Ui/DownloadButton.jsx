@@ -3,7 +3,7 @@ import React from "react";
 const DownloadButton = () => {
   return (
     <button
-      className="relative border-none text-[14px] font-semibold cursor-pointer rounded-lg 
+      className="relative text-sm border-none  font-semibold cursor-pointer rounded-lg 
       z-[1] bg-transparent group transition-all duration-[500ms] ease-[cubic-bezier(0.77,0,0.175,1)]"
     >
       <div
@@ -47,8 +47,8 @@ const DownloadButton = () => {
       >
         <svg
           viewBox="0 0 24 24"
-          width="24"
-          height="24"
+          width="22"
+          height="22"
           stroke="var(--color-bg)"
           strokeWidth="2"
           fill="none"

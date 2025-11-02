@@ -1,6 +1,7 @@
 import React from 'react'
 import DownloadButton from '../DownloadButton'
 import GetInTouchButton from '../GetInTouchButton'
+import SocialMediaicons from '../SocialMediaicons'
 
 const Introduction = () => {
   return (
@@ -27,7 +28,7 @@ const Introduction = () => {
           </span>
 
           {/* description */}
-          <p className="mt-4 flex gap-1 flex-wrap items-center text-base md:text-lg text-[var(--color-muted)]">
+          <p className="mt-4 tracking-tight flex gap-1 flex-wrap items-center text-base md:text-lg text-[var(--color-muted)]">
             My toolkit?&nbsp;&nbsp;&nbsp;
 
             {/* React */}
@@ -72,7 +73,7 @@ const Introduction = () => {
               className="text-sm flex items-center gap-1 bg-[var(--color-icons-bg)] text-[var(--color-text)] px-2 py-1 tracking-tight rounded-sm border border-dashed border-[var(--color-muted)] font-bold transition duration-300 hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
             >
               <img
-                src="src/assets/SvgsLogo/node-js-svgrepo-com (1).svg"
+                src="src/assets/SvgsLogo/node.svg"
                 alt="Node.js"
                 width="18"
                 height="18"
@@ -131,7 +132,7 @@ const Introduction = () => {
               GSAP
             </a>
 
-           magic to make things move just right — a developer who believes code is
+            magic to make things move just right — a developer who believes code is
             just another form of creativity. Mixing logic, motion, and design into
             something users actually enjoy using.
           </p>
@@ -139,9 +140,16 @@ const Introduction = () => {
 
         {/* buttons */}
         <div className='flex items-center gap-4'>
-            <DownloadButton/>
-            <GetInTouchButton/>
+          <DownloadButton />
+          <GetInTouchButton />
+
         </div>
+
+        {/* Social icons */}
+        <div className='pt-10'>
+            <SocialMediaicons/>
+        </div>
+
       </div>
     </div>
   )

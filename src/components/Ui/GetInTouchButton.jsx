@@ -3,17 +3,18 @@ import React from "react";
 const GetInTouchButton = () => {
   return (
     <button
-      className="relative border-none text-[14px] font-semibold cursor-pointer rounded-md 
-      z-[1] bg-transparent group transition-all duration-200 ease-in-out hover:brightness-110"
+      className="relative border-none  font-semibold cursor-pointer rounded-md 
+      z-[1] bg-transparent group transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)]
+      hover:brightness-110"
     >
       <div
-        className="flex items-center justify-between gap-2 min-h-[44px] px-3 rounded-lg 
-        shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)]
-        hover:shadow-[inset_0_0_8px_var(--color-text)]"
+        className="font-medium flex text-sm items-center justify-between gap-2 min-h-[44px] px-4 rounded-lg
+        transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)]
+        shadow-[inset_0_2px_6px_rgba(0,0,0,0.25)]
+        group-hover:shadow-[inset_0_0_12px_var(--color-text),0_0_6px_var(--color-accent)]"
         style={{
           backgroundColor: "var(--color-accent)",
           color: "var(--color-bg)",
-          fontFamily: "var(--font-main)",
         }}
       >
         <svg
@@ -25,9 +26,11 @@ const GetInTouchButton = () => {
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
+          className="transition-transform duration-300 group-hover:translate-x-1"
         >
           <polygon points="4,4 20,12 4,20 7,13 4,4" />
         </svg>
+
         Get in touch
       </div>
     </button>
