@@ -1,7 +1,8 @@
 import React from 'react'
-import DownloadButton from '../DownloadButton'
-import GetInTouchButton from '../GetInTouchButton'
-import SocialMediaicons from '../SocialMediaicons'
+import DownloadButton from './../DownloadButton';
+import GetInTouchButton from './../GetInTouchButton';
+import SocialMediaicons from './../SocialMediaicons';
+
 
 const Introduction = () => {
   return (

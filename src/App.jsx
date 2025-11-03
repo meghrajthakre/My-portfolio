@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../src/components/Ui/Layouts/Navbar";
 import Home from "./Pages/Home";
-import Hero from "./Sections/Hero";
 import DogFollower from './components/Ui/DogFollower';
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Work from './Pages/Work';
 import Projects from './Pages/Projects';
 import Blog from './Pages/Blog';
+import { AnimatePresence } from "framer-motion";
 
 function App() {
+  const location = useLocation()
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
@@ -34,13 +35,14 @@ function App() {
       >
         {/* <DogFollower/> */}
         <Navbar />
-
-        <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route path="/work" element={<Work />} />
-          <Route path="/blogs" element={<Blog />} />
-          <Route path="/projects" element={<Projects />} />
-        </Routes>
+        <AnimatePresence mode="wait"> 
+          <Routes location={location} key={location.pathname}>
+            <Route index path="/" element={<Home />} />
+            <Route path="/work" element={<Work />} />
+            <Route path="/blogs" element={<Blog />} />
+            <Route path="/projects" element={<Projects />} />
+          </Routes>
+        </AnimatePresence>
 
 
       </div>

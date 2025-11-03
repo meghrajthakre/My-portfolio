@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import CircleCanvas from "../CircleCanvas";
-import DarkModeToggle from "../DarkModeToggle";
 import { NavLink } from "react-router-dom";
+import CircleCanvas from './../CircleCanvas';
+import DarkModeToggle from './../DarkModeToggle';
 
 const Navbar = () => {
   const [isDark, setIsDark] = useState(false);
