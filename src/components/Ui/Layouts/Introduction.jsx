@@ -1,159 +1,84 @@
-import React from 'react'
-import DownloadButton from './../DownloadButton';
-import GetInTouchButton from './../GetInTouchButton';
-import SocialMediaicons from './../SocialMediaicons';
+import React from "react";
+import DownloadButton from "./../DownloadButton";
+import GetInTouchButton from "./../GetInTouchButton";
+import SocialMediaicons from "./../SocialMediaicons";
 
+const techStack = [
+  { name: "React", icon: "/src/assets/SvgsLogo/react.svg", link: "https://react.dev/" },
+  { name: "JavaScript", icon: "/src/assets/SvgsLogo/js.svg", link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+  { name: "Node.js", icon: "/src/assets/SvgsLogo/node.svg", link: "https://nodejs.org/" },
+  { name: "Express.js", icon: "/src/assets/SvgsLogo/exp.svg", link: "https://expressjs.com/" },
+  { name: "MongoDB", icon: "/src/assets/SvgsLogo/mongodb.svg", link: "https://www.mongodb.com/" },
+  { name: "GSAP", icon: "/src/assets/SvgsLogo/gsap.svg", link: "https://gsap.com/" },
+  { name: "Framer Motion", icon: "src/assets/SvgsLogo/framerMotion.svg", link: "https://gsap.com/" },
+];
+
+const TechBadge = ({ name, icon, link }) => (
+  <a
+    href={link}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-sm flex items-center gap-1 bg-[var(--color-icons-bg)] 
+      text-[var(--color-text)] px-2 py-1 tracking-tight rounded-sm 
+      border border-dashed border-[var(--color-muted)] font-bold 
+      transition-all duration-300 hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
+  >
+    <img src={icon} alt={`${name} logo`} width="18" height="18" />
+    {name}
+  </a>
+);
 
 const Introduction = () => {
   return (
-    <div className='mx-auto max-w-3xl px-8 py-14'>
-      <div>
-        {/* heading */}
-        <div className='inline-block'>
+    <section className="mx-auto max-w-3xl text-left py-14">
+      <header>
+        {/* Profile / Logo */}
+        <div className="inline-block">
           <img
-            className='h-24 w-24 rounded-full transition-all duration-300 ease-in-out bg-yellow-300'
+            className="h-24 w-24 rounded-full bg-yellow-300 transition-all duration-300 ease-in-out"
             src="/src/assets/Logo/logo (1).webp"
-            alt="Logo"
+            alt="Meghraj logo"
             loading="lazy"
           />
         </div>
-        {/* description */}
-        <div className='py-8'>
-          {/* heading */}
-          <span className='text-[34px] font-bold text-[var(--color-text)]'>
-            Hi, I'm Meghraj
-            <span className='px-2'>—</span>
-            <span className='text-[var(--color-secondary-text)]'>
-              I Make Softwares For Web.
-            </span>
+
+        {/* Heading */}
+        <h1 className="pt-8 text-[34px] font-bold text-[var(--color-text)] leading-tight">
+          Hi, I’m Meghraj
+          <span className="px-2">—</span>
+          <span className="text-[var(--color-secondary-text)]">
+            I Make Software for the Web.
           </span>
+        </h1>
 
-          {/* description */}
-          <p className="mt-4 tracking-tight flex gap-1 flex-wrap items-center text-base md:text-lg text-[var(--color-muted)]">
-            My toolkit?&nbsp;&nbsp;&nbsp;
+        {/* Description */}
+        <p className="mt-4 pr-2 tracking-tight flex gap-2 flex-wrap items-center text-base md:text-lg text-[var(--color-muted)]">
+          My toolkit?&nbsp;&nbsp;&nbsp;
+          {techStack.slice(0,6).map((tech) => (
+            <React.Fragment key={tech.name}>
+              <TechBadge {...tech} />
+            </React.Fragment>
+          ))}
+          and a bit of&nbsp;
+        <TechBadge {...techStack[6]}/>
+         magic to make things move just right — a developer who believes
+          code is just another form of creativity. Mixing logic, motion, and
+          design into something users actually enjoy using.
+        </p>
+      </header>
 
-            {/* React */}
-            <a
-              href="https://react.dev/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm flex items-center gap-1 bg-[var(--color-icons-bg)] text-[var(--color-text)] px-2 py-1 tracking-tight rounded-sm border border-dashed border-[var(--color-muted)] font-bold transition duration-300 hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
-            >
-              <img
-                src="src/assets/SvgsLogo/react.svg"
-                alt="React"
-                width="18"
-                height="18"
-              />
-              React
-            </a>
-            &nbsp;
-
-            {/* JavaScript */}
-            <a
-              href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm flex items-center gap-1 bg-[var(--color-icons-bg)] text-[var(--color-text)] px-2 py-1 tracking-tight rounded-sm border border-dashed border-[var(--color-muted)] font-bold transition duration-300 hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
-            >
-              <img
-                src="src/assets/SvgsLogo/js.svg"
-                alt="JavaScript"
-                width="18"
-                height="18"
-              />
-              JavaScript
-            </a>
-            &nbsp;
-
-            {/* Node.js */}
-            <a
-              href="https://nodejs.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm flex items-center gap-1 bg-[var(--color-icons-bg)] text-[var(--color-text)] px-2 py-1 tracking-tight rounded-sm border border-dashed border-[var(--color-muted)] font-bold transition duration-300 hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
-            >
-              <img
-                src="src/assets/SvgsLogo/node.svg"
-                alt="Node.js"
-                width="18"
-                height="18"
-              />
-              Node.js
-            </a>
-            &nbsp;
-
-            {/* Express */}
-            <a
-              href="https://expressjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm flex items-center gap-1 bg-[var(--color-icons-bg)] text-[var(--color-text)] px-2 py-1 tracking-tight rounded-sm border border-dashed border-[var(--color-muted)] font-bold transition duration-300 hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
-            >
-              <img
-                src="src/assets/SvgsLogo/exp.svg"
-                alt="Express.js"
-                width="18"
-                height="18"
-              />
-              Express JS
-            </a>
-            &nbsp;
-
-            {/* MongoDB */}
-            <a
-              href="https://www.mongodb.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm flex items-center gap-1 bg-[var(--color-icons-bg)] text-[var(--color-text)] px-2 py-1 tracking-tight rounded-sm border border-dashed border-[var(--color-muted)] font-bold transition duration-300 hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
-            >
-              <img
-                src="src/assets/SvgsLogo/mongodb.svg"
-                alt="MongoDB"
-                width="18"
-                height="18"
-              />
-              MongoDB
-            </a>
-
-            {/* GSAP */}
-            and a bit of&nbsp;
-            <a
-              href="https://gsap.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm flex items-center gap-1 bg-[var(--color-icons-bg)] text-[var(--color-text)] px-2 py-1 tracking-tight rounded-sm border border-dashed border-[var(--color-muted)] font-bold transition duration-300 hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
-            >
-              <img
-                src="src/assets/SvgsLogo/gsap.svg"
-                alt="GSAP"
-                width="18"
-                height="18"
-              />
-              GSAP
-            </a>
-
-            magic to make things move just right — a developer who believes code is
-            just another form of creativity. Mixing logic, motion, and design into
-            something users actually enjoy using.
-          </p>
-        </div>
-
-        {/* buttons */}
-        <div className='flex items-center gap-4'>
-          <DownloadButton />
-          <GetInTouchButton />
-
-        </div>
-
-        {/* Social icons */}
-        <div className='pt-10'>
-            <SocialMediaicons/>
-        </div>
-
+      {/* Buttons */}
+      <div className="flex items-center gap-4 pt-6">
+        <DownloadButton />
+        <GetInTouchButton />
       </div>
-    </div>
-  )
-}
 
-export default Introduction
+      {/* Social Media */}
+      <div className="pt-10">
+        <SocialMediaicons />
+      </div>
+    </section>
+  );
+};
+
+export default Introduction;

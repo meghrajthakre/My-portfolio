@@ -5,7 +5,7 @@ import Introduction from './../components/Ui/Layouts/Introduction';
 
 const Home = () => {
   return (
-    <div className=' p-8 max-w-3xl m-auto  z-30'>
+    <div className=' max-w-3xl m-auto  z-30'>
      <Introduction/>
     </div>
   )

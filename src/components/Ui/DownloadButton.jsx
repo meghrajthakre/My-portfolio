@@ -7,7 +7,7 @@ const DownloadButton = () => {
       z-[1] bg-transparent group transition-all duration-[500ms] ease-[cubic-bezier(0.77,0,0.175,1)]"
     >
       <div
-        className="flex items-center justify-between gap-2 min-h-[44px] px-4 rounded-md 
+        className="flex items-center justify-between gap-2 min-h-[40px] px-4 rounded-md 
         shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)]
         transition-all duration-[200ms] ease-[cubic-bezier(0.77,0,0.175,1)] 
         hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
@@ -47,8 +47,8 @@ const DownloadButton = () => {
       >
         <svg
           viewBox="0 0 24 24"
-          width="22"
-          height="22"
+          width="20"
+          height="20"
           stroke="var(--color-bg)"
           strokeWidth="2"
           fill="none"

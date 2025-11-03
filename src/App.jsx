@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../src/components/Ui/Layouts/Navbar";
 import Home from "./Pages/Home";
-import DogFollower from './components/Ui/DogFollower';
 import { Route, Routes, useLocation } from "react-router-dom";
 import Work from './Pages/Work';
 import Projects from './Pages/Projects';
