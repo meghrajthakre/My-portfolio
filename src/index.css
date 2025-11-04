@@ -29,6 +29,8 @@
   --color-border: #000000;
   --color-icons-bg: #F2F2F2;
   --color-card-bg: #ffffff;
+ --logo-bg: #8EC6FF; /* blue for light mode */
+
 
   /* 🌈 Brand Colors */
   --color-react: #61dafb;
@@ -58,6 +60,7 @@
   --color-border: #2a2a2a;
   --color-icons-bg: #2F2F2F;
   --color-card-bg: #171717;
+  --logo-bg: #facc15; /* yellow for dark mode */
 
 
 }

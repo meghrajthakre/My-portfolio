@@ -35,7 +35,8 @@ const Introduction = () => {
         {/* Profile / Logo */}
         <div className="inline-block">
           <img
-            className="h-24 w-24 rounded-full bg-yellow-300 transition-all duration-300 ease-in-out"
+          style={{ backgroundColor: "var(--logo-bg)" }}
+            className="h-24 w-24 rounded-full  transition-all duration-300 ease-in-out"
             src="/src/assets/Logo/logo (1).webp"
             alt="Meghraj logo"
             loading="lazy"
