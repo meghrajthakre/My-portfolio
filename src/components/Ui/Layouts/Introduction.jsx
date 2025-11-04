@@ -43,7 +43,7 @@ const Introduction = () => {
         </div>
 
         {/* Heading */}
-        <h1 className="pt-8 text-[34px] font-bold text-[var(--color-text)] leading-tight">
+        <h1 className="pt-8 text-[34px] text-[var(--color-text)] leading-tight">
           Hi, I’m Meghraj
           <span className="px-2">—</span>
           <span className="text-[var(--color-secondary-text)]">

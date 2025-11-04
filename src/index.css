@@ -28,7 +28,8 @@
   --color-muted: #828282;
   --color-border: #000000;
   --color-icons-bg: #F2F2F2;
- 
+  --color-card-bg: #ffffff;
+
   /* 🌈 Brand Colors */
   --color-react: #61dafb;
   --color-next: #000000;
@@ -49,14 +50,16 @@
    🌙 Dark Theme
 ============================= */
 :root.dark {
-  --color-bg: #0A0A0A;
+  --color-bg: black;
   --color-text: #ffffff;
   --color-secondary-text: #909092;
   --color-accent: #ffffff;
   --color-muted: #737373;
   --color-border: #2a2a2a;
   --color-icons-bg: #2F2F2F;
-  
+  --color-card-bg: #171717;
+
+
 }
 
 /* =============================
@@ -71,31 +74,36 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   transition: background-color var(--transition-speed) ease,
-  color var(--transition-speed) ease;
+    color var(--transition-speed) ease;
   background: transparent !important;
 }
 
 /* =============================
    🧱 Headings
 ============================= */
-h1,
-h2,
-h3 {
-  font-family: var(--font-heading);
-  letter-spacing: 1px;
-}
+
 
 h1 {
   color: var(--color-text);
   font-weight: 900;
+  letter-spacing: 1px;
+  font-weight: bold;
 }
 
 h2 {
-  color: var(--color-accent);
+  font-size: 24px;
+  letter-spacing: .5px;
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 h3 {
+  font-size: 13px;
   color: var(--color-secondary-text);
+}
+
+span {
+  color: var(--color-secondary-text)
 }
 
 /* =============================
@@ -188,5 +196,19 @@ p {
 }
 
 
-/* transiton */
+/* grid css */
+.parent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 15px;
+  grid-row-gap: 0px;
+}
 
+.div1 {
+  grid-area: 4 / 1 / 5 / 2;
+}
+
+.div2 {
+  grid-area: 5 / 2 / 6 / 3;
+}

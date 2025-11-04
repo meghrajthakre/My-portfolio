@@ -37,7 +37,7 @@ const DownloadButton = () => {
       </div>
 
       <div
-        className="absolute inset-0 flex items-center justify-center max-w-[90%] mx-auto 
+        className="absolute h-8 mt-1 inset-0 flex items-center justify-center max-w-[80%] mx-auto 
         z-[-1] rounded-md transform translate-y-0 
         transition-all duration-[500ms] ease-[cubic-bezier(0.77,0,0.175,1)] 
         group-hover:translate-y-full shadow-[inset_0_2px_8px_rgba(0,0,0,0.25)]"

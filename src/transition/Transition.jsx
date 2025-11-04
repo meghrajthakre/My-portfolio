@@ -12,7 +12,7 @@ const Transition = (OgComponent) => {
           duration: 0.5,
           ease: [0.22, 1, 0.36, 1],
         }}
-        className="min-h-screen max-w-3xl mx-auto px-6"
+        className="min-h-screen max-w-3xl mx-auto "
       >
         <OgComponent {...props} />
       </motion.div>
