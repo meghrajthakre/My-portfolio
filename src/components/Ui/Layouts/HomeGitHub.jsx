@@ -54,13 +54,13 @@ const HomeGitHub = () => {
             contributions
           </p>
 
-          <div className="mt-3 flex  gap-3 text-sm items-baseline justify-between">
-            <p className="text-sm text-gray-400 mb-4">
+          <div className="mt-3 flex  gap-3 text-sm  text-gray-500 items-baseline  justify-between">
+            <h3 className="font-medium  mb-4">
               Total Contributions Overview
-            </p>
+            </h3>
             <div className="flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-              <h3 className="text-[var(--color-text)] font-medium">
+              <h3 className="font-medium">
                 This Year
               </h3>
             </div>
