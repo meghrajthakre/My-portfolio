@@ -30,7 +30,7 @@
   --color-icons-bg: #F2F2F2;
   --color-card-bg: #ffffff;
  --logo-bg: #8EC6FF; /* blue for light mode */
-   --card-bg: #909092;
+   --card-bg: #eaeaea;
 
   /* 🌈 Brand Colors */
   --color-react: #61dafb;
@@ -95,7 +95,7 @@ h1 {
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 25px;
   letter-spacing: .5px;
   font-weight: 600;
   color: var(--color-text);
@@ -215,4 +215,9 @@ p {
 
 .div2 {
   grid-area: 5 / 2 / 6 / 3;
+}
+/* github border */
+.dashed{
+  border: 0.5px dashed;
+  border-color: var(--color-secondary-text);
 }

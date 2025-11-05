@@ -16,7 +16,7 @@ const HomeAbout = () => {
                 
                 {/* 🔹 Profile / Logo */}
                 <div
-                    className="border-secondary size-60 rounded-md border-2 bg-blue-300 dark:bg-yellow-300"
+                    className="size-60 rounded-md border-1 bg-blue-300 dark:bg-yellow-300"
                     style={{ backgroundColor: "var(--logo-bg)" }}
                 >
                     <img
