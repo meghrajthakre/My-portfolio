@@ -35,14 +35,14 @@ const HomeAbout = () => {
                     </span>
 
                     {/* 🔹 Skills Section */}
-                    <div className="flex flex-col gap-2 mt-2">
+                    <div className="flex flex-col gap-2 ">
                         <span className="font-medium text-lg">Skills</span>
                         <div className="flex flex-wrap justify-center md:justify-start gap-4">
                             {techStack.map((tech) => (
                                 <NavLink
                                     key={tech.name}
                                     to={tech.link || "#"}
-                                    className="p-2 w-10 h-10 rounded-md flex items-center justify-center hover:scale-110 transition-transform duration-200"
+                                    className=" w-6 h-6 hover:scale-110 transition-transform duration-200"
                                 >
                                     {tech.icon ? (
                                         <img
