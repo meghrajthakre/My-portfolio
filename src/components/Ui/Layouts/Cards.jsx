@@ -101,7 +101,7 @@ const Cards = () => {
               >
                 <h3>View Details</h3>
                 <img
-                  src="/src/assets/technologySvgs/rightArrow.svg"
+                  src="src/assets/technologySvgs/rightArrow.webp"
                   className="w-5 h-5 text-white"
                   alt="arrow"
                 />

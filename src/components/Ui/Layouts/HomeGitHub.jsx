@@ -46,20 +46,20 @@ const HomeGitHub = () => {
         </div>
       ) : (
         <>
-          <p className="text-sm flex gap-1 mt-2 text-[var(--color-text)]">
+          <span className="text-sm flex gap-1 mt-2 text-[var(--color-text)]">
             Total:{" "}
-            <h4 className="font-bold text-md">
+            <h4 className="font-bold text-md text-[var(--color-text)]">
               {totalContributions}
             </h4>{" "}
             contributions
-          </p>
+          </span>
 
           <div className="mt-3 flex  gap-3 text-sm  text-gray-500 items-baseline  justify-between">
             <h3 className="font-medium  mb-4">
               Total Contributions Overview
             </h3>
             <div className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
               <h3 className="font-medium">
                 This Year
               </h3>
@@ -83,14 +83,14 @@ const HomeGitHub = () => {
                 color="text-color"
                 theme={{
                   light: [
-                    "#ebedf0", // 🩶 empty (official GitHub light gray)
+                    "#EEEEEE", // 🩶 empty (official GitHub light gray)
                     "#156813", // 💚 level 1
                     "#40c463", // 💚 level 2
                     "#30a14e", // 💚 level 3
                     "#216e39", // 💚 level 4 (darkest)
                   ],
                   dark: [
-                    "#898989", // empty
+                    "#7D7E7E", // empty
                     "#1DB213", // level 1
                     "#006d32", // level 2
                     "#26a641", // level 3
