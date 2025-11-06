@@ -6,7 +6,7 @@ import HomeAbout from '../components/Ui/Layouts/HomeAbout';
 import HomeGitHub from '../components/Ui/Layouts/HomeGitHub';
 import HomeBlog from '../components/Ui/Layouts/HomeBlog';
 import HomeBook from '../components/Ui/Layouts/HomeBook';
-
+import InfiniteSlider from '../components/Animation/InfiniteSlider';
 
 const Home = () => {
   return (
@@ -14,6 +14,7 @@ const Home = () => {
       <Introduction />
       <HomeProjects />
       <HomeAbout/>
+      <InfiniteSlider/>
       <HomeGitHub/>
       <HomeBlog/>
       <HomeBook/>
