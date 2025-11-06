@@ -1,5 +1,5 @@
 import React from 'react'
-import Cal from '../../schedular/Cal'
+import Cal from '../../Meetings/Cal'
 
 const HomeBook = () => {
   return (

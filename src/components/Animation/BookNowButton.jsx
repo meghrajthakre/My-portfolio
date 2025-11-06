@@ -5,7 +5,7 @@ const BookNowButton = () => {
     <button
       className="
         group relative flex items-center justify-center cursor-pointer
-        px-3 rounded-md text-md font-semibold
+        px-3 rounded-md text-sm font-semibold
         bg-[var(--color-icons-bg)]
         border border-dashed border-[var(--color-muted)]
         hover:shadow-[0_4px_14px_-3px_rgba(0,0,0,0.2)]
@@ -17,7 +17,7 @@ const BookNowButton = () => {
         <img
           src="src/assets/Logo/logo (1).webp"
           alt="logo"
-          className="w-6 h-6 object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
+          className="w-5 h-5 object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
         />
 
         {/* Middle animated text (+ You) */}

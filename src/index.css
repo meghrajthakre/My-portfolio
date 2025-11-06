@@ -259,7 +259,7 @@ p {
 
 /* brand color for span */
 .brand {
-  color: var(--color-border);
+  color: var(--color-text);
 }
 
 @theme inline {

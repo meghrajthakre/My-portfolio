@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { getCalApi } from "@calcom/embed-react";
-import Shinytext from "../Animation/Shinytext";
+import Shinytext from "../Ui/Shinytext";
 import BookNowButton from "../Animation/BookNowButton";
 
 
