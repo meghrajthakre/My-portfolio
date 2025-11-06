@@ -20,7 +20,7 @@ const Cal = () => {
 
     return (
         <div className="py-6 pb-14">
-            <div className="text-center  text-center flex items-center flex-col dashed container mx-auto max-w-3xl px-4 py-12 rounded-md">
+            <div className="text-center  text-center flex items-center flex-col dashed container mx-auto max-w-3xl px-4 py-14 rounded-md">
                 <div className="text-xl text-[var(--color-text)] mb-4">
                     
 
