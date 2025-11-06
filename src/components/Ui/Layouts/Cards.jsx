@@ -2,6 +2,7 @@ import React from "react";
 import SpotlightCard from "./SpotlightCard";
 import { NavLink } from "react-router-dom";
 import { ProjectsData } from './../../../Data/ProjectsData';
+import Tooltip from './../../../common/Tooltip';
 
 const Cards = () => {
 
@@ -72,14 +73,17 @@ const Cards = () => {
             {/* ⚙️ Tech Stack */}
             <div className="mt-3">
               <span>Technologies</span>
-              <div className="flex gap-2 mt-2">
+              <div className="flex gap-4 mt-2">
                 {project.techStack.map((tech, i) => (
-                  <img
-                    key={i}
-                    src={tech.icon}
-                    alt={tech.name}
-                    className="w-5 h-5 cursor-pointer transition-all duration-300 hover:scale-125 hover:drop-shadow-[0_0_6px_var(--color-accent)]"
-                  />
+                  <Tooltip key={tech.name} text={tech.name}>
+                    <img
+                      key={i}
+                      src={tech.icon}
+                      alt={tech.name}
+                      className="w-5 h-5 cursor-pointer transition-all duration-300 hover:scale-125 "
+                    />
+
+                  </Tooltip>
                 ))}
               </div>
             </div>
@@ -100,17 +104,16 @@ const Cards = () => {
                 className="flex items-center gap-1 text-[var(--color-accent)] hover:underline transition-all duration-300"
               >
                 <h3>View Details</h3>
-                <img
-                  src="src/assets/technologySvgs/rightArrow.webp"
-                  className="w-5 h-5 text-white"
-                  alt="arrow"
-                />
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="2" y1="12" x2="20" y2="12" />
+                  <polyline points="14 6 20 12 14 18" />
+                </svg>
               </NavLink>
             </div>
           </div>
         </SpotlightCard>
       ))}
-     
+
     </div>
   );
 };

@@ -16,7 +16,7 @@ const HomeBlog = () => {
             {/* 🔹 Centered Button with NavLink */}
             <div className="flex justify-center py-6">
                 <NavLink
-                    to="/projects"
+                    to="/blogs"
                     className="relative text-sm border-none font-semibold cursor-pointer rounded-lg 
                      z-[1] bg-transparent group transition-all duration-[500ms] ease-[cubic-bezier(0.77,0,0.175,1)]"
                 >
@@ -31,6 +31,7 @@ const HomeBlog = () => {
                             fontFamily: "var(--font-main)",
                         }}
                     >
+                        
                         Show All Blogs
                     </div>
                 </NavLink>

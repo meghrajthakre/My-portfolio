@@ -4,13 +4,13 @@ import { NavLink } from 'react-router-dom';
 import { BlogData } from '../../../data/BlogData';
 const BlogCard = () => {
   return (
-   <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
+    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
       {/* Loop through all projects */}
       {BlogData.slice(0, 4).map((project, index) => (
         <SpotlightCard
           key={index}
           className="transition-transform duration-300 bg-[var(--color-card-bg)]"
-          spotlightColor="rgba(0, 229, 255, 0.2)"
+          spotlightColor="rgba(178, 34, 34, .2)"
         >
           {/* 📸 Project Image */}
           <img
@@ -27,7 +27,7 @@ const BlogCard = () => {
                 {project.title}
               </h2>
 
-              
+
             </div>
 
             {/* 📝 Description */}
@@ -38,7 +38,7 @@ const BlogCard = () => {
             </span>
 
             {/* ⚙️ Tech Stack */}
-            
+
 
             {/* ⚡ System Status + View Details */}
             <div className="flex py-6 items-center justify-between">
@@ -56,17 +56,17 @@ const BlogCard = () => {
                 className="flex items-center gap-1 text-[var(--color-accent)] hover:underline transition-all duration-300"
               >
                 <h3>Read More</h3>
-                <img
-                  src="src/assets/technologySvgs/rightArrow.webp"
-                  className="w-5 h-5 text-white"
-                  alt="arrow"
-                />
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="2" y1="12" x2="20" y2="12" />
+                  <polyline points="14 6 20 12 14 18" />
+                </svg>
+
               </NavLink>
             </div>
           </div>
         </SpotlightCard>
       ))}
-     
+
     </div>
   )
 }

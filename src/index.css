@@ -95,7 +95,7 @@ h1 {
 }
 
 h2 {
-  font-size: 25px;
+  font-size: 26px;
   letter-spacing: .5px;
   font-weight: 600;
   color: var(--color-text);
@@ -220,4 +220,8 @@ p {
 .dashed{
   border: 0.5px dashed;
   border-color: var(--color-secondary-text);
+}
+/* brand color for span */
+.brand{
+  color: var(--color-text);
 }
