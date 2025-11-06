@@ -5,6 +5,7 @@ import HomeProjects from '../components/Ui/Layouts/HomeProjects';
 import HomeAbout from '../components/Ui/Layouts/HomeAbout';
 import HomeGitHub from '../components/Ui/Layouts/HomeGitHub';
 import HomeBlog from '../components/Ui/Layouts/HomeBlog';
+import HomeBook from '../components/Ui/Layouts/HomeBook';
 
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
       <HomeAbout/>
       <HomeGitHub/>
       <HomeBlog/>
+      <HomeBook/>
     </div>
   )
 }

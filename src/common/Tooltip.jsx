@@ -8,12 +8,12 @@ const Tooltip = ({ text, children }) => {
         className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 invisible 
                    group-hover:opacity-100 group-hover:visible group-hover:-translate-y-1 
                    text-[var(--color-text)] bg-[var(--color-bg-secondary)] 
-                   text-xs px-3 py-1.5 rounded-lg transition-all duration-300 ease-out 
+                   text-xs px-2 py-1 rounded-lg transition-all duration-300 ease-out 
                    whitespace-nowrap shadow-lg border dashed 
                    border-[var(--color-border)] z-[99] backdrop-blur-md"
         style={{
-          backgroundColor: "var(--color-bg)",
-          color: "var(--color-text)",
+          backgroundColor: "var(--color-text)",
+          color: "var(--color-bg)",
         }}
       >
         {text}
