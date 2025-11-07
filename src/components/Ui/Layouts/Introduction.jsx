@@ -4,8 +4,7 @@ import GetInTouchButton from "./../GetInTouchButton";
 import SocialMediaicons from "./../SocialMediaicons";
 import { techStack } from "../../../data/techStack";
 
-
-const TechBadge = ({ name, icon, link }) => (
+const TechBadge = ({ name, Icon, link }) => (
   <a
     href={link}
     target="_blank"
@@ -15,7 +14,7 @@ const TechBadge = ({ name, icon, link }) => (
       border border-dashed border-[var(--color-muted)] font-bold 
       transition-all duration-300 hover:shadow-[inset_0_0_8px_var(--color-secondary-text)]"
   >
-    <img src={icon} alt={`${name} logo`} width="18" height="18" />
+    <Icon className="w-[18px] h-[18px]" />
     {name}
   </a>
 );
@@ -27,9 +26,9 @@ const Introduction = () => {
         {/* Profile / Logo */}
         <div className="inline-block">
           <img
-          style={{ backgroundColor: "var(--logo-bg)" }}
-            className="h-24 w-24 rounded-full  transition-all duration-300 ease-in-out"
-            src="/src/assets/Logo/logo (1).webp"
+            style={{ backgroundColor: "var(--logo-bg)" }}
+            className="h-24 w-24 rounded-full transition-all duration-300 ease-in-out"
+            src="/assets/Logo/logo.webp"
             alt="Meghraj logo"
             loading="lazy"
           />
@@ -47,16 +46,16 @@ const Introduction = () => {
         {/* Description */}
         <p className="mt-4 pr-2 tracking-tight flex gap-2 flex-wrap items-center text-base md:text-lg text-[var(--color-muted)]">
           My toolkit?&nbsp;&nbsp;&nbsp;
-          {techStack.slice(0,6).map((tech) => (
+          {techStack.slice(0, 6).map((tech) => (
             <React.Fragment key={tech.name}>
               <TechBadge {...tech} />
             </React.Fragment>
           ))}
           and a bit of&nbsp;
-        <TechBadge {...techStack[6]}/>
-         magic to make things move just right — a developer who believes
-          code is just another form of creativity. Mixing logic, motion, and
-          design into something users actually enjoy using.
+          <TechBadge {...techStack[6]} />
+          magic to make things move just right — a developer who believes code
+          is just another form of creativity. Mixing logic, motion, and design
+          into something users actually enjoy using.
         </p>
       </header>
 
