@@ -2,42 +2,44 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../src/components/Ui/Layouts/Navbar";
 import Home from "./Pages/Home";
 import { Route, Routes, useLocation } from "react-router-dom";
-import Work from './Pages/Work';
-import Projects from './Pages/Projects';
-import Blog from './Pages/Blog';
+import Work from "./Pages/Work";
+import Projects from "./Pages/Projects";
+import Blog from "./Pages/Blog";
 import { AnimatePresence } from "framer-motion";
 import Footer from "./Pages/Footer";
-import SmoothScroll from './components/Animation/SmoothScroll';
+import SmoothScroll from "./components/Animation/SmoothScroll";
+import ScrollToTop from "./common/ScrollToTop";
 
 function App() {
-  const location = useLocation()
+  const location = useLocation();
   const [loader, setLoader] = useState(true);
 
+  // 🔹 Loader blur effect
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoader(false);
-    }, 1000); // 1 second blur time
+    }, 1000); // loader duration
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="relative ">
-      {/* 🔹 Pure Transparent Blur Overlay */}
+    <div className="relative">
+      {/* 🔹 Transparent Blur Loader Overlay */}
       <div
         style={{ backdropFilter: "blur(10px)" }}
-        className={`fixed max-w-3xl m-auto inset-0 z-[999] transition-all duration-500 ${loader
-          ? "opacity-100"
-          : "opacity-0 backdrop-blur-0 pointer-events-none"
-          }`}
+        className={`fixed max-w-3xl m-auto inset-0 z-[999] transition-all duration-500 ${
+          loader
+            ? "opacity-100"
+            : "opacity-0 backdrop-blur-0 pointer-events-none"
+        }`}
       ></div>
 
-      {/* Main Content */}
-      <div
-      >
-        {/* <DogFollower/> */}
+      {/* 🔹 Main Content */}
+      <div>
         <Navbar />
-        <SmoothScroll />
-        <AnimatePresence mode="wait"> 
+        <SmoothScroll/>
+        <AnimatePresence mode="wait">
+          <ScrollToTop/>
           <Routes location={location} key={location.pathname}>
             <Route index path="/" element={<Home />} />
             <Route path="/work" element={<Work />} />
@@ -45,8 +47,7 @@ function App() {
             <Route path="/projects" element={<Projects />} />
           </Routes>
         </AnimatePresence>
-          <Footer/>
-
+        <Footer />
       </div>
     </div>
   );
