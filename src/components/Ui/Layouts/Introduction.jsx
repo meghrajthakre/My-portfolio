@@ -9,13 +9,16 @@ const TechBadge = ({ name, Icon, link, color }) => (
     href={link}
     target="_blank"
     rel="noopener noreferrer"
-    className="text-sm flex items-center gap-1 bg-[var(--color-icons-bg)]
-      text-[var(--color-text)] px-2 py-1 tracking-tight rounded-sm 
-      border border-dashed border-[var(--color-muted)] font-bold 
-      transition-all duration-300 hover:scale-105 hover:bg-[var(--color-secondary-bg)]
-      "
+    className="text-sm flex items-center gap-1 
+      bg-[var(--color-icons-bg)] text-[var(--color-text)]
+      px-2 py-1 tracking-tight rounded-sm border border-dashed 
+      border-[var(--color-muted)] font-bold transition-all duration-300
+      hover:scale-105 hover:bg-[var(--color-secondary-bg)]"
   >
-    <Icon className="w-[18px] h-[18px]" style={{ color }} />
+    <Icon
+      className="w-[18px] h-[18px] flex-shrink-0"
+      style={{ color: color }}
+    />
     {name}
   </a>
 );
@@ -29,7 +32,7 @@ const Introduction = () => {
           <img
             style={{ backgroundColor: "var(--logo-bg)" }}
             className="h-24 w-24 rounded-full transition-all duration-300 ease-in-out"
-            src="public/Logo/logo (1).webp"
+            src="/Logo/logo.webp" // ✅ correct path for public folder
             alt="Meghraj logo"
             loading="lazy"
           />
