@@ -22,7 +22,7 @@ const TechBadge = ({ name, icon, link }) => (
 
 const Introduction = () => {
   return (
-    <section className="mx-auto max-w-3xl text-left py-14">
+    <section className="mx-auto max-w-3xl text-left py-8">
       <header>
         {/* Profile / Logo */}
         <div className="inline-block">

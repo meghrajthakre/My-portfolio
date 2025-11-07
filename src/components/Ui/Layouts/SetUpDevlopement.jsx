@@ -42,7 +42,7 @@ const SetUpDevelopment = () => {
           <NavLink key={index} to={item.link}>
             <div
               className="group cursor-pointer flex items-center justify-between gap-6 bg-[var(--color-card-bg)]
-              p-3 rounded-xl border border-dashed border-[var(--color-border)] hover:border-[var(--color-accent)]
+              p-3 rounded-xl border border-dashed border-[var(--color-border)] hover:border-[var(--color-muted)]
               transition-all duration-300 hover:shadow-[0_4px_14px_-3px_rgba(0,0,0,0.2)]"
             >
               <div className="flex items-center gap-6 sm:gap-8 ml-2">

@@ -6,6 +6,7 @@ import Work from './Pages/Work';
 import Projects from './Pages/Projects';
 import Blog from './Pages/Blog';
 import { AnimatePresence } from "framer-motion";
+import Footer from "./Pages/Footer";
 
 function App() {
   const location = useLocation()
@@ -42,7 +43,7 @@ function App() {
             <Route path="/projects" element={<Projects />} />
           </Routes>
         </AnimatePresence>
-
+          <Footer/>
 
       </div>
     </div>
