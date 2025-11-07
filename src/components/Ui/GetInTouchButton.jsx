@@ -11,7 +11,7 @@ const GetInTouchButton = () => {
         className="font-medium flex text-sm items-center justify-between gap-2 min-h-[40px] px-4 rounded-lg
         transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)]
         shadow-[inset_0_2px_6px_rgba(0,0,0,0.25)]
-        group-hover:shadow-[inset_0_0_12px_var(--color-text),0_0_6px_var(--color-accent)]"
+        "
         style={{
           backgroundColor: "var(--color-accent)",
           color: "var(--color-bg)",

@@ -7,6 +7,7 @@ import Projects from './Pages/Projects';
 import Blog from './Pages/Blog';
 import { AnimatePresence } from "framer-motion";
 import Footer from "./Pages/Footer";
+import SmoothScroll from './components/Animation/SmoothScroll';
 
 function App() {
   const location = useLocation()
@@ -35,6 +36,7 @@ function App() {
       >
         {/* <DogFollower/> */}
         <Navbar />
+        <SmoothScroll />
         <AnimatePresence mode="wait"> 
           <Routes location={location} key={location.pathname}>
             <Route index path="/" element={<Home />} />
