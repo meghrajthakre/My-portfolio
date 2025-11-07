@@ -33,7 +33,7 @@ const Introduction = () => {
             style={{ backgroundColor: "var(--logo-bg)" }}
             className="h-24 w-24 rounded-full transition-all duration-300 ease-in-out"
             src="/Logo/logo (1).webp" // ✅ correct path for public folder
-            alt="Meghraj logo"
+            alt=" logo"
             loading="lazy"
           />
         </div>
