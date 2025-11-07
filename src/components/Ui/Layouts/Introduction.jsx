@@ -64,7 +64,7 @@ const Introduction = () => {
       </header>
 
       {/* Buttons */}
-      <div className="flex items-center gap-4 pt-6">
+      <div className="flex flex-col sm:flex-row items-center gap-4 pt-6">
         <DownloadButton />
         <GetInTouchButton />
       </div>

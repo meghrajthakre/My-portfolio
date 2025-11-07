@@ -3,30 +3,27 @@ import React from "react";
 const GetInTouchButton = () => {
   return (
     <button
-      className="relative border-none  font-semibold cursor-pointer rounded-md 
+      className="relative border-none font-semibold cursor-pointer rounded-md 
       z-[1] bg-transparent group transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)]
       hover:brightness-110"
     >
       <div
-        className="font-medium flex text-sm items-center justify-between gap-2 min-h-[40px] px-4 rounded-lg
+        className="font-medium flex items-center justify-between gap-2 min-h-[40px] px-3 sm:px-4 rounded-lg
         transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)]
-        shadow-[inset_0_2px_6px_rgba(0,0,0,0.25)]
-        "
+        shadow-[inset_0_2px_6px_rgba(0,0,0,0.25)] text-sm "
         style={{
           backgroundColor: "var(--color-accent)",
-          color: "var(--color-bg)",
+          color: "var(--color-bg)", // this keeps your original text color
         }}
       >
         <svg
           viewBox="0 0 24 24"
-          width="22"
-          height="22"
-          stroke="var(--color-bg)"
+          className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1"
+          stroke="var(--color-bg)" // keeps the same color as text
           strokeWidth="2"
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="transition-transform duration-300 group-hover:translate-x-1"
         >
           <polygon points="4,4 20,12 4,20 7,13 4,4" />
         </svg>

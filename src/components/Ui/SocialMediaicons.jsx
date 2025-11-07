@@ -82,7 +82,7 @@ const SocialMediaicons = () => {
   ];
 
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex flex-wrap justify-center md:justify-start gap-5">
       {icons.map(({ href, label, svg }) => (
         <div key={label} className="relative group">
           <a
@@ -98,11 +98,11 @@ const SocialMediaicons = () => {
           {/* Tooltip */}
           <span
             className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 invisible 
-                       group-hover:opacity-100 group-hover:visible group-hover:-translate-y-1 
-                       text-[var(--color-text)] bg-[var(--color-bg-secondary)] 
-                       text-xs px-3 py-1.5 rounded-lg transition-all duration-300 ease-out 
-                       whitespace-nowrap shadow-lg dashed 
-                       border-[var(--color-border)] z-[99] backdrop-blur-md"
+                   group-hover:opacity-100 group-hover:visible group-hover:-translate-y-1 
+                   text-[var(--color-text)] bg-[var(--color-bg-secondary)] 
+                   text-xs px-3 py-1.5 rounded-lg transition-all duration-300 ease-out 
+                   whitespace-nowrap shadow-lg dashed 
+                   border-[var(--color-border)] z-[99] backdrop-blur-md"
             style={{
               backgroundColor: "var(--color-bg)",
               color: "var(--color-text)",
@@ -111,7 +111,7 @@ const SocialMediaicons = () => {
             {label}
             <span
               className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-4 
-                         border-x-transparent border-t-4"
+                     border-x-transparent border-t-4"
               style={{
                 borderTopColor: "var(--color-bg-secondary)",
               }}
@@ -120,7 +120,9 @@ const SocialMediaicons = () => {
         </div>
       ))}
     </div>
+
   );
+
 };
 
 export default SocialMediaicons;

@@ -36,9 +36,8 @@ const Navbar = () => {
             {/* 🧿 Logo */}
             <NavLink to="/">
               <img
-                className={`h-12 w-12 rounded-md border border-gray-200 transition-all duration-300 ease-in-out hover:scale-90 ${
-                  isDark ? "bg-yellow-300" : "bg-blue-300"
-                }`}
+                className={`h-12 w-12 rounded-md border border-gray-200 transition-all duration-300 ease-in-out hover:scale-90 ${isDark ? "bg-yellow-300" : "bg-blue-300"
+                  }`}
                 src="/Logo/logo (1).webp"
                 alt="Logo"
                 loading="lazy"
@@ -49,10 +48,9 @@ const Navbar = () => {
             <NavLink
               to="/work"
               className={({ isActive }) =>
-                `transition-all duration-300  ease-in-out ${
-                  isActive
-                    ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
-                    : "hover:underline hover:decoration-2 hover:underline-offset-4"
+                `transition-all duration-300  ease-in-out ${isActive
+                  ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
+                  : "hover:underline hover:decoration-2 hover:underline-offset-4"
                 }`
               }
             >
@@ -62,10 +60,9 @@ const Navbar = () => {
             <NavLink
               to="/blogs"
               className={({ isActive }) =>
-                `transition-all duration-300 ease-in-out ${
-                  isActive
-                    ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
-                    : "hover:underline hover:decoration-2 hover:underline-offset-4"
+                `transition-all duration-300 ease-in-out ${isActive
+                  ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
+                  : "hover:underline hover:decoration-2 hover:underline-offset-4"
                 }`
               }
             >
@@ -75,10 +72,9 @@ const Navbar = () => {
             <NavLink
               to="/projects"
               className={({ isActive }) =>
-                `transition-all duration-300 ease-in-out ${
-                  isActive
-                    ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
-                    : "hover:underline hover:decoration-2 hover:underline-offset-4"
+                `transition-all duration-300 ease-in-out ${isActive
+                  ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
+                  : "hover:underline hover:decoration-2 hover:underline-offset-4"
                 }`
               }
             >
@@ -87,9 +83,15 @@ const Navbar = () => {
           </div>
 
           {/* ---------- Right: Mode Toggle ---------- */}
+          {/* ---------- Right: Mode Toggle ---------- */}
           <div className="relative">
-            <DarkModeToggle isDark={isDark} onClickMethod={setIsDark} />
+            <DarkModeToggle
+              isDark={isDark}
+              onClickMethod={setIsDark}
+              className="w-8 h-8 sm:w-10 sm:h-10"
+            />
           </div>
+
         </div>
       </div>
     </>
