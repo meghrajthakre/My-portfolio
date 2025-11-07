@@ -18,7 +18,7 @@ const HomeAbout = () => {
                     style={{ backgroundColor: "var(--logo-bg)" }}
                 >
                     <img
-                        src="src/assets/Logo/logo (1).webp"
+                        src="/Logo/logo (1).webp"
                         alt="Meghraj Thakre logo"
                         className="object-contain "
                     />

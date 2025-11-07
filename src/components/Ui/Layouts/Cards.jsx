@@ -3,28 +3,30 @@ import SpotlightCard from "./SpotlightCard";
 import { NavLink } from "react-router-dom";
 import Tooltip from './../../../common/Tooltip';
 import { ProjectsData } from "../../../data/ProjectsData";
+import { FaGlobe, FaGithub } from "react-icons/fa";
+
 const Cards = () => {
-
-
-
   return (
     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
       {/* Loop through all projects */}
       {ProjectsData.slice(0, 4).map((project, index) => (
         <SpotlightCard
           key={index}
-          className="transition-transform duration-300 bg-[var(--color-card-bg)]"
+          className="transition-transform duration-300 bg-[var(--color-card-bg)] flex flex-col"
           spotlightColor="rgba(0, 229, 255, 0.2)"
         >
           {/* 📸 Project Image */}
-          <img
-            src={project.image}
-            alt={project.title}
-            className="rounded-2xl object-center object-cover mb-3"
-          />
+          <div className="w-full h-48 overflow-hidden rounded-2xl mb-3">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
+            />
+          </div>
 
           {/* 📦 Card Content */}
-          <div className="p-5">
+          <div className="p-5 flex flex-col flex-1 justify-between">
+            {/* 🔹 Title + Icons */}
             {/* 🔹 Title + Icons */}
             <div className="flex items-center justify-between">
               <h2 className="text-[var(--color-text)] text-sm font-semibold">
@@ -36,14 +38,12 @@ const Cards = () => {
                 <NavLink
                   to={project.website}
                   target="_blank"
-                  className="transition-transform duration-300 hover:scale-125"
+                  className="transition-transform duration-300 "
                 >
                   <div className="p-2 rounded-full bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-hover)] transition-colors duration-300">
-                    <img
-                      src="/src/assets/technologySvgs/weeeb.svg"
-                      alt="Website"
-                      className="w-7 h-7 invert dark:invert-0 transition-all duration-300"
-                    />
+                    <Tooltip key={'Visite Website'} text={'Visite Website'} >
+                      <FaGlobe className="w-6 h-6 text-[var(--color-text)]" />
+                    </Tooltip>
                   </div>
                 </NavLink>
 
@@ -51,16 +51,16 @@ const Cards = () => {
                 <NavLink
                   to={project.github}
                   target="_blank"
-                  className="transition-transform duration-300 hover:scale-125"
+                  className="transition-transform duration-300 "
                 >
-                  <img
-                    src="/src/assets/technologySvgs/github1.svg"
-                    alt="GitHub"
-                    className="w-8 h-8"
-                  />
+                  <Tooltip key={'Code'} text={'Code'} >
+                    <FaGithub className="w-6 h-6 text-[var(--color-text)]" />
+
+                  </Tooltip>
                 </NavLink>
               </div>
             </div>
+
 
             {/* 📝 Description */}
             <span className="text-[var(--color-secondary-text)] text-md mt-1 block">
@@ -73,23 +73,22 @@ const Cards = () => {
             <div className="mt-3">
               <span>Technologies</span>
               <div className="flex gap-4 mt-2">
-                {project.techStack.map((tech, i) => (
-                  <Tooltip key={tech.name} text={tech.name}>
-                    <img
-                      key={i}
-                      src={tech.icon}
-                      alt={tech.name}
-                      className="w-5 h-5 cursor-pointer transition-all duration-300 hover:scale-125 "
-                    />
-
-                  </Tooltip>
-                ))}
+                {project.techStack.map((tech) => {
+                  const TechIcon = tech.Icon;
+                  return (
+                    <Tooltip key={tech.name} text={tech.name}>
+                      <TechIcon
+                        className="w-5 h-5 cursor-pointer transition-transform duration-300 "
+                        style={{ color: tech.color }}
+                      />
+                    </Tooltip>
+                  );
+                })}
               </div>
             </div>
 
             {/* ⚡ System Status + View Details */}
             <div className="flex py-6 items-center justify-between">
-              {/* ✅ Active System */}
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
                 <h3 className="text-[var(--color-text)] font-medium">
@@ -97,7 +96,6 @@ const Cards = () => {
                 </h3>
               </div>
 
-              {/* 🔗 View Details */}
               <NavLink
                 to="/"
                 className="flex items-center gap-1 text-[var(--color-accent)] hover:underline transition-all duration-300"
@@ -117,11 +115,11 @@ const Cards = () => {
                   <line x1="2" y1="12" x2="20" y2="12" />
                   <polyline points="14 6 20 12 14 18" />
                 </svg>
-
               </NavLink>
             </div>
           </div>
         </SpotlightCard>
+
       ))}
 
     </div>
