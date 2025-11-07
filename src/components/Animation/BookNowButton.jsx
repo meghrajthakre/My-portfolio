@@ -12,12 +12,12 @@ const BookNowButton = () => {
         overflow-hidden transition-all duration-500 ease-in-out
       "
     >
-      <div className="flex items-center gap-2 relative ">
+      <div className="flex items-center gap-1 relative ">
         {/* Logo */}
         <img
-          src="src/assets/Logo/logo (1).webp"
+          src="/Logo/logo (1).webp"
           alt="logo"
-          className="w-5 h-5 object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
+          className="w-6 h-6 object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
         />
 
         {/* Middle animated text (+ You) */}
