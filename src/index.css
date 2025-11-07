@@ -85,7 +85,7 @@
 }
 
 /* =============================
-   🌙 Dark Theme
+   🌙 Dark Themeborder 
 ============================= */
 :root.dark {
   --color-bg: black;
@@ -379,7 +379,7 @@ p {
 .slider-track {
   display: flex;
   width: max-content;
-  animation: scroll 5s linear infinite;
+  animation: scroll 8s linear infinite;
 }
 
 .slider-track:hover {
@@ -403,6 +403,3 @@ p {
   }
 }
 
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}

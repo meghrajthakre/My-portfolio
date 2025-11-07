@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 const HomeBlog = () => {
     return (
-        <div className='py-10'>
+        <div className='mt-6'>
             <div className="flex flex-col gap-0.5">
                 <h3>Featured</h3>
                 <h2>Blogs</h2>

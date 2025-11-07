@@ -1,9 +1,8 @@
 import React from "react";
 import SpotlightCard from "./SpotlightCard";
 import { NavLink } from "react-router-dom";
-import { ProjectsData } from './../../../Data/ProjectsData';
 import Tooltip from './../../../common/Tooltip';
-
+import { ProjectsData } from "../../../data/ProjectsData";
 const Cards = () => {
 
 
@@ -104,10 +103,21 @@ const Cards = () => {
                 className="flex items-center gap-1 text-[var(--color-accent)] hover:underline transition-all duration-300"
               >
                 <h3>View Details</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="gray"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <line x1="2" y1="12" x2="20" y2="12" />
                   <polyline points="14 6 20 12 14 18" />
                 </svg>
+
               </NavLink>
             </div>
           </div>

@@ -23,7 +23,7 @@ function App() {
       {/* 🔹 Pure Transparent Blur Overlay */}
       <div
         style={{ backdropFilter: "blur(10px)" }}
-        className={`fixed inset-0 z-[999] transition-all duration-500 ${loader
+        className={`fixed max-w-3xl m-auto inset-0 z-[999] transition-all duration-500 ${loader
           ? "opacity-100"
           : "opacity-0 backdrop-blur-0 pointer-events-none"
           }`}

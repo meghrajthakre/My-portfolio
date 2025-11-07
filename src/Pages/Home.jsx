@@ -7,7 +7,7 @@ import HomeGitHub from '../components/Ui/Layouts/HomeGitHub';
 import HomeBlog from '../components/Ui/Layouts/HomeBlog';
 import HomeBook from '../components/Ui/Layouts/HomeBook';
 import InfiniteSlider from '../components/Animation/InfiniteSlider';
-
+import SetUpDevlopement from '../components/Ui/Layouts/SetUpDevlopement'
 const Home = () => {
   return (
     <div className=' max-w-3xl m-auto px-8'>
@@ -18,6 +18,7 @@ const Home = () => {
       <HomeGitHub/>
       <HomeBlog/>
       <HomeBook/>
+      <SetUpDevlopement/>
     </div>
   )
 }
