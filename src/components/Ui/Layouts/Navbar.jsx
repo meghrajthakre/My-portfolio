@@ -39,7 +39,7 @@ const Navbar = () => {
                 className={`h-12 w-12 rounded-md border border-gray-200 transition-all duration-300 ease-in-out hover:scale-90 ${
                   isDark ? "bg-yellow-300" : "bg-blue-300"
                 }`}
-                src="/src/assets/Logo/logo (1).webp"
+                src="public/Logo/logo (1).webp"
                 alt="Logo"
                 loading="lazy"
               />
