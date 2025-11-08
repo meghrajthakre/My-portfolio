@@ -15,7 +15,7 @@ const skills = [
 const InfiniteSlider = () => {
   return (
     <div className="overflow-hidden w-full py-14">
-      <h2 className="font-medium  pb-4">Skills</h2>
+      <h2 className="font-medium  pb-4 ">Skills</h2>
 
       <div className="slider relative w-full overflow-hidden">
         <div className="slider-track flex gap-4 animate-scroll">

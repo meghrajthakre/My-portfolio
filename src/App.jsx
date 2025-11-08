@@ -11,7 +11,7 @@ import SmoothScroll from "./components/Animation/SmoothScroll";
 import ScrollToTop from "./common/ScrollToTop";
 import Quotes from "./common/Quotes";
 import Resume from './Pages/Resume';
-import Contact from "./Pages/Contact";
+import Contact from "./Pages/Contact/Contact";
 
 function App() {
   const location = useLocation();

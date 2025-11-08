@@ -3,11 +3,12 @@ import SpotlightCard from "./SpotlightCard";
 import { NavLink } from "react-router-dom";
 import Tooltip from './../../../common/Tooltip';
 import { ProjectsData } from "../../../data/ProjectsData";
-import { FaGlobe, FaGithub } from "react-icons/fa";
+import {  FaGithub } from "react-icons/fa";
+import { FaEarthAmericas } from "react-icons/fa6";
 
 const Cards = () => {
   return (
-    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
+    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
       {/* Loop through all projects */}
       {ProjectsData.slice(0, 4).map((project, index) => (
         <SpotlightCard
@@ -25,7 +26,7 @@ const Cards = () => {
           </div>
 
           {/* 📦 Card Content */}
-          <div className="p-5 flex flex-col flex-1 justify-between">
+          <div className="px-6 my-1 flex flex-col flex-1 justify-between">
             {/* 🔹 Title + Icons */}
             {/* 🔹 Title + Icons */}
             <div className="flex items-center justify-between">
@@ -40,9 +41,9 @@ const Cards = () => {
                   target="_blank"
                   className="transition-transform duration-300 "
                 >
-                  <div className="p-2 rounded-full bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-hover)] transition-colors duration-300">
+                  <div className="p-2 rounded-full">
                     <Tooltip key={'Visite Website'} text={'Visite Website'} >
-                      <FaGlobe className="w-6 h-6 text-[var(--color-text)]" />
+                      <FaEarthAmericas className="w-6 h-6 hover:text-blue-500 " />
                     </Tooltip>
                   </div>
                 </NavLink>
@@ -54,7 +55,7 @@ const Cards = () => {
                   className="transition-transform duration-300 "
                 >
                   <Tooltip key={'Code'} text={'Code'} >
-                    <FaGithub className="w-6 h-6 text-[var(--color-text)]" />
+                    <FaGithub className="w-6 h-6 hover:text-blue-500 " />
 
                   </Tooltip>
                 </NavLink>
@@ -98,7 +99,7 @@ const Cards = () => {
 
               <NavLink
                 to="/"
-                className="flex items-center gap-1 text-[var(--color-accent)] hover:underline transition-all duration-300"
+                className="flex items-center   gap-1 text-[var(--color-accent)] hover:underline transition-all duration-300"
               >
                 <h3>View Details</h3>
                 <svg
