@@ -17,7 +17,7 @@ const Quotes = () => {
   if (!randomQuote) return null; // ✅ Prevents "undefined" error before data loads
 
   return (
-    <div className="font-bold sm:p-6 md:p-8 py-6 sm:py-8  text-[var(--color-secondary-text)] rounded-md mt-10 sm:mt-16 md:mt-20 sm:mx-8 md:mx-auto max-w-md sm:max-w-lg md:max-w-3xl text-center transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+    <div className="font-bold px-6 sm:p-6 md:p-8 py-6 sm:py-8  text-[var(--color-secondary-text)] rounded-md mt-10 sm:mt-16 md:mt-20 sm:mx-8 md:mx-auto max-w-md sm:max-w-lg md:max-w-3xl text-center transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]">
       <p className="text-base sm:text-lg md:text-xl italic mb-3 leading-relaxed">
         “{randomQuote.quote}”
       </p>

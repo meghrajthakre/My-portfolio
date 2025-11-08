@@ -3,7 +3,7 @@ import DarkModeButton from "./DarkModeButton";
 import LightModeButton from "./LightModeButton";
 
 const DarkModeToggle = ({ isDark, onClickMethod }) => {
-  const onClickWrapper = () => {
+  const onClickWrapper =  () => {
     // Always trigger from top-right corner of viewport
     const customEventData = {
       x: window.innerWidth,

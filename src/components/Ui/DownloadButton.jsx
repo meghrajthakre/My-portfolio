@@ -1,9 +1,12 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const DownloadButton = () => {
   return (
-    <button
-      className="relative text-sm border-none  font-semibold cursor-pointer rounded-lg 
+    <NavLink
+      to="/resume" // 👉 Change this path if needed (e.g. "/assets/resume.pdf")
+      rel="noopener noreferrer"
+      className="relative text-sm border-none font-semibold cursor-pointer rounded-lg 
       z-[1] bg-transparent group transition-all duration-[500ms] ease-[cubic-bezier(0.77,0,0.175,1)]"
     >
       <div
@@ -35,47 +38,7 @@ const DownloadButton = () => {
         </svg>
         Resume / CV
       </div>
-
-      <div
-        className="absolute h-8 mt-1 inset-0 flex items-center justify-center max-w-[80%] mx-auto 
-        z-[-1] rounded-md transform translate-y-0 
-        transition-all duration-[500ms] ease-[cubic-bezier(0.77,0,0.175,1)] 
-        group-hover:translate-y-full shadow-[inset_0_2px_8px_rgba(0,0,0,0.25)]"
-        style={{
-          backgroundColor: "var(--color-accent)",
-        }}
-      >
-        <svg
-          viewBox="0 0 24 24"
-          width="20"
-          height="20"
-          stroke="var(--color-bg)"
-          strokeWidth="2"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="animate-docs"
-        >
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-      </div>
-
-      <style>
-        {`
-          @keyframes docs {
-            0% { transform: translateY(0%); }
-            50% { transform: translateY(-15%); }
-            100% { transform: translateY(0%); }
-          }
-          .animate-docs polyline,
-          .animate-docs line {
-            animation: docs 1s infinite;
-          }
-        `}
-      </style>
-    </button>
+    </NavLink>
   );
 };
 

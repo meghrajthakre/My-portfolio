@@ -9,6 +9,8 @@ import { AnimatePresence } from "framer-motion";
 import Footer from "./Pages/Footer";
 import SmoothScroll from "./components/Animation/SmoothScroll";
 import ScrollToTop from "./common/ScrollToTop";
+import Quotes from "./common/Quotes";
+import Resume from './Pages/Resume';
 
 function App() {
   const location = useLocation();
@@ -45,8 +47,10 @@ function App() {
             <Route path="/work" element={<Work />} />
             <Route path="/blogs" element={<Blog />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/resume" element={<Resume />} />
           </Routes>
         </AnimatePresence>
+        <Quotes/>
         <Footer />
       </div>
     </div>
