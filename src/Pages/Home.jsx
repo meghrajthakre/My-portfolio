@@ -8,7 +8,6 @@ import HomeBlog from '../components/Ui/Layouts/HomeBlog';
 import HomeBook from '../components/Ui/Layouts/HomeBook';
 import InfiniteSlider from '../components/Animation/InfiniteSlider';
 import SetUpDevlopement from '../components/Ui/Layouts/SetUpDevlopement'
-import Quotes from './../common/Quotes';
 const Home = () => {
   return (
     <div className=' max-w-3xl m-auto px-8'>
