@@ -1,8 +1,10 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const GetInTouchButton = () => {
   return (
-    <button
+    <NavLink
+      to="/contact" // ✅ update this route as per your contact page path
       className="relative border-none font-semibold cursor-pointer rounded-md 
       z-[1] bg-transparent group transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)]
       hover:brightness-110"
@@ -13,7 +15,7 @@ const GetInTouchButton = () => {
         shadow-[inset_0_2px_6px_rgba(0,0,0,0.25)] text-sm "
         style={{
           backgroundColor: "var(--color-accent)",
-          color: "var(--color-bg)", // this keeps your original text color
+          color: "var(--color-bg)", // keeps your original text color
         }}
       >
         <svg
@@ -30,7 +32,7 @@ const GetInTouchButton = () => {
 
         Get in touch
       </div>
-    </button>
+    </NavLink>
   );
 };
 
