@@ -12,7 +12,7 @@ const Resume = () => {
       {/* 🔹 Lazy Loaded Image */}
       <div className="mt-8 mb-8">
         <LazyLoadImage
-          src="src/assets/resume/resume.jpg"
+          src="/resume/resume.jpg"
           alt="My Resume"
           effect="blur" // smooth fade-in blur effect
           className="w-full rounded-lg shadow-md"
