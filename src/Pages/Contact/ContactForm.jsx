@@ -1,7 +1,6 @@
 // src/Pages/Contact/ContactForm.jsx
 import React, { useState } from "react";
-import { sendEmail } from "./contactService"; // ✅ correct import
-
+import { sendEmail } from "./contactServiceData";
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
