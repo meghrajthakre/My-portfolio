@@ -16,7 +16,7 @@ const ProjectDetails = () => {
                 className="text-center mt-20 text-xl text-gray-400"
                 aria-live="polite"
             >
-                Project not found 😕
+                Project not found Brother  😕
             </div>
         );
     }
