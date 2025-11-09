@@ -1,19 +1,20 @@
 import React from "react";
 import SpotlightCard from "./SpotlightCard";
-import { NavLink } from "react-router-dom";
-import Tooltip from './../../../common/Tooltip';
+import { NavLink, useNavigate } from "react-router-dom";
+import Tooltip from "./../../../common/Tooltip";
 import { ProjectsData } from "../../../data/ProjectsData";
-import {  FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { FaEarthAmericas } from "react-icons/fa6";
 
-const Cards = () => {
+const Cards = ({ num }) => {
+
+
   return (
     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
-      {/* Loop through all projects */}
-      {ProjectsData.slice(0, 4).map((project, index) => (
+      {ProjectsData.slice(0, num).map((project, index) => (
         <SpotlightCard
           key={index}
-          className="transition-transform duration-300 bg-[var(--color-card-bg)] flex flex-col"
+          className="transition-transform duration-300 bg-[var(--color-card-bg)] flex flex-col cursor-pointer"
           spotlightColor="rgba(0, 229, 255, 0.2)"
         >
           {/* 📸 Project Image */}
@@ -28,7 +29,6 @@ const Cards = () => {
           {/* 📦 Card Content */}
           <div className="px-6 my-1 flex flex-col flex-1 justify-between">
             {/* 🔹 Title + Icons */}
-            {/* 🔹 Title + Icons */}
             <div className="flex items-center justify-between">
               <h2 className="text-[var(--color-text)] text-sm font-semibold">
                 {project.title}
@@ -39,11 +39,12 @@ const Cards = () => {
                 <NavLink
                   to={project.website}
                   target="_blank"
-                  className="transition-transform duration-300 "
+                  className="transition-transform duration-300"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <div className="p-2 rounded-full">
-                    <Tooltip key={'Visite Website'} text={'Visite Website'} >
-                      <FaEarthAmericas className="w-6 h-6 hover:text-blue-500 " />
+                    <Tooltip text="Visit Website">
+                      <FaEarthAmericas className="w-6 h-6 hover:text-blue-500" />
                     </Tooltip>
                   </div>
                 </NavLink>
@@ -52,16 +53,15 @@ const Cards = () => {
                 <NavLink
                   to={project.github}
                   target="_blank"
-                  className="transition-transform duration-300 "
+                  className="transition-transform duration-300"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <Tooltip key={'Code'} text={'Code'} >
-                    <FaGithub className="w-6 h-6 hover:text-blue-500 " />
-
+                  <Tooltip text="Code">
+                    <FaGithub className="w-6 h-6 hover:text-blue-500" />
                   </Tooltip>
                 </NavLink>
               </div>
             </div>
-
 
             {/* 📝 Description */}
             <span className="text-[var(--color-secondary-text)] text-md mt-1 block">
@@ -74,12 +74,12 @@ const Cards = () => {
             <div className="mt-3">
               <span>Technologies</span>
               <div className="flex gap-4 mt-2">
-                {project.techStack.map((tech) => {
+                {project.techStack.slice(0 , 5).map((tech) => {
                   const TechIcon = tech.Icon;
                   return (
                     <Tooltip key={tech.name} text={tech.name}>
                       <TechIcon
-                        className="w-5 h-5 cursor-pointer transition-transform duration-300 "
+                        className="w-5 h-5 cursor-pointer transition-transform duration-300"
                         style={{ color: tech.color }}
                       />
                     </Tooltip>
@@ -97,9 +97,11 @@ const Cards = () => {
                 </h3>
               </div>
 
+              {/* ✅ Fixed “View Details” link */}
               <NavLink
-                to="/"
-                className="flex items-center   gap-1 text-[var(--color-accent)] hover:underline transition-all duration-300"
+                to={`/projects/${project.id}`}
+                className="flex items-center gap-1 text-[var(--color-accent)] hover:underline transition-all duration-300"
+                onClick={(e) => e.stopPropagation()} // prevent card click override
               >
                 <h3>View Details</h3>
                 <svg
@@ -120,9 +122,7 @@ const Cards = () => {
             </div>
           </div>
         </SpotlightCard>
-
       ))}
-
     </div>
   );
 };

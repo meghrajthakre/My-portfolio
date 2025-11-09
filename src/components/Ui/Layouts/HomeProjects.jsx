@@ -12,7 +12,7 @@ const HomeProjects = () => {
       </div>
 
       {/* 🔹 Cards Section */}
-      <Cards />
+      <Cards num={4}/>
 
       {/* 🔹 Centered Button with NavLink */}
       <div className="flex justify-center py-6">
