@@ -4,15 +4,15 @@ import Cards from "../../components/Ui/Layouts/Cards";
 
 const Projects = () => {
   return (
-    <section className="max-w-5xl mx-auto px-6 sm:px-8 mt-12 mb-16">
+    <section className="max-w-3xl mx-auto px-8 sm:px-8 mt-12 mb-16">
       {/* Header */}
-      <header className="text-center pb-6 border-b border-[var(--color-border)] flex flex-col items-center gap-4">
-        <h2 className="text-4xl font-bold text-[var(--color-heading)]">
+      <header className="text-center pb-6 border-b border-[var(--color-border)] flex flex-col items-center gap-6">
+        <h4 className="text-4xl font-bold text-[var(--color-heading)]">
           Projects
-        </h2>
-        <p className="text-[var(--color-text)] max-w-md">
+        </h4>
+        <span className="text-[var(--color-text)] max-w-md">
           A showcase of my projects across different technologies and domains.
-        </p>
+        </span>
       </header>
 
       {/* Cards Section */}
