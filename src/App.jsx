@@ -14,6 +14,8 @@ const Blog = lazy(() => import("./Pages/Blog"));
 const ProjectDetails = lazy(() => import("./Pages/Projects/ProjectDetails"));
 const Resume = lazy(() => import("./Pages/Resume"));
 import Contact from './Pages/Contact/Contact';
+import Gears from "./Pages/Gears";
+import VscodeSetup from "./Pages/VscodeSetup";
 
 function App() {
   const location = useLocation();
@@ -49,6 +51,8 @@ function App() {
             <Route path="/projects/:id" element={<ProjectDetails />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/gears" element={<Gears />} />
+            <Route path="/vscode-setup" element={<VscodeSetup />} />
           </Routes>
         </AnimatePresence>
       </Suspense>
