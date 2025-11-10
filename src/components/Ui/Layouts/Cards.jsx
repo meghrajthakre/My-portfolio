@@ -1,30 +1,59 @@
-import React from "react";
-import SpotlightCard from "./SpotlightCard";
-import { NavLink, useNavigate } from "react-router-dom";
-import Tooltip from "./../../../common/Tooltip";
-import { ProjectsData } from "../../../data/ProjectsData";
+import React, { memo, Suspense } from "react";
+import { NavLink } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { FaEarthAmericas } from "react-icons/fa6";
+import SpotlightCard from "./SpotlightCard";
+import { ProjectsData } from "../../../data/ProjectsData";
+
+// Lazy load Tooltip to reduce initial bundle size
+const Tooltip = React.lazy(() => import("./../../../common/Tooltip"));
+
+// ✅ Extracted small sub-components
+const ProjectImage = ({ src, title }) => (
+  <div className="w-full h-48 overflow-hidden rounded-2xl mb-3">
+    <img
+      src={src}
+      alt={title}
+      loading="lazy"
+      className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105 will-change-transform"
+    />
+  </div>
+);
+
+const ProjectTechStack = ({ stack }) => (
+  <div className="mt-3">
+    <span>Technologies</span>
+    <div className="flex gap-4 mt-2">
+      {stack.slice(0, 5).map((tech) => {
+        const TechIcon = tech.Icon;
+        return (
+          <Suspense key={tech.name} fallback={<span />}>
+            <Tooltip text={tech.name}>
+              <TechIcon
+                className="w-5 h-5 cursor-pointer transition-transform duration-300"
+                style={{ color: tech.color }}
+              />
+            </Tooltip>
+          </Suspense>
+        );
+      })}
+    </div>
+  </div>
+);
+
+const handleStopPropagation = (e) => e.stopPropagation();
 
 const Cards = ({ num }) => {
-
-
   return (
     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
-      {ProjectsData.slice(0, num).map((project, index) => (
+      {ProjectsData.slice(0, num).map((project) => (
         <SpotlightCard
-          key={index}
+          key={project.id}
           className="transition-transform duration-300 bg-[var(--color-card-bg)] flex flex-col cursor-pointer"
           spotlightColor="rgba(0, 229, 255, 0.2)"
         >
           {/* 📸 Project Image */}
-          <div className="w-full h-48 overflow-hidden rounded-2xl mb-3">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
-            />
-          </div>
+          <ProjectImage src={project.image} title={project.title} />
 
           {/* 📦 Card Content */}
           <div className="px-6 my-1 flex flex-col flex-1 justify-between">
@@ -39,26 +68,26 @@ const Cards = ({ num }) => {
                 <NavLink
                   to={project.website}
                   target="_blank"
-                  className="transition-transform duration-300"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={handleStopPropagation}
                 >
-                  <div className="p-2 rounded-full">
+                  <Suspense fallback={<span />}>
                     <Tooltip text="Visit Website">
-                      <FaEarthAmericas className="w-6 h-6 hover:text-blue-500" />
+                      <FaEarthAmericas className="w-6 h-6 hover:text-blue-500 transition-transform duration-300" />
                     </Tooltip>
-                  </div>
+                  </Suspense>
                 </NavLink>
 
                 {/* 💻 GitHub */}
                 <NavLink
                   to={project.github}
                   target="_blank"
-                  className="transition-transform duration-300"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={handleStopPropagation}
                 >
-                  <Tooltip text="Code">
-                    <FaGithub className="w-6 h-6 hover:text-blue-500" />
-                  </Tooltip>
+                  <Suspense fallback={<span />}>
+                    <Tooltip text="Code">
+                      <FaGithub className="w-6 h-6 hover:text-blue-500 transition-transform duration-300" />
+                    </Tooltip>
+                  </Suspense>
                 </NavLink>
               </div>
             </div>
@@ -71,22 +100,7 @@ const Cards = ({ num }) => {
             </span>
 
             {/* ⚙️ Tech Stack */}
-            <div className="mt-3">
-              <span>Technologies</span>
-              <div className="flex gap-4 mt-2">
-                {project.techStack.slice(0 , 5).map((tech) => {
-                  const TechIcon = tech.Icon;
-                  return (
-                    <Tooltip key={tech.name} text={tech.name}>
-                      <TechIcon
-                        className="w-5 h-5 cursor-pointer transition-transform duration-300"
-                        style={{ color: tech.color }}
-                      />
-                    </Tooltip>
-                  );
-                })}
-              </div>
-            </div>
+            <ProjectTechStack stack={project.techStack} />
 
             {/* ⚡ System Status + View Details */}
             <div className="flex py-6 items-center justify-between">
@@ -97,11 +111,11 @@ const Cards = ({ num }) => {
                 </h3>
               </div>
 
-              {/* ✅ Fixed “View Details” link */}
+              {/* ✅ View Details link */}
               <NavLink
                 to={`/projects/${project.id}`}
+                onClick={handleStopPropagation}
                 className="flex items-center gap-1 text-[var(--color-accent)] hover:underline transition-all duration-300"
-                onClick={(e) => e.stopPropagation()} // prevent card click override
               >
                 <h3>View Details</h3>
                 <svg
@@ -127,4 +141,4 @@ const Cards = ({ num }) => {
   );
 };
 
-export default Cards;
+export default memo(Cards);

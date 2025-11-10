@@ -1,10 +1,5 @@
-import axios from "axios";
-import React, { useState } from "react";
 import ContactForm from "./ContactForm";
 import ContactHeader from "./ContactHeader";
-
-
-
 
 const Contact = () => {
 

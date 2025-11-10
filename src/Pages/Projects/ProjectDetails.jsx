@@ -210,7 +210,7 @@ const ProjectDetails = () => {
                         })}
                     </div>
                 </section>
-                    {/* Key Challenges */}
+                {/* Key Challenges */}
 
                 <section className="mt-8 space-y-6">
                     <div>
