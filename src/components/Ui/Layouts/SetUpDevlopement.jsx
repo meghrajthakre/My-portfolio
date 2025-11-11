@@ -30,10 +30,10 @@ const SetUpDevelopment = () => {
     <div className="mt-8 space-y-8">
       {/* Header */}
       <div className="flex flex-col">
-        <h3 className="text-sm font-medium text-[var(--color-muted)] uppercase tracking-wide">
+        <span className="text-sm font-medium text-[var(--color-muted)]  tracking-wide">
           Development
-        </h3>
-        <h2 className="text-2xl font-bold text-[var(--color-text)]">Setup</h2>
+        </span>
+        <h2 className="text-3xl font-bold text-[var(--color-text)]">Setup</h2>
       </div>
 
       {/* Cards */}
