@@ -11,12 +11,12 @@ const TechBadge = ({ name, Icon, link, color }) => (
     rel="noopener noreferrer"
     className="text-sm flex items-center gap-1 
       bg-[var(--color-icons-bg)] text-[var(--color-text)]
-      px-2 py-1 tracking-tight rounded-sm border border-dashed 
+      px-2 py-[2px] tracking-tight rounded-sm border border-dashed 
       border-[var(--color-muted)] font-bold transition-all duration-300
       hover:scale-105 hover:bg-[var(--color-secondary-bg)]"
   >
     <Icon
-      className="w-[18px] h-[18px] flex-shrink-0"
+      className="w-[15px] h-[15px] flex-shrink-0"
       style={{ color: color }}
     />
     {name}
