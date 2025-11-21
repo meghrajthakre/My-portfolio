@@ -1,6 +1,7 @@
 // src/Pages/Contact/ContactForm.jsx
 import React, { useState } from "react";
 import { sendEmail } from "./contactServiceData";
+
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -34,6 +35,7 @@ const ContactForm = () => {
   return (
     <div className="mt-6 mb-16 px-4 md:px-20">
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        
         {/* Name & Phone */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-5 w-full">
           <div className="flex flex-col gap-2 w-full sm:w-1/2">
@@ -50,6 +52,7 @@ const ContactForm = () => {
               placeholder="Enter Your Full Name"
               className="px-4 py-2 text-sm rounded-md border border-dashed outline-none 
               border-[var(--color-border)] bg-[var(--color-card-bg)] text-[var(--color-text)]
+              placeholder:text-[var(--color-secondary-text)] dark:placeholder:text-[var(--color-secondary-text)]
               hover:border-[var(--color-text)] focus:border-[var(--color-text)]
               transition-colors duration-300"
             />
@@ -68,6 +71,7 @@ const ContactForm = () => {
               placeholder="+1 (123) xxxx-xxxx"
               className="px-4 py-2 text-sm rounded-md border border-dashed outline-none 
               border-[var(--color-border)] bg-[var(--color-card-bg)] text-[var(--color-text)]
+              placeholder:text-[var(--color-secondary-text)] dark:placeholder:text-[var(--color-secondary-text)]
               hover:border-[var(--color-text)] focus:border-[var(--color-text)]
               transition-colors duration-300"
             />
@@ -89,6 +93,7 @@ const ContactForm = () => {
             placeholder="Enter your email"
             className="px-4 py-2 text-sm rounded-md border border-dashed outline-none 
             border-[var(--color-border)] bg-[var(--color-card-bg)] text-[var(--color-text)]
+            placeholder:text-[var(--color-secondary-text)] dark:placeholder:text-[var(--color-secondary-text)]
             hover:border-[var(--color-text)] focus:border-[var(--color-text)]
             transition-colors duration-300"
           />
@@ -108,7 +113,8 @@ const ContactForm = () => {
             placeholder="Tell me about your project or just say hi..."
             rows="5"
             className="px-4 py-2 text-sm rounded-md border border-dashed outline-none 
-            border-[var(--color-border)] bg-[var(--color-card-bg)] text-[var(--color-text)] resize-none
+            border-[var(--color-border)] bg-[var(--color-card-bg)] resize-none
+            placeholder:text-[var(--color-secondary-text)] dark:placeholder:text-[var(--color-secondary-text)]
             hover:border-[var(--color-text)] focus:border-[var(--color-text)]
             transition-colors duration-300"
           />
