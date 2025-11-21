@@ -1,9 +1,24 @@
 import React from "react";
 
 const LightModeButton = () => {
+  // Create audio once (no re-creation on every click)
+  const clickSound = new Audio("/audio/mouse-click-290204.mp3");
+
+  // Optional: control volume
+  clickSound.volume = 0.5;
+
+  // Function to play sound instantly
+  const playClickSound = () => {
+    clickSound.currentTime = 0; // rewind sound for instant replay
+    clickSound.play();
+  };
+
+
+
   return (
     <div>
       <button
+        onClick={playClickSound}
         className="
           p-3 rounded-xl bg-[#0d0d0d] text-white 
           shadow-[inset_0_2px_6px_rgba(255,255,255,0.06)]
