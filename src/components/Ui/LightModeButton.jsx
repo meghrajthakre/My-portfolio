@@ -30,13 +30,7 @@ const LightModeButton = () => {
         "
       >
         {/* smooth cool cyan glow on hover */}
-        <span
-          className="
-            absolute inset-0 bg-gradient-to-tr from-cyan-400/25 to-transparent 
-            rounded-xl opacity-0 hover:opacity-100 
-            transition-opacity duration-700 ease-in-out
-          "
-        ></span>
+       
 
         <svg
           className="size-4 text-cyan-400 transition-transform duration-500 ease-in-out hover:-rotate-[25deg]"

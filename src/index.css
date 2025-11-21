@@ -408,3 +408,17 @@ p {
     transform: rotate(360deg);
   }
 }
+
+/* button dark and light */
+@keyframes icon-shake {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-10deg); }
+  40%  { transform: rotate(10deg); }
+  60%  { transform: rotate(-8deg); }
+  80%  { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.icon-shake:hover {
+  animation: icon-shake 0.18s ease-in-out infinite;
+}
