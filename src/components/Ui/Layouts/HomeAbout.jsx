@@ -20,7 +20,7 @@ const HomeAbout = () => {
                     <img
                         src="/Logo/logo (1).webp"
                         alt="Meghraj Thakre logo"
-                        className="object-contain "
+                        className="object-contain  rounded-md"
                     />
                 </div>
 
