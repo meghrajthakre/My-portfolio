@@ -45,11 +45,11 @@ const handleStopPropagation = (e) => e.stopPropagation();
 
 const Cards = ({ num }) => {
   return (
-    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
+    <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 ">
       {ProjectsData.slice(0, num).map((project) => (
         <SpotlightCard
           key={project.id}
-          className="transition-transform duration-300 bg-[var(--color-card-bg)] flex flex-col cursor-pointer"
+          className="border border-1 transition-transform duration-300 bg-[var(--color-card-bg)] flex flex-col cursor-pointer"
           spotlightColor="rgba(0, 229, 255, 0.2)"
         >
           {/* 📸 Project Image */}

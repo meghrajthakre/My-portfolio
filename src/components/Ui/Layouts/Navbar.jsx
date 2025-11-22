@@ -54,7 +54,7 @@ const Navbar = () => {
                 }`
               }
             >
-              Work
+              Component
             </NavLink>
 
             <NavLink
