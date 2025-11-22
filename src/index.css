@@ -409,15 +409,16 @@ p {
 .animate-scroll-left {
   display: flex;
   width: max-content;
-  animation: scroll-left 20s linear infinite;
+  animation: scroll-left 15s linear infinite;
 }
 
 .animate-scroll-right {
   display: flex;
   width: max-content;
-  animation: scroll-right 20s linear infinite;
+  animation: scroll-right 15s linear infinite;
   flex-direction: row-reverse;  /* THIS makes it move right */
 }
+
 .slider:hover .animate-scroll-left,
 .slider-2:hover .animate-scroll-right {
   animation-play-state: paused;

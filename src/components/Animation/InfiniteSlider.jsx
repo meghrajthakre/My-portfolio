@@ -1,21 +1,22 @@
 import React from "react";
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs } from "react-icons/fa";
 import { SiTailwindcss, SiMongodb } from "react-icons/si";
-import { 
-  FaCode, 
-  FaNetworkWired, 
-  FaVideo, 
+import {
+  FaCode,
+  FaNetworkWired,
+  FaVideo,
   FaBullhorn,
   FaTwitter
 } from "react-icons/fa";
 
-import { 
-  SiVscodium, 
-  SiLeetcode, 
+import {
+  SiVscodium,
+  SiLeetcode,
   SiPython,
-
-  SiAdobephotoshop, 
-  SiCanva 
+  SiPostman,
+  SiMongoose,
+  SiAdobephotoshop,
+  SiCanva
 } from "react-icons/si";
 
 
@@ -27,12 +28,14 @@ const skills = [
   { icon: <FaNodeJs className="w-8 h-8 text-green-600" />, name: "NodeJS" },
   { icon: <SiTailwindcss className="w-8 h-8 text-teal-400" />, name: "Tailwind" },
   { icon: <SiMongodb className="w-8 h-8 text-green-500" />, name: "MongoDB" },
+  { icon: <SiMongoose className="w-8 h-8 text-red-600" />, name: "Mongoose" },
+  { icon: <SiPostman className="w-8 h-8 text-orange-500" />, name: "Postman" },
 ];
 const skills2 = [
   { icon: <SiVscodium className="w-7 h-7 text-blue-500" />, name: "VS Code" },
   { icon: <SiLeetcode className="w-7 h-7 text-orange-500" />, name: "DSA" },
   { icon: <FaNetworkWired className="w-7 h-7 text-blue-600" />, name: "Networking" },
-    { icon: <SiPython className="w-8 h-8 text-yellow-500" />, name: "Python" },
+  { icon: <SiPython className="w-8 h-8 text-yellow-500" />, name: "Python" },
 
   { icon: <FaVideo className="w-7 h-7 text-red-500" />, name: "Video Editing" },
   { icon: <SiCanva className="w-7 h-7 text-purple-500" />, name: "Canva" },
@@ -69,7 +72,7 @@ const InfiniteSlider = () => {
           {[...skills2, ...skills2].map((skill, idx) => (
             <div
               key={idx}
-              className="flex flex-col items-center justify-center w-20 flex-shrink-0"
+              className="flex flex-col items-center justify-center text-center w-20 flex-shrink-0"
             >
               {skill.icon}
               <span className="text-xs mt-2">{skill.name}</span>
