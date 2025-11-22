@@ -418,7 +418,10 @@ p {
   animation: scroll-right 20s linear infinite;
   flex-direction: row-reverse;  /* THIS makes it move right */
 }
-
+.slider:hover .animate-scroll-left,
+.slider-2:hover .animate-scroll-right {
+  animation-play-state: paused;
+}
 
 
 @keyframes spin-slow {

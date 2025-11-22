@@ -10,7 +10,7 @@ const Tooltip = React.lazy(() => import("./../../../common/Tooltip"));
 
 // ✅ Extracted small sub-components
 const ProjectImage = ({ src, title }) => (
-  <div className="w-full h-48 overflow-hidden rounded-2xl mb-3">
+  <div className="w-full h-48 overflow-hidden  mb-3">
     <img
       src={src}
       alt={title}
