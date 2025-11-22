@@ -90,7 +90,7 @@ const ProjectDetails = () => {
 
                     {/* Links */}
                     <nav
-                        className="flex items-center gap-6"
+                        className="flex items-center gap-4"
                         aria-label="Project external links"
                     >
                         <Tooltip text="Visit Website">
@@ -98,13 +98,13 @@ const ProjectDetails = () => {
                                 href={website}
                                 target="_blank"
                                 rel="noopener noreferrer external"
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg dashed
-                  bg-[var(--color-card-bg)] text-[var(--color-text)] font-medium
-                  hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)]
-                  transition-all duration-300 shadow-sm"
+                                className="flex items-center gap-2 px-2 py-1 rounded-lg dashed
+                                    bg-[var(--color-card-bg)] text-[var(--color-text)] font-medium
+                                    hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)]
+                                    transition-all duration-300 shadow-sm"
                                 aria-label="Visit live website"
                             >
-                                <FaEarthAmericas className="text-xl" />
+                                <FaEarthAmericas className="text-sm" />
                                 <span>Live Demo</span>
                             </a>
                         </Tooltip>
@@ -114,13 +114,13 @@ const ProjectDetails = () => {
                                 href={github}
                                 target="_blank"
                                 rel="noopener noreferrer external"
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg dashed
-                  bg-[var(--color-card-bg)] text-[var(--color-text)] font-medium
+                                className="flex items-center gap-2 px-2 py-1 rounded-lg dashed
+                  bg-[var(--color-card-bg)] text-[var(--color-text)] text-medium
                   hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)]
                   transition-all duration-300 shadow-sm"
                                 aria-label="View source code on GitHub"
                             >
-                                <FaGithub className="text-xl" />
+                                <FaGithub className="text-sm" />
                                 <span>Source Code</span>
                             </a>
                         </Tooltip>

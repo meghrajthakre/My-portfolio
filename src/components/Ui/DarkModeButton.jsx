@@ -20,8 +20,7 @@ const DarkModeButton = () => {
         className="
           p-3 rounded-md bg-[#f5f5f5] text-[#0d0d0d] 
           shadow-[inset_0_2px_6px_rgba(0,0,0,0.08)]
-          hover:shadow-[inset_0_3px_8px_rgba(0,0,0,0.12)]
-          active:shadow-[inset_0_4px_10px_rgba(0,0,0,0.18)]
+         hover:shadow-[inset_0_4px_12px_rgba(0,0,0,0.18)]
           cursor-pointer transition-all duration-1000 ease-in-out
           relative overflow-hidden 
         "

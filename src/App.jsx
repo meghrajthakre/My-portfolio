@@ -16,6 +16,7 @@ const Resume = lazy(() => import("./Pages/Resume"));
 import Contact from './Pages/Contact/Contact';
 import Gears from "./Pages/Gears";
 import VscodeSetup from "./Pages/VscodeSetup";
+import BackToTop from "./components/Ui/BackToTop";
 
 function App() {
   const location = useLocation();
@@ -56,7 +57,7 @@ function App() {
           </Routes>
         </AnimatePresence>
       </Suspense>
-
+        <BackToTop/>
       <Quotes />
       <Footer />
     </div>
