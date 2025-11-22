@@ -2,7 +2,7 @@ import React from "react";
 
 const LightModeButton = () => {
   // Create audio once (no re-creation on every click)
-  const clickSound = new Audio("public/audio/click.mp3");
+  const clickSound = new Audio("public/audio/computer-mouse-click-352734.mp3");
 
   // Optional: control volume
   clickSound.volume = 0.5;
