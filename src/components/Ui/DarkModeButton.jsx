@@ -2,7 +2,7 @@ import React from "react";
 
 const DarkModeButton = () => {
   // Create audio once (no re-creation on every click)
-  const clickSound = new Audio("public/audio/clicke.wav");
+  const clickSound = new Audio("public/audio/click.mp3");
 
   // Optional: control volume
   clickSound.volume = 0.5;
