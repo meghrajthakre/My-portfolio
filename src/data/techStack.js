@@ -31,11 +31,5 @@ export const techStack = [
     Icon: SiGreensock,
     link: "https://greensock.com/gsap/",
     color: "#88CE02",
-  },
-  {
-    name: "Framer Motion",
-    Icon: SiFramer,
-    link: "https://www.framer.com/motion/",
-    color: "#E829F7",
-  },
+  }
 ];

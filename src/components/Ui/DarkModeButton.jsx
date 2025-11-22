@@ -18,7 +18,7 @@ const DarkModeButton = () => {
       <button
       onClick={playClickSound}
         className="
-          p-3 rounded-xl bg-[#f5f5f5] text-[#0d0d0d] 
+          p-3 rounded-md bg-[#f5f5f5] text-[#0d0d0d] 
           shadow-[inset_0_2px_6px_rgba(0,0,0,0.08)]
           hover:shadow-[inset_0_3px_8px_rgba(0,0,0,0.12)]
           active:shadow-[inset_0_4px_10px_rgba(0,0,0,0.18)]
@@ -31,10 +31,10 @@ const DarkModeButton = () => {
 
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="size-4 text-yellow-500 transition-transform duration-500 ease-in-out hover:rotate-[25deg]"
+          className="size-4  transition-transform duration-500 ease-in-out hover:rotate-[50deg]"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="currentColor"
+          stroke="black"
           strokeWidth="1.8"
         >
           <path

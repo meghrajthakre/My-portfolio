@@ -39,24 +39,24 @@ const Introduction = () => {
         </div>
 
         {/* Heading */}
-        <h1 className="pt-8 text-[34px] text-[var(--color-text)] leading-tight">
+        <h1 className="pt-8 text-[32px] text-[var(--color-text)] leading-tight">
           Hi, I’m Meghraj
-          <span className="px-2">—</span>
+          <span className="px-1">—</span>
           <span className="text-[var(--color-secondary-text)]">
-            I Make Software for the Web.
+           A Full Stack web developer.
           </span>
         </h1>
 
         {/* Description */}
-        <p className="mt-4 pr-2 tracking-tight flex gap-2 flex-wrap items-center text-base md:text-lg text-[var(--color-muted)]">
+        <p className="mt-4 pr-2  flex gap-2 flex-wrap items-center text-base md:text-lg text-[var(--color-muted)]">
           My toolkit?&nbsp;&nbsp;&nbsp;
-          {techStack.slice(0, 5).map((tech) => (
+          {techStack.slice(0, 4).map((tech) => (
             <React.Fragment key={tech.name}>
               <TechBadge {...tech} />
             </React.Fragment>
           ))}
           and a bit of&nbsp;
-          <TechBadge {...techStack[5]} />
+          <TechBadge {...techStack[4]} />
           magic to make things move just right — a developer who believes code
           is just another form of creativity. Mixing logic, motion, and design
           into something users actually enjoy using.

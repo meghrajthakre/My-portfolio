@@ -82,7 +82,7 @@ const SocialMediaicons = () => {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center md:justify-start gap-5">
+    <div className="flex flex-wrap justify-center md:justify-start gap-4">
       {icons.map(({ href, label, svg }) => (
         <div key={label} className="relative group">
           <a

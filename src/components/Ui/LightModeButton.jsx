@@ -20,7 +20,7 @@ const LightModeButton = () => {
       <button
         onClick={playClickSound}
         className="
-          p-3 rounded-xl bg-[#0d0d0d] text-white 
+          p-3 rounded-md bg-[#0d0d0d] text-white 
           shadow-[inset_0_2px_6px_rgba(255,255,255,0.06)]
           hover:shadow-[inset_0_3px_8px_rgba(255,255,255,0.1)]
           active:shadow-[inset_0_4px_10px_rgba(255,255,255,0.15)]
