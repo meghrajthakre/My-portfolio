@@ -25,7 +25,7 @@ const LightModeButton = () => {
           hover:shadow-[inset_0_3px_8px_rgba(255,255,255,0.1)]
           active:shadow-[inset_0_4px_10px_rgba(255,255,255,0.15)]
           transition-all duration-500 ease-in-out
-          active:scale-110 hover:scale-105
+          active:scale-110 
           hover:bg-[#1a1a1a] relative overflow-hidden cursor-pointer
         "
       >

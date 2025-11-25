@@ -47,9 +47,9 @@ const Navbar = () => {
             <NavLink
               to="/work"
               className={({ isActive }) =>
-                `transition-all duration-300 ease-in-out text-sm sm:text-base ${
+                `transition-all duration-300  ease-in-out text-sm sm:text-base ${
                   isActive
-                    ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
+                    ? "underline decoration-2 font-semibold underline-offset-4 text-[var(--color-accent)]"
                     : "hover:underline hover:decoration-2 hover:underline-offset-4"
                 }`
               }
@@ -62,7 +62,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `transition-all duration-300 ease-in-out text-sm sm:text-base ${
                   isActive
-                    ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
+                    ? "underline decoration-2 font-semibold underline-offset-4 text-[var(--color-accent)]"
                     : "hover:underline hover:decoration-2 hover:underline-offset-4"
                 }`
               }
@@ -75,7 +75,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `transition-all duration-300 ease-in-out text-sm sm:text-base ${
                   isActive
-                    ? "underline decoration-2 underline-offset-4 text-[var(--color-accent)]"
+                    ? "underline decoration-2 font-semibold underline-offset-4 text-[var(--color-accent)]"
                     : "hover:underline hover:decoration-2 hover:underline-offset-4"
                 }`
               }

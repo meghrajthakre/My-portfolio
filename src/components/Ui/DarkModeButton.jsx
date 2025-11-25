@@ -18,11 +18,13 @@ const DarkModeButton = () => {
       <button
       onClick={playClickSound}
         className="
-          p-3 rounded-md bg-[#f5f5f5] text-[#0d0d0d] 
-          shadow-[inset_0_2px_6px_rgba(0,0,0,0.08)]
+          p-3 rounded-md bg-[#ffffff] text-[#0d0d0d] 
+          shadow-[inset_0_1px_6px_rgba(0,0,0,0.1),inset_0_-2px_6px_rgba(255,255,255,0.4)]
+
+
            hover:shadow-[inset_0_4px_12px_rgba(0,0,0,0.18)]
           cursor-pointer transition-all duration-1000 ease-in-out
-          active:scale-110 hover:scale-105
+          active:scale-110 
           relative overflow-hidden 
         "
       >
