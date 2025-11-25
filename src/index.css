@@ -24,7 +24,7 @@
 ============================= */
 :root {
   /* 🌞 Light Mode Colors */
-  --color-bg: #ffffff;
+  --color-bg: #FAFAFA;
   --color-text: #2B313C;
   --color-secondary-text: #909092;
   --color-accent: #000000;
@@ -89,7 +89,7 @@
 ============================= */
 :root.dark {
   --color-bg: black;
-  --color-text: #ffffff;
+  --color-text: #E0E2E6;
   --color-secondary-text: #909092;
   --color-accent: #ffffff;
   --color-muted: #737373;
