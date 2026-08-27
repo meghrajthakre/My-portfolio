@@ -42,7 +42,10 @@ const Gears = () => {
                     hover:bg-[var(--color-secondary-bg)]
                     transition-all duration-300 hover:scale-[1.02]"
                   >
-                    <Icon className="text-xl text-[var(--color-accent)] flex-shrink-0" />
+                    {React.createElement(Icon, {
+                      className: "text-xl text-[var(--color-accent)] flex-shrink-0",
+                      "aria-hidden": true,
+                    })}
                     <div>
                       <h3 className="font-medium">{name}</h3>
                       {specs && (

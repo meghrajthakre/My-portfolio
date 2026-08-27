@@ -43,6 +43,15 @@ const ProjectTechStack = ({ stack }) => (
 
 const handleStopPropagation = (e) => e.stopPropagation();
 
+const ExternalProjectLink = ({ href, label, children }) => {
+  if (!href || href === "#") return null;
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" onClick={handleStopPropagation} aria-label={label}>
+      {children}
+    </a>
+  );
+};
+
 const Cards = ({ num }) => {
   return (
     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 ">
@@ -65,30 +74,22 @@ const Cards = ({ num }) => {
 
               <div className="flex items-center gap-2">
                 {/* 🌐 Website */}
-                <NavLink
-                  to={project.website}
-                  target="_blank"
-                  onClick={handleStopPropagation}
-                >
+                <ExternalProjectLink href={project.website} label={`Visit ${project.title} website`}>
                   <Suspense fallback={<span />}>
                     <Tooltip text="Visit Website">
                       <FaEarthAmericas className="w-6 h-6 hover:text-blue-500 transition-transform duration-300" />
                     </Tooltip>
                   </Suspense>
-                </NavLink>
+                </ExternalProjectLink>
 
                 {/* 💻 GitHub */}
-                <NavLink
-                  to={project.github}
-                  target="_blank"
-                  onClick={handleStopPropagation}
-                >
+                <ExternalProjectLink href={project.github} label={`View ${project.title} source code`}>
                   <Suspense fallback={<span />}>
                     <Tooltip text="Code">
                       <FaGithub className="w-6 h-6 hover:text-blue-500 transition-transform duration-300" />
                     </Tooltip>
                   </Suspense>
-                </NavLink>
+                </ExternalProjectLink>
               </div>
             </div>
 

@@ -15,10 +15,11 @@ const TechBadge = ({ name, Icon, link, color }) => (
       border-[var(--color-muted)] font-bold transition-all duration-300
       hover:scale-105 hover:bg-[var(--color-secondary-bg)]"
   >
-    <Icon
-      className="w-[15px] h-[15px] flex-shrink-0"
-      style={{ color: color }}
-    />
+    {React.createElement(Icon, {
+      className: "w-[15px] h-[15px] flex-shrink-0",
+      style: { color },
+      "aria-hidden": true,
+    })}
     {name}
   </a>
 );

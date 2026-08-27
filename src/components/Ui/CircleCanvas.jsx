@@ -1,37 +1,53 @@
-import React, { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const CircleCanvas = ({ isDark }) => {
   const canvasRef = useRef(null);
-  const circleCenter = useRef({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  });
+  const circleCenter = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   const animationFrameId = useRef(null);
 
-  // 🧠 Helper to update canvas size properly (with DPR)
-  const resizeCanvas = () => {
+  const startAnimation = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = canvas.getContext("2d");
-    const dpr = window.devicePixelRatio || 1;
+    const targetRadius = Math.hypot(window.innerWidth, window.innerHeight);
+    let startTime;
 
-    // update canvas size for HDPI displays
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
+    const render = (timestamp) => {
+      startTime ??= timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / 800, 1);
+      const eased = progress < 0.5
+        ? 4 * progress ** 3
+        : 1 - ((-2 * progress + 2) ** 3) / 2;
 
-    ctx.setTransform(1, 0, 0, 1, 0, 0); // reset any scale
-    ctx.scale(dpr, dpr);
-  };
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.arc(circleCenter.current.x, circleCenter.current.y, targetRadius * eased, 0, 2 * Math.PI);
+      ctx.fillStyle = isDark ? "#fff" : "#111";
+      ctx.fill();
+
+      if (progress < 1) animationFrameId.current = requestAnimationFrame(render);
+    };
+
+    cancelAnimationFrame(animationFrameId.current);
+    animationFrameId.current = requestAnimationFrame(render);
+  }, [isDark]);
 
   useEffect(() => {
+    const resizeCanvas = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-    window.addEventListener("scroll", resizeCanvas); // ✅ Fix scroll issue too
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      window.removeEventListener("scroll", resizeCanvas);
-    };
+    return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 
   useEffect(() => {
@@ -39,68 +55,18 @@ const CircleCanvas = ({ isDark }) => {
       circleCenter.current = event.detail;
       startAnimation();
     };
-
     window.addEventListener("darkModeToggle", handleToggle);
     return () => window.removeEventListener("darkModeToggle", handleToggle);
-  }, [isDark]);
+  }, [startAnimation]);
 
-  const startAnimation = () => {
-    const ctx = canvasRef.current.getContext("2d");
-    const targetRadius = Math.sqrt(
-      window.innerWidth ** 2 + window.innerHeight ** 2
-    );
-    let startTime = null;
-    const duration = 1200; // smoother transition
-
-    const render = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const t = Math.min(elapsed / duration, 1);
-
-      // ease-in-out cubic
-      const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      const currentRadius = targetRadius * eased;
-
-      // clear canvas each frame
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-      // draw expanding circle
-      ctx.beginPath();
-      ctx.arc(
-        circleCenter.current.x,
-        circleCenter.current.y,
-        currentRadius,
-        0,
-        2 * Math.PI
-      );
-      ctx.fillStyle = isDark ? "#fff" : "#111";
-      ctx.fill();
-
-      if (elapsed < duration) {
-        animationFrameId.current = requestAnimationFrame(render);
-      } else {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-    };
-
-    cancelAnimationFrame(animationFrameId.current);
-    animationFrameId.current = requestAnimationFrame(render);
-  };
+  useEffect(() => () => cancelAnimationFrame(animationFrameId.current), []);
 
   return (
     <canvas
       ref={canvasRef}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        zIndex: -1,
-        pointerEvents: "none",
-        background: isDark ? "#111" : "#fff",
-        transition: "background 1s ease-in-out",
-      }}
+      aria-hidden="true"
+      className="fixed inset-0 -z-10 h-screen w-screen pointer-events-none"
+      style={{ background: isDark ? "#111" : "#fff", transition: "background 0.8s ease-in-out" }}
     />
   );
 };

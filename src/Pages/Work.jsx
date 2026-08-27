@@ -1,11 +1,14 @@
-import React from 'react'
-import Transition from '../transition/Transition'
-const Work = () => {
-  return (
-    <div className='mx-auto max-w-3xl px-8 py-14'>
-      Work Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque mollitia ullam eveniet fugit incidunt ab voluptate provident. Facilis ex in at eaque magnam, similique aspernatur blanditiis quibusdam sed. Odit, sint consequuntur? Earum, atque mollitia sequi ab ex fuga, error, natus deleniti delectus dolores magnam exercitationem sit totam officia dolore aliquam recusandae eveniet eaque possimus. Accusamus, provident? Perspiciatis consectetur excepturi rerum ipsa perferendis, qui fuga quia libero nihil corporis a saepe soluta in. Recusandae sunt fugit accusantium unde similique qui expedita voluptatum, reprehenderit veritatis laborum atque necessitatibus itaque nemo ducimus eligendi, non sit aperiam illo odit! Voluptatem sapiente doloremque quae facere assumenda voluptatum deleniti iure dicta fuga! Nobis voluptate tempore, ratione accusantium aliquid saepe incidunt molestiae iure. Vero nobis odit, ipsam, voluptate at praesentium perferendis autem explicabo eius sit quos qui alias dolorem minima iusto maiores culpa soluta id, architecto illo consectetur magnam neque animi enim. Rem nobis culpa accusamus ab temporibus, voluptas obcaecati consectetur voluptates harum cupiditate delectus magnam asperiores laudantium hic quibusdam atque totam dolorem tempora. Repellat minus temporibus cum aliquam beatae laudantium deleniti doloribus minima vitae nihil ipsum, quidem ab accusantium vel, id reprehenderit iste provident exercitationem vero dolor mollitia deserunt! Illo a aperiam quis placeat non ea consequuntur fugit, assumenda nesciunt aut nostrum itaque temporibus optio doloribus ullam dolorem dolores harum voluptatem sequi veritatis sunt. Numquam voluptatem cupiditate illo pariatur fugit temporibus repellat unde iusto voluptates minus accusantium perferendis dicta et doloremque ullam modi accusamus quam consectetur similique sapiente, porro inventore dignissimos? Cumque ratione voluptatem ipsam dolore quis nostrum exercitationem sed est ipsa eveniet explicabo quos a officia vitae quibusdam, odit, porro, molestias quae quisquam. Debitis ducimus voluptatem explicabo, natus nemo expedita minus, voluptate, enim saepe voluptates vitae dolore praesentium blanditiis tenetur aperiam optio nulla assumenda. Excepturi adipisci optio autem unde pariatur est sapiente nesciunt nihil omnis, minima temporibus hic delectus similique natus, sunt fugiat? Soluta veniam in temporibus voluptate minus fugiat dolore tempore doloribus laboriosam culpa doloremque cupiditate unde cumque repellendus, ducimus corporis officia recusandae rem aperiam dolorum, dicta quaerat amet modi. Consectetur, ea nostrum ducimus inventore necessitatibus quisquam rem neque, nulla non quo, soluta quaerat ipsum veniam quos quasi aliquid iusto quis laboriosam exercitationem! Ex, quasi! Voluptatum nesciunt blanditiis possimus vero magni, expedita quia fuga nobis, animi autem dolorum error explicabo quae eveniet atque rem? In tempora officia id pariatur ad distinctio adipisci optio ratione esse reprehenderit molestiae accusantium necessitatibus aut illum, quas sunt corporis, quam, placeat doloribus? Quidem officia, esse delectus praesentium, maiores ea ipsam voluptatem dolorem, cupiditate nulla dolorum illo sint. Dolorem, blanditiis expedita necessitatibus architecto aut sit quis similique debitis adipisci nemo quia placeat fuga nobis culpa dolorum a vitae fugiat nisi eligendi consequatur voluptates cupiditate facilis nihil. Quibusdam, quisquam, fuga aliquam quam eius, vitae minima ipsam maiores cumque numquam odit delectus autem. Eum, ipsum sapiente dolores, voluptates labore temporibus vitae cum dolorem illo aspernatur vel impedit blanditiis dolorum minima nulla suscipit accusantium explicabo corporis animi error autem eos quasi assumenda. Adipisci voluptas iure ipsum nostrum blanditiis laboriosam eius quis, repudiandae recusandae?
-    </div>
-  )
-}
+import { Link } from "react-router-dom";
 
-export default Transition(Work)
+const Work = () => (
+  <main className="mx-auto max-w-3xl min-h-[60vh] px-8 py-14">
+    <p className="text-sm text-[var(--color-secondary-text)]">Work</p>
+    <h1 className="mt-2 text-4xl">Building useful digital experiences.</h1>
+    <p className="mt-5 max-w-xl text-[var(--color-secondary-text)]">
+      I work across frontend and backend development, with a focus on clear interfaces, maintainable React code, APIs, and thoughtful motion.
+    </p>
+    <Link className="mt-6 inline-block underline underline-offset-4" to="/projects">Explore my projects</Link>
+  </main>
+);
+
+export default Work;

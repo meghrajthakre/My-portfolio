@@ -1,5 +1,4 @@
 import React from "react";
-import Transition from "../../transition/Transition";
 import Cards from "../../components/Ui/Layouts/Cards";
 
 const Projects = () => {
@@ -23,4 +22,5 @@ const Projects = () => {
   );
 };
 
-export default Transition(Projects);
+export default Projects;
+

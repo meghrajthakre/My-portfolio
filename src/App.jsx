@@ -1,42 +1,28 @@
-import React, { useEffect, useState, lazy, Suspense } from "react";
+import React, { lazy, Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import Navbar from "../src/components/Ui/Layouts/Navbar";
+import Navbar from "./components/layout/Navbar";
 import SmoothScroll from "./components/Animation/SmoothScroll";
 import ScrollToTop from "./common/ScrollToTop";
 import Quotes from "./common/Quotes";
 import Footer from "./Pages/Footer";
-import Home from "./Pages/Home";
-import Projects from "./Pages/Projects/Projects";
-// Lazy load pages
+const Home = lazy(() => import("./Pages/Home"));
+const Projects = lazy(() => import("./Pages/Projects/Projects"));
 const Work = lazy(() => import("./Pages/Work"));
 const Blog = lazy(() => import("./Pages/Blog"));
 const ProjectDetails = lazy(() => import("./Pages/Projects/ProjectDetails"));
 const Resume = lazy(() => import("./Pages/Resume"));
-import Contact from './Pages/Contact/Contact';
-import Gears from "./Pages/Gears";
-import VscodeSetup from "./Pages/VscodeSetup";
+const Contact = lazy(() => import("./Pages/Contact/Contact"));
+const Gears = lazy(() => import("./Pages/Gears"));
+const VscodeSetup = lazy(() => import("./Pages/VscodeSetup"));
+const NotFound = lazy(() => import("./Pages/NotFound"));
 import BackToTop from "./components/Ui/BackToTop";
 
 function App() {
   const location = useLocation();
-  const [loader, setLoader] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoader(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="relative">
       {/* 🔹 Loader Blur Effect */}
-      <div
-        style={{ backdropFilter: "blur(10px)" }}
-        className={`fixed inset-0 z-[999] transition-all duration-500 ${
-          loader ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      ></div>
-
       <Navbar />
       <SmoothScroll />
 
@@ -54,6 +40,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/gears" element={<Gears />} />
             <Route path="/vscode-setup" element={<VscodeSetup />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
       </Suspense>

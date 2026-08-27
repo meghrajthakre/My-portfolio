@@ -89,11 +89,11 @@ const ProjectDetails = () => {
                     </div>
 
                     {/* Links */}
-                    <nav
+                    {(website !== "#" || github !== "#") && <nav
                         className="flex items-center gap-4"
                         aria-label="Project external links"
                     >
-                        <Tooltip text="Visit Website">
+                        {website !== "#" && <Tooltip text="Visit Website">
                             <a
                                 href={website}
                                 target="_blank"
@@ -107,9 +107,9 @@ const ProjectDetails = () => {
                                 <FaEarthAmericas className="text-sm" />
                                 <span>Live Demo</span>
                             </a>
-                        </Tooltip>
+                        </Tooltip>}
 
-                        <Tooltip text="View Code">
+                        {github !== "#" && <Tooltip text="View Code">
                             <a
                                 href={github}
                                 target="_blank"
@@ -123,8 +123,8 @@ const ProjectDetails = () => {
                                 <FaGithub className="text-sm" />
                                 <span>Source Code</span>
                             </a>
-                        </Tooltip>
-                    </nav>
+                        </Tooltip>}
+                    </nav>}
                 </div>
 
                 {/* 📖 Full Description */}

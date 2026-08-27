@@ -1,5 +1,4 @@
 import React, { Suspense, lazy } from "react";
-import Transition from "./../transition/Transition";
 import Introduction from "./../components/Ui/Layouts/Introduction";
 import HomeProjects from "../components/Ui/Layouts/HomeProjects";
 import HomeAbout from "../components/Ui/Layouts/HomeAbout";
@@ -31,4 +30,4 @@ const Home = () => {
   );
 };
 
-export default Transition(Home);
+export default Home;

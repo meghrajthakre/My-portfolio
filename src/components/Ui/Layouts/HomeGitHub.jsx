@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Suspense } from "react";
-import Wakatime from "../../Loader/Wakatime";
 
 const GitHubCalendar = React.lazy(() => import("react-github-calendar"));
 
@@ -46,13 +45,13 @@ const HomeGitHub = () => {
         </div>
       ) : (
         <>
-          <span className="text-sm flex gap-1 mt-2 text-[var(--color-text)]">
+          <div className="text-sm flex gap-1 mt-2 text-[var(--color-text)]">
             Total:{" "}
-            <h4 className="font-bold text-md text-[var(--color-text)]">
+            <strong className="font-bold text-md text-[var(--color-text)]">
               {totalContributions}
-            </h4>{" "}
+            </strong>{" "}
             contributions
-          </span>
+          </div>
 
           <div className="mt-3 flex  gap-3 text-sm  text-gray-500 items-baseline  justify-between">
             <h3 className="font-medium  mb-4">
