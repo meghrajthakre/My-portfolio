@@ -24,8 +24,8 @@
 :root {
   /* 🌞 Light Mode Colors */
   --color-bg: #FAFAFA;
-  --color-text: #2B313C;
-  --color-secondary-text: #909092;
+  --color-text: #1d212a;
+  --color-secondary-text: #898282;
   --color-accent: #000000;
   --color-muted: #828282;
   --color-border: #b1b1b1;
@@ -106,8 +106,16 @@
 ============================= */
 * {
   font-family: var(--font-main);
+}
 
+::selection {
+  background-color: #facc15;
+  color: #0a0a0a;
+}
 
+::-moz-selection {
+  background-color: #facc15;
+  color: #0a0a0a;
 }
 
 .min-h-screen {

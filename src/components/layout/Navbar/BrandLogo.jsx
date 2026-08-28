@@ -8,7 +8,7 @@ const BrandLogo = ({ className = "" }) => (
   >
     <title id="brand-logo-title">Meghraj Thakre</title>
 
-    <g fill="#ffffff">
+    <g fill="currentColor">
       <rect x="50" y="50" width="18" height="18" />
       <rect x="122" y="50" width="18" height="18" />
       <rect x="50" y="68" width="18" height="18" />

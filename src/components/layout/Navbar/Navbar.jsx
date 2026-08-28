@@ -40,9 +40,9 @@ const Navbar = () => {
           <NavLink
             to="/"
             aria-label="Go to home page"
-            className="hidden shrink-0 overflow-hidden rounded-sm transition-opacity hover:opacity-80 sm:block"
+            className="block shrink-0 overflow-hidden rounded-sm text-black transition-opacity hover:opacity-80 dark:text-white"
           >
-            <BrandLogo className="h-8 w-auto" />
+            <BrandLogo className="h-7 w-auto sm:h-8" />
           </NavLink>
 
           <div className="ml-auto flex items-center gap-5 sm:gap-6">
@@ -51,7 +51,7 @@ const Navbar = () => {
                 <NavLink
                   key={to}
                   to={to}
-                  className={({ isActive }) => `text-sm font-medium transition-colors duration-200 ${isActive ? "text-[var(--color-text)]" : "text-[var(--color-secondary-text)] hover:text-[var(--color-text)]"}`}
+                  className={({ isActive }) => `text-sm font-medium transition-colors duration-200 hover:text-yellow-400 ${isActive ? "text-[var(--color-text)]" : "text-[var(--color-secondary-text)]"}`}
                 >
                   {label}
                 </NavLink>
