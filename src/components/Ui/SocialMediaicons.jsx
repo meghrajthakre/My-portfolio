@@ -1,11 +1,11 @@
 import React from "react";
+import { FaDiscord } from "react-icons/fa";
 
 const SocialMediaicons = () => {
   const iconClass = `
-    w-6 h-6
+    w-6 h-5
     text-[var(--color-secondary-text)]
-    transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)]
-    group-hover:scale-110 group-hover:text-[var(--color-primary-text)]
+    transition-colors duration-200 group-hover:text-[var(--logo-bg)]
   `;
 
   const icons = [
@@ -66,6 +66,11 @@ const SocialMediaicons = () => {
       ),
     },
     {
+      href: "https://discord.com/app",
+      label: "Discord — meghraj2285",
+      svg: <FaDiscord aria-hidden="true" className={iconClass} />,
+    },
+    {
       href: "mailto:meghrajthakre444@gmail.com",
       label: "Gmail",
       svg: (
@@ -82,7 +87,7 @@ const SocialMediaicons = () => {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center md:justify-start gap-4">
+    <div className="flex flex-nowrap items-center gap-3">
       {icons.map(({ href, label, svg }) => (
         <div key={label} className="relative group">
           <a
@@ -90,14 +95,14 @@ const SocialMediaicons = () => {
             target={href.startsWith("http") ? "_blank" : undefined}
             rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
             aria-label={label}
-            className="flex items-center justify-center"
+            className="flex size-9 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-icons-bg)] shadow-[inset_0_0_0_4px_var(--color-card-bg)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-[var(--logo-bg)]"
           >
             {svg}
           </a>
 
           {/* Tooltip */}
           <span
-            className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 invisible 
+            className="hidden absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 invisible 
                    group-hover:opacity-100 group-hover:visible group-hover:-translate-y-1 
                    text-[var(--color-text)] bg-[var(--color-bg-secondary)] 
                    text-xs px-3 py-1.5 rounded-lg transition-all duration-300 ease-out 
