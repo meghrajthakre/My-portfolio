@@ -31,7 +31,7 @@ const DetailRow = ({ icon, children, onClick, trailingIcon, underlineOnHover = f
       <span className={ICON_CLASS}>
         {createElement(icon, { "aria-hidden": true, size: 18, strokeWidth: 1.7 })}
       </span>
-      <span className={`min-w-0 truncate ${underlineOnHover ? "group-hover:!text-white group-hover:underline group-hover:underline-offset-4" : ""}`}>{children}</span>
+      <span className={`min-w-0 truncate ${underlineOnHover ? "group-hover:!text-[var(--color-accent)] group-hover:underline group-hover:underline-offset-4" : ""}`}>{children}</span>
       {trailingIcon && createElement(trailingIcon, {
         "aria-hidden": true,
         size: 15,
@@ -55,14 +55,16 @@ const ProfileDetails = ({ onCopyEmail, isEmailCopied, onCopyPhone, isPhoneCopied
 
   return (
     <div className="mt-4 grid font-mono text-sm font-medium text-[var(--color-text)] sm:grid-cols-2 sm:text-[15px]">
-      <div className="flex flex-col gap-3  py-4 ">
+      <div className="hidden flex-col gap-3 py-4 sm:flex">
         <DetailRow icon={Code2}>Full Stack Developer</DetailRow>
         <DetailRow icon={GitFork}>Open Source Contributor</DetailRow>
         <DetailRow icon={MapPin}>India</DetailRow>
       </div>
 
       <div className="flex flex-col gap-3  px-4 py-4 ">
-        <DetailRow icon={Clock3}>{indiaTime} <span className="text-[var(--color-secondary-text)]">/ IST</span></DetailRow>
+        <div className="hidden sm:block">
+          <DetailRow icon={Clock3}>{indiaTime} <span className="text-[var(--color-secondary-text)]">/ IST</span></DetailRow>
+        </div>
         <DetailRow icon={Mail} onClick={onCopyEmail} trailingIcon={isEmailCopied ? Check : Copy} underlineOnHover>
           {PROFILE.email}
         </DetailRow>
