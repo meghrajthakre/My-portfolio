@@ -31,7 +31,7 @@ const DetailRow = ({ icon, children, onClick, trailingIcon, underlineOnHover = f
       <span className={ICON_CLASS}>
         {createElement(icon, { "aria-hidden": true, size: 18, strokeWidth: 1.7 })}
       </span>
-      <span className={`min-w-0 truncate ${underlineOnHover ? "group-hover:underline group-hover:underline-offset-4" : ""}`}>{children}</span>
+      <span className={`min-w-0 truncate ${underlineOnHover ? "group-hover:!text-white group-hover:underline group-hover:underline-offset-4" : ""}`}>{children}</span>
       {trailingIcon && createElement(trailingIcon, {
         "aria-hidden": true,
         size: 15,
