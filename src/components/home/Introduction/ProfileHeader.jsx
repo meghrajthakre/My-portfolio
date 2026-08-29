@@ -22,7 +22,7 @@ const ProfileHeader = () => {
 
         <div className="min-w-0">
           <ProfileName name={PROFILE.name} />
-          <div className="mt-1.5 flex items-center text-sm text-[var(--color-secondary-text)] sm:text-lg">
+          <div className="mt-2.5 flex items-center text-sm leading-snug text-[var(--color-secondary-text)] sm:text-base">
             <RotatingRole roles={PROFILE.roles} />
           </div>
         </div>
