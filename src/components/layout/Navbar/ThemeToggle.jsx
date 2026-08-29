@@ -58,7 +58,7 @@ const ThemeToggle = ({ isDark, onToggle }) => {
       type="button"
       onClick={handleClick}
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-      className="relative inline-flex size-10 shrink-0 items-center justify-center rounded-full text-[var(--color-text)] transition-colors duration-300 hover:bg-[var(--color-icons-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] active:scale-90"
+      className="relative inline-flex size-9 shrink-0 items-center justify-center rounded-full text-[var(--color-text)] transition-colors duration-300 hover:bg-[var(--color-icons-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] active:scale-90 sm:size-10"
     >
       <Sun
         aria-hidden="true"

@@ -31,12 +31,22 @@ const Navbar = () => {
     navigate(path);
   };
 
+  const handleThemeSelect = (nextIsDark) => {
+    setIsSearchOpen(false);
+    if (nextIsDark === isDark) return;
+
+    window.dispatchEvent(new CustomEvent("darkModeToggle", {
+      detail: { x: window.innerWidth, y: 0 },
+    }));
+    window.setTimeout(() => setIsDark(nextIsDark), 500);
+  };
+
   return (
     <>
       <CircleCanvas isDark={isDark} />
 
       <header className="sticky top-0 z-50 backdrop-blur-xl">
-        <nav aria-label="Main navigation" className="mx-auto flex h-[60px] w-full max-w-3xl items-center justify-between px-5 sm:px-8">
+        <nav aria-label="Main navigation" className="mx-auto flex h-[60px] w-full max-w-3xl items-center px-2 sm:px-8">
           <NavLink
             to="/"
             aria-label="Go to home page"
@@ -45,34 +55,32 @@ const Navbar = () => {
             <BrandLogo className="h-7 w-auto sm:h-8" />
           </NavLink>
 
-          <div className="ml-auto flex items-center gap-5 sm:gap-6">
-            <div className="flex items-center gap-5 sm:gap-6">
-              {NAV_ITEMS.map(({ label, to }) => (
-                <NavLink
-                  key={to}
-                  to={to}
-                  className={({ isActive }) => `text-sm font-medium transition-colors duration-200 hover:text-yellow-400 ${isActive ? "text-[var(--color-text)]" : "text-[var(--color-secondary-text)]"}`}
-                >
-                  {label}
-                </NavLink>
-              ))}
-            </div>
+          <div className="ml-auto flex items-center gap-2 sm:gap-6">
+            {NAV_ITEMS.map(({ label, to }) => (
+              <NavLink
+                key={to}
+                to={to}
+                className={({ isActive }) => `text-xs font-medium transition-colors duration-200 hover:text-yellow-400 sm:text-sm ${isActive ? "text-[var(--color-text)]" : "text-[var(--color-secondary-text)]"}`}
+              >
+                {label}
+              </NavLink>
+            ))}
+          </div>
 
-            <div className="flex shrink-0 items-center gap-2">
+          <div className="ml-2 flex shrink-0 items-center gap-1 sm:ml-6 sm:gap-2">
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Search pages (Ctrl K)"
-              className="hidden h-8 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-icons-bg)] px-2 text-[var(--color-secondary-text)] transition-colors hover:text-[var(--color-text)] sm:flex"
+              className="flex h-8 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-transparent px-2 text-[var(--color-secondary-text)] transition-colors hover:text-[var(--color-text)]"
             >
               <Search aria-hidden="true" size={16} strokeWidth={2.2} />
-              <span className="flex items-center gap-1">
+              <span className="hidden items-center gap-1 md:flex">
                 <kbd className="rounded border border-[var(--color-border)] bg-[var(--color-card-bg)] px-1 py-0.5 font-sans text-xs leading-none">Ctrl</kbd>
                 <kbd className="rounded border border-[var(--color-border)] bg-[var(--color-card-bg)] px-1 py-0.5 font-sans text-xs leading-none">K</kbd>
               </span>
             </button>
             <ThemeToggle isDark={isDark} onToggle={setIsDark} />
-            </div>
           </div>
         </nav>
       </header>
@@ -82,6 +90,7 @@ const Navbar = () => {
         items={NAV_ITEMS}
         onClose={() => setIsSearchOpen(false)}
         onSelect={handleSelect}
+        onThemeSelect={handleThemeSelect}
       />
     </>
   );
