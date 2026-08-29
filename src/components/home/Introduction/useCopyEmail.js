@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { playCopySound } from "../../../lib/playCopySound";
 
 export const useCopyEmail = (email) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -9,6 +10,7 @@ export const useCopyEmail = (email) => {
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
+      playCopySound();
       setIsCopied(true);
       window.clearTimeout(resetTimer.current);
       resetTimer.current = window.setTimeout(() => setIsCopied(false), 1600);

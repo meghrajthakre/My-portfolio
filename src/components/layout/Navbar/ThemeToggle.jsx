@@ -1,48 +1,7 @@
-import { useRef } from "react";
 import { Moon, Sun } from "lucide-react";
+import { playClickSound } from "../../../lib/playClickSound";
 
 const ThemeToggle = ({ isDark, onToggle }) => {
-  const audioCtxRef = useRef(null);
-
-  const playClickSound = () => {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-
-    if (!audioCtxRef.current) {
-      audioCtxRef.current = new AudioContext();
-    }
-    const ctx = audioCtxRef.current;
-
-    // Two-tone click for more satisfying feedback
-    const duration = 0.08;
-    const sampleRate = ctx.sampleRate;
-    const bufferSize = sampleRate * duration;
-    const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
-    const data = buffer.getChannelData(0);
-
-    // Combine two frequencies for a richer sound
-    for (let i = 0; i < bufferSize; i++) {
-      const t = i / sampleRate;
-      // Main click: 800Hz with fast decay
-      const click = Math.sin(2 * Math.PI * 800 * t) * Math.exp(-t * 50);
-      // Sub click: 400Hz for body
-      const body = Math.sin(2 * Math.PI * 400 * t) * Math.exp(-t * 30) * 0.3;
-      data[i] = (click + body) * 0.7;
-    }
-
-    const source = ctx.createBufferSource();
-    source.buffer = buffer;
-
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0.25, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-
-    source.connect(gain);
-    gain.connect(ctx.destination);
-
-    source.start(ctx.currentTime);
-  };
-
   const handleClick = () => {
     playClickSound();
 
