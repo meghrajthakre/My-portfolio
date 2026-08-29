@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react";
-import Introduction from "./../components/Ui/Layouts/Introduction";
+import Introduction from "../components/home/Introduction";
 import HomeProjects from "../components/Ui/Layouts/HomeProjects";
 import HomeAbout from "../components/Ui/Layouts/HomeAbout";
 import InfiniteSlider from "../components/Animation/InfiniteSlider";

@@ -72,7 +72,7 @@ const Navbar = () => {
               type="button"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Search pages (Ctrl K)"
-              className="flex h-8 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-transparent px-2 text-[var(--color-secondary-text)] transition-colors hover:text-[var(--color-text)]"
+              className="flex h-8 items-center gap-1.5 rounded-full border-0 bg-transparent px-2 text-[var(--color-secondary-text)] transition-colors hover:text-[var(--color-text)] md:border md:border-[var(--color-border)]"
             >
               <Search aria-hidden="true" size={16} strokeWidth={2.2} />
               <span className="hidden items-center gap-1 md:flex">
