@@ -2,7 +2,7 @@ import { createElement, useEffect, useState } from "react";
 import { Check, Clock3, Code2, Copy, GitFork, Mail, MapPin, Phone } from "lucide-react";
 import { PROFILE } from "./profileContent";
 
-const ICON_CLASS = "flex size-9 shrink-0 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-icons-bg)] shadow-[inset_0_0_0_4px_var(--color-card-bg)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-[var(--logo-bg)]";
+const ICON_CLASS = "profile-icon-tile flex size-9 shrink-0 items-center justify-center rounded-lg text-[var(--profile-icon-color)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-[var(--logo-bg)]";
 
 const useIndiaTime = () => {
   const getTime = () => new Intl.DateTimeFormat("en-IN", {

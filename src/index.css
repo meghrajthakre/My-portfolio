@@ -31,6 +31,9 @@
   --color-border: #b1b1b1;
   --color-icons-bg: #F2F2F2;
   --color-card-bg: #ffffff;
+  --profile-icon-border: #F1F1F2;
+  --profile-icon-inner-border: var(--color-border);
+  --profile-icon-color: var(--color-secondary-text);
   --logo-bg: #8EC6FF;
   /* blue for light mode */
   --card-bg: #eaeaea;
@@ -95,10 +98,22 @@
   --color-border: #2a2a2a;
   --color-icons-bg: #2F2F2F;
   --color-card-bg: #171717;
+  --profile-icon-border: #1C1C1E;
+  --profile-icon-inner-border: #39393D;
+  --profile-icon-color: #9F9FA9;
   --logo-bg: #facc15;
   /* yellow for dark mode */
   --card-bg: #0d1117;
 
+}
+
+/* Double-frame icon treatment used throughout the profile intro. */
+.profile-icon-tile {
+  border: 2px solid var(--profile-icon-border);
+  background: var(--color-icons-bg);
+  box-shadow:
+    inset 0 0 0 3px var(--color-card-bg),
+    inset 0 0 0 4px var(--profile-icon-inner-border);
 }
 
 /* =============================

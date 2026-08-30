@@ -4,7 +4,7 @@ import { FaDiscord } from "react-icons/fa";
 const SocialMediaicons = () => {
   const iconClass = `
     w-5 h-5
-    text-black dark:text-white
+    text-[var(--profile-icon-color)]
     transition-colors duration-200 group-hover:text-[var(--logo-bg)]
   `;
 
@@ -95,7 +95,7 @@ const SocialMediaicons = () => {
             target={href.startsWith("http") ? "_blank" : undefined}
             rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
             aria-label={label}
-            className="flex size-9 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-icons-bg)] shadow-[inset_0_0_0_4px_var(--color-card-bg)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-[var(--logo-bg)]"
+            className="profile-icon-tile flex size-9 items-center justify-center rounded-lg transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-[var(--logo-bg)]"
           >
             {svg}
           </a>
