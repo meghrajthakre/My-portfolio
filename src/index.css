@@ -34,6 +34,7 @@
   --profile-icon-border: #F1F1F2;
   --profile-icon-inner-border: var(--color-border);
   --profile-icon-color: var(--color-secondary-text);
+  --profile-icon-hover: #111111;
   --logo-bg: #8EC6FF;
   /* blue for light mode */
   --card-bg: #eaeaea;
@@ -101,6 +102,7 @@
   --profile-icon-border: #1C1C1E;
   --profile-icon-inner-border: #39393D;
   --profile-icon-color: #9F9FA9;
+  --profile-icon-hover: #FFFFFF;
   --logo-bg: #facc15;
   /* yellow for dark mode */
   --card-bg: #0d1117;

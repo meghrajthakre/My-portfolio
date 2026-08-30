@@ -36,7 +36,7 @@ const DetailRow = ({ icon, children, onClick, trailingIcon, underlineOnHover = f
         "aria-hidden": true,
         size: 15,
         strokeWidth: 1.8,
-        className: "shrink-0 text-[var(--color-secondary-text)]",
+        className: "shrink-0 text-[var(--color-secondary-text)] transition-all duration-200 group-hover:scale-110 group-hover:text-[var(--color-accent)]",
       })}
     </>
   );
