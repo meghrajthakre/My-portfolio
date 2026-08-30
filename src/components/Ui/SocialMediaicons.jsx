@@ -3,8 +3,8 @@ import { FaDiscord } from "react-icons/fa";
 
 const SocialMediaicons = () => {
   const iconClass = `
-    w-6 h-5
-    text-[var(--color-secondary-text)]
+    w-5 h-5
+    text-black dark:text-white
     transition-colors duration-200 group-hover:text-[var(--logo-bg)]
   `;
 
