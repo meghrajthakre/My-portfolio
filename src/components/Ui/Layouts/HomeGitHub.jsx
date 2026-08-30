@@ -1,10 +1,30 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 
 const GitHubCalendar = React.lazy(() => import("react-github-calendar"));
+const contributionColors = [
+  "var(--github-level-0)",
+  "var(--github-level-1)",
+  "var(--github-level-2)",
+  "var(--github-level-3)",
+  "var(--github-level-4)",
+];
+
+const formatContributionDate = (date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kolkata",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(date).replaceAll("/", ".");
 
 const HomeGitHub = () => {
   const [totalContributions, setTotalContributions] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [hoveredContribution, setHoveredContribution] = useState(null);
+  const calendarRef = useRef(null);
+  const rangeEnd = new Date();
+  const rangeStart = new Date(rangeEnd);
+  rangeStart.setDate(rangeStart.getDate() - 364);
 
   useEffect(() => {
     const fetchContributions = async () => {
@@ -32,7 +52,7 @@ const HomeGitHub = () => {
   }, []);
 
   return (
-    <div className="py-15 rounded-xl text-white w-full">
+    <div className="py-4 rounded-xl text-[var(--color-text)] w-full">
       <div className="gap-0.5 md:text-left">
         <h3 className="text-base md:text-lg">Featured</h3>
         <h2 className="text-xl mb-1">GitHub Activity</h2>
@@ -45,13 +65,7 @@ const HomeGitHub = () => {
         </div>
       ) : (
         <>
-          <div className="text-sm flex gap-1 mt-2 text-[var(--color-text)]">
-            Total:{" "}
-            <strong className="font-bold text-md text-[var(--color-text)]">
-              {totalContributions}
-            </strong>{" "}
-            contributions
-          </div>
+         
 
           <div className="mt-3 flex  gap-3 text-sm  text-gray-500 items-baseline  justify-between">
             <h3 className="font-medium  mb-4">
@@ -73,13 +87,38 @@ const HomeGitHub = () => {
               </div>
             }
           >
-            <div className="dashed overflow-x-hidden  p-6 text-[var(--color-text)] rounded-lg border-[var(--color-border)]">
+            <div className="github-calendar github-calendar-scroll w-full max-w-full dashed overflow-x-auto rounded-xl border-[var(--color-border)] p-6 text-[var(--github-calendar-muted)] sm:p-7 md:overflow-x-hidden md:py-9">
+              <div ref={calendarRef} className="relative min-w-[636px]">
               <GitHubCalendar
                 username="meghrajthakre"
-                blockSize={9}
-                blockMargin={3}
+                blockSize={10}
+                blockMargin={2}
+                blockRadius={2}
                 fontSize={14}
                 color="text-color"
+                hideTotalCount
+                hideColorLegend
+                renderBlock={(block, activity) => React.cloneElement(block, {
+                  onMouseEnter: (event) => {
+                    const bounds = calendarRef.current?.getBoundingClientRect();
+                    if (!bounds) return;
+                    setHoveredContribution({
+                      activity,
+                      x: event.clientX - bounds.left,
+                      y: event.clientY - bounds.top,
+                    });
+                  },
+                  onMouseMove: (event) => {
+                    const bounds = calendarRef.current?.getBoundingClientRect();
+                    if (!bounds) return;
+                    setHoveredContribution((current) => current && ({
+                      ...current,
+                      x: event.clientX - bounds.left,
+                      y: event.clientY - bounds.top,
+                    }));
+                  },
+                  onMouseLeave: () => setHoveredContribution(null),
+                })}
                 theme={{
                   light: [
                     "#EEEEEE", // 🩶 empty (official GitHub light gray)
@@ -98,6 +137,42 @@ const HomeGitHub = () => {
                 }}
 
               />
+                {hoveredContribution && (
+                  <div
+                    role="tooltip"
+                    className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-[calc(100%+12px)] whitespace-nowrap rounded-lg bg-[var(--color-text)] px-3 py-2 text-xs font-medium text-[var(--color-bg)] shadow-xl"
+                    style={{ left: hoveredContribution.x, top: hoveredContribution.y }}
+                  >
+                    {hoveredContribution.activity.count} {hoveredContribution.activity.count === 1 ? "contribution" : "contributions"} on {formatContributionDate(new Date(`${hoveredContribution.activity.date}T12:00:00`))}
+                    <span className="absolute left-1/2 top-full size-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-[var(--color-text)]" />
+                  </div>
+                )}
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+                  <span>
+                    {totalContributions.toLocaleString("en-US")} contributions, {formatContributionDate(rangeStart)} – {formatContributionDate(rangeEnd)}. Source:{" "}
+                    <a
+                      href="https://github.com/meghrajthakre"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-2 transition-colors hover:text-[var(--color-text)]"
+                    >
+                      GitHub
+                    </a>
+                  </span>
+
+                  <div className="flex items-center gap-1" aria-label="Contribution intensity legend">
+                    <span className="mr-1">Less</span>
+                    {contributionColors.map((color) => (
+                      <span
+                        key={color}
+                        className="size-[14px] rounded-[3px]"
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
+                    <span className="ml-1">More</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </Suspense>
         </>

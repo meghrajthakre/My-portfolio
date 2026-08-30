@@ -14,13 +14,15 @@ const Home = () => {
   return (
     <div className="max-w-3xl m-auto px-8">
       <Introduction />
+      <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
+        <HomeGitHub />
+      </Suspense>
       <HomeProjects />
       <HomeAbout />
       <InfiniteSlider />
 
       {/* 🔹 Lazy-loaded sections */}
       <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
-        <HomeGitHub />
         <HomeBlog />
         <HomeBook />
       </Suspense>
