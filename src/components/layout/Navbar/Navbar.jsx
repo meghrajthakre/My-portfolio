@@ -45,8 +45,8 @@ const Navbar = () => {
     <>
       <CircleCanvas isDark={isDark} />
 
-      <header className="sticky top-0 z-50 backdrop-blur-xl">
-        <nav aria-label="Main navigation" className="mx-auto flex h-[60px] w-full max-w-3xl items-center px-2 sm:px-8">
+      <header className="sticky top-0 z-50 border-b border-[color-mix(in_srgb,var(--color-border)_32%,transparent)] backdrop-blur-xl">
+        <nav aria-label="Main navigation" className="mx-auto flex h-[60px] w-full max-w-3xl items-center border-x border-[color-mix(in_srgb,var(--color-border)_38%,transparent)] px-2 sm:px-8">
           <NavLink
             to="/"
             aria-label="Go to home page"
