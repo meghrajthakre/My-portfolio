@@ -65,21 +65,6 @@ const HomeGitHub = () => {
         </div>
       ) : (
         <>
-         
-
-          <div className="mt-3 flex  gap-3 text-sm  text-gray-500 items-baseline  justify-between">
-            <h3 className="font-medium  mb-4">
-              Total Contributions Overview
-            </h3>
-            <div className="flex items-center gap-1">
-              <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
-              <h3 className="font-medium">
-                This Year
-              </h3>
-            </div>
-
-          </div>
-
           <Suspense
             fallback={
               <div className="flex justify-center mt-5 text-gray-400 text-sm">

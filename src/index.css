@@ -538,3 +538,75 @@ p {
 .icon-shake:hover {
   animation: icon-shake 0.18s ease-in-out infinite;
 }
+
+/* Creative blueprint pattern behind the entire portfolio. */
+.site-grid-background {
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right,
+      transparent calc(50% - 385px),
+      color-mix(in srgb, var(--color-border) 55%, transparent) calc(50% - 384px),
+      color-mix(in srgb, var(--color-border) 55%, transparent) calc(50% - 383px),
+      transparent calc(50% - 382px),
+      transparent calc(50% + 382px),
+      color-mix(in srgb, var(--color-border) 55%, transparent) calc(50% + 383px),
+      color-mix(in srgb, var(--color-border) 55%, transparent) calc(50% + 384px),
+      transparent calc(50% + 385px)),
+    radial-gradient(circle, color-mix(in srgb, var(--color-border) 52%, transparent) 1px, transparent 1.2px),
+    repeating-linear-gradient(135deg,
+      transparent 0,
+      transparent 179px,
+      color-mix(in srgb, var(--logo-bg) 9%, transparent) 180px,
+      transparent 181px,
+      transparent 360px);
+  background-size: auto, 24px 24px, auto;
+  opacity: .72;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+}
+
+.site-grid-background::before,
+.site-grid-background::after {
+  content: "";
+  position: absolute;
+  border: 1px solid color-mix(in srgb, var(--logo-bg) 18%, transparent);
+  border-radius: 999px;
+  opacity: .65;
+}
+
+.site-grid-background::before {
+  top: 9rem;
+  left: calc(50% - 31rem);
+  width: 15rem;
+  height: 15rem;
+  box-shadow: inset 0 0 70px color-mix(in srgb, var(--logo-bg) 5%, transparent);
+}
+
+.site-grid-background::after {
+  right: calc(50% - 29rem);
+  top: 56%;
+  width: 9rem;
+  height: 9rem;
+  border-style: dashed;
+}
+
+@media (max-width: 1024px) {
+  .site-grid-background {
+    background-image:
+      linear-gradient(to right,
+        transparent 23px,
+        color-mix(in srgb, var(--color-border) 48%, transparent) 24px,
+        transparent 25px,
+        transparent calc(100% - 25px),
+        color-mix(in srgb, var(--color-border) 48%, transparent) calc(100% - 24px),
+        transparent calc(100% - 23px)),
+      radial-gradient(circle, color-mix(in srgb, var(--color-border) 48%, transparent) 1px, transparent 1.2px);
+    background-size: auto, 24px 24px;
+  }
+
+  .site-grid-background::before { left: -7rem; }
+  .site-grid-background::after { right: -4rem; }
+}

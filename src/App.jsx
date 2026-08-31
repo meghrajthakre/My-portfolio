@@ -22,9 +22,9 @@ function App() {
   const location = useLocation();
   return (
     <div className="relative">
+      <div className="site-grid-background" aria-hidden="true" />
       {/* 🔹 Loader Blur Effect */}
       <Navbar />
-      <SmoothScroll />
 
       {/* 🔹 Wrap Routes in Suspense for lazy loading fallback */}
       <Suspense fallback={<div className="text-center p-10">Loading...</div>}>
