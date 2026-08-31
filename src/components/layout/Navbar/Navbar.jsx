@@ -76,8 +76,8 @@ const Navbar = () => {
             >
               <Search aria-hidden="true" size={16} strokeWidth={2.2} />
               <span className="hidden items-center gap-1 md:flex">
-                <kbd className="rounded border border-[var(--color-border)] bg-[var(--color-card-bg)] px-1 py-0.5 font-sans text-xs leading-none">Ctrl</kbd>
-                <kbd className="rounded border border-[var(--color-border)] bg-[var(--color-card-bg)] px-1 py-0.5 font-sans text-xs leading-none">K</kbd>
+                <kbd className="rounded border border-[var(--color-border)] bg-[var(--profile-icon-bg)] px-1 py-0.5 font-sans text-xs leading-none">Ctrl</kbd>
+                <kbd className="rounded border border-[var(--color-border)] bg-[var(--profile-icon-bg)] px-1 py-0.5 font-sans text-xs leading-none">K</kbd>
               </span>
             </button>
             <ThemeToggle isDark={isDark} onToggle={setIsDark} />

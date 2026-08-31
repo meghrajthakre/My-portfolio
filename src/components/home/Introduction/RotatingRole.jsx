@@ -18,11 +18,11 @@ const RotatingRole = ({ roles }) => {
   }, [roles.length]);
 
   return (
-    <span className="relative inline-flex h-[3em] w-[160px] items-start overflow-hidden sm:w-[240px]" aria-live="polite">
+    <span className="relative inline-flex h-[1.5em] w-[160px] items-center overflow-hidden sm:w-[240px]" aria-live="polite">
       <AnimatePresence mode="wait" initial={false}>
         <Motion.span
           key={roles[activeIndex]}
-          className="absolute left-0 inline-flex w-full whitespace-normal"
+          className="absolute left-0 inline-flex w-full whitespace-nowrap"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 12 }}
