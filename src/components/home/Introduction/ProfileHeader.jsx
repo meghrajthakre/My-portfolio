@@ -10,7 +10,7 @@ const ProfileHeader = () => {
 
   return (
     <header>
-      <div className="flex items-center gap-4 sm:gap-5">
+      <div className="flex items-center gap-4 sm:gap-6">
         <img
           src={PROFILE.avatar}
           alt={PROFILE.name}
@@ -21,15 +21,15 @@ const ProfileHeader = () => {
           className="size-20 shrink-0 rounded-full object-cover sm:size-28"
         />
 
-        <div className="min-w-0">
+        <div className="flex min-w-0 flex-col justify-center gap-2">
           <ProfileName name={PROFILE.name} />
-          <div className="mt-2.5 flex items-center text-sm leading-snug text-[var(--color-secondary-text)] sm:text-base">
+          <div className="flex min-h-[1.5rem] items-center text-sm leading-snug text-[var(--color-secondary-text)] sm:text-base">
             <RotatingRole roles={PROFILE.roles} />
           </div>
         </div>
       </div>
 
-      <p className="mt-5 max-w-[60ch] text-pretty text-[15px] leading-7 text-[var(--color-secondary-text)] sm:mt-6 sm:text-base">
+      <p className="mt-6 max-w-[60ch] text-pretty text-[15px] leading-7 text-[var(--color-secondary-text)] sm:text-base">
         {PROFILE.bio}
       </p>
 
