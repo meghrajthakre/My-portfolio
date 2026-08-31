@@ -35,6 +35,7 @@
   --profile-icon-inner-border: var(--color-border);
   --profile-icon-color: var(--color-secondary-text);
   --profile-icon-hover: #111111;
+  --profile-icon-bg: #F2F2F2; /* ✅ fixed: was missing in light mode */
   --github-calendar-bg: #ffffff;
   --github-calendar-muted: #57606a;
   --github-level-0: #ebedf0;
@@ -95,7 +96,7 @@
 }
 
 /* =============================
-   🌙 Dark Themeborder 
+   🌙 Dark Theme
 ============================= */
 :root.dark {
   --color-bg: black;
@@ -110,6 +111,7 @@
   --profile-icon-inner-border: #39393D;
   --profile-icon-color: #9F9FA9;
   --profile-icon-hover: #FFFFFF;
+  --profile-icon-bg: #27272A;
   --github-calendar-bg: #0d1117;
   --github-calendar-muted: #8b949e;
   --github-level-0: #161b22;
@@ -120,16 +122,24 @@
   --logo-bg: #facc15;
   /* yellow for dark mode */
   --card-bg: #0d1117;
-
 }
 
-/* Double-frame icon treatment used throughout the profile intro. */
+/* =============================
+   🔲 Profile Icon Tile
+   Double-frame icon treatment used throughout the profile intro.
+============================= */
 .profile-icon-tile {
-  border: 2px solid var(--profile-icon-border);
-  background: var(--color-icons-bg);
+  border-radius: 0.65rem; /* rounded-xl — matches reference image's soft corner */
+  border: 1px solid var(--profile-icon-border);
+  background-color: var(--profile-icon-bg);
   box-shadow:
     inset 0 0 0 3px var(--color-card-bg),
     inset 0 0 0 4px var(--profile-icon-inner-border);
+}
+
+.profile-icon-tile:hover {
+  border-color: var(--logo-bg);
+  color: var(--profile-icon-hover);
 }
 
 .github-calendar [data-level="0"] { fill: var(--github-level-0); }

@@ -2,7 +2,7 @@ import { createElement, useEffect, useState } from "react";
 import { Check, Clock3, Code2, Copy, GitFork, Mail, MapPin, Phone } from "lucide-react";
 import { PROFILE } from "./profileContent";
 
-const ICON_CLASS = "profile-icon-tile flex size-9 shrink-0 items-center justify-center rounded-lg text-[var(--profile-icon-color)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-[var(--logo-bg)]";
+const ICON_CLASS = "profile-icon-tile flex size-8 shrink-0 items-center justify-center rounded-lg text-[var(--profile-icon-color)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-[var(--logo-bg)]";
 
 const useIndiaTime = () => {
   const getTime = () => new Intl.DateTimeFormat("en-IN", {
@@ -29,7 +29,7 @@ const DetailRow = ({ icon, children, onClick, trailingIcon, underlineOnHover = f
   const content = (
     <>
       <span className={ICON_CLASS}>
-        {createElement(icon, { "aria-hidden": true, size: 18, strokeWidth: 1.7 })}
+        {createElement(icon, { "aria-hidden": true, size: 16, strokeWidth: 1.7 })}
       </span>
       <span className={`min-w-0 truncate ${underlineOnHover ? "group-hover:!text-[var(--color-accent)] group-hover:underline group-hover:underline-offset-4" : ""}`}>{children}</span>
       {trailingIcon && createElement(trailingIcon, {
