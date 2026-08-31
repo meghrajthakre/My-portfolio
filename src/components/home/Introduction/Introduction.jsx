@@ -8,12 +8,12 @@ const Introduction = () => (
     <div className="relative mt-8 py-5">
       <div className="pointer-events-none absolute right-[calc(100%+3rem)] top-1/2 hidden -translate-y-1/2 lg:block">
         <p
-          className="-rotate-33 text-lg font-semibold text-[var(--color-secondary-text)]"
+          className="w-20 -rotate-33 text-center text-lg font-semibold leading-none text-[var(--color-secondary-text)]"
           style={{ fontFamily: "'Caveat', cursive" }}
         >
           follow me
         </p>
-        <svg aria-hidden="true" viewBox="0 0 90 44" className="ml-3 h-15 w-20 translate-x-10 text-[var(--color-secondary-text)]">
+        <svg aria-hidden="true" viewBox="0 0 90 44" className="-mt-5 h-15 w-20 translate-x-10 text-[var(--color-secondary-text)]">
           <path
             d="M10 4c-2 14 3 24 15 28 10 3 22 1 32-4"
             fill="none"
