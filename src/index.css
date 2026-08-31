@@ -547,14 +547,14 @@ p {
   pointer-events: none;
   background-image:
     linear-gradient(to right,
-      transparent calc(50% - 385px),
-      color-mix(in srgb, var(--color-border) 55%, transparent) calc(50% - 384px),
-      color-mix(in srgb, var(--color-border) 55%, transparent) calc(50% - 383px),
-      transparent calc(50% - 382px),
-      transparent calc(50% + 382px),
-      color-mix(in srgb, var(--color-border) 55%, transparent) calc(50% + 383px),
-      color-mix(in srgb, var(--color-border) 55%, transparent) calc(50% + 384px),
-      transparent calc(50% + 385px)),
+      transparent calc(50% - 400px),
+      color-mix(in srgb, var(--color-border) 42%, transparent) calc(50% - 400px),
+      color-mix(in srgb, var(--color-border) 42%, transparent) calc(50% - 399px),
+      transparent calc(50% - 399px),
+      transparent calc(50% + 399px),
+      color-mix(in srgb, var(--color-border) 42%, transparent) calc(50% + 399px),
+      color-mix(in srgb, var(--color-border) 42%, transparent) calc(50% + 400px),
+      transparent calc(50% + 400px)),
     radial-gradient(circle, color-mix(in srgb, var(--color-border) 52%, transparent) 1px, transparent 1.2px),
     repeating-linear-gradient(135deg,
       transparent 0,
@@ -563,9 +563,9 @@ p {
       transparent 181px,
       transparent 360px);
   background-size: auto, 24px 24px, auto;
-  opacity: .72;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  opacity: .40;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 92%, transparent 100%);
 }
 
 .site-grid-background::before,
@@ -574,7 +574,7 @@ p {
   position: absolute;
   border: 1px solid color-mix(in srgb, var(--logo-bg) 18%, transparent);
   border-radius: 999px;
-  opacity: .65;
+  opacity: .3;
 }
 
 .site-grid-background::before {
@@ -597,12 +597,14 @@ p {
   .site-grid-background {
     background-image:
       linear-gradient(to right,
-        transparent 23px,
-        color-mix(in srgb, var(--color-border) 48%, transparent) 24px,
-        transparent 25px,
-        transparent calc(100% - 25px),
-        color-mix(in srgb, var(--color-border) 48%, transparent) calc(100% - 24px),
-        transparent calc(100% - 23px)),
+        transparent 19px,
+        color-mix(in srgb, var(--color-border) 42%, transparent) 19px,
+        color-mix(in srgb, var(--color-border) 42%, transparent) 20px,
+        transparent 20px,
+        transparent calc(100% - 20px),
+        color-mix(in srgb, var(--color-border) 42%, transparent) calc(100% - 20px),
+        color-mix(in srgb, var(--color-border) 42%, transparent) calc(100% - 19px),
+        transparent calc(100% - 19px)),
       radial-gradient(circle, color-mix(in srgb, var(--color-border) 48%, transparent) 1px, transparent 1.2px);
     background-size: auto, 24px 24px;
   }
