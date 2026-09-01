@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
@@ -19,30 +19,40 @@ const VscodeSetup = lazy(() => import("./Pages/VscodeSetup"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
 import BackToTop from "./components/Ui/BackToTop";
 
+const StartupReady = ({ onReady }) => {
+  useEffect(() => onReady(), [onReady]);
+  return null;
+};
+
 function App() {
   const location = useLocation();
   const [isStarting, setIsStarting] = useState(true);
+  const [isStartupLeaving, setIsStartupLeaving] = useState(false);
+
+  const handleStartupReady = useCallback(() => setIsStartupLeaving(true), []);
 
   useEffect(() => {
-    const startupTimer = window.setTimeout(() => setIsStarting(false), 3000);
-    return () => window.clearTimeout(startupTimer);
-  }, []);
+    if (!isStartupLeaving) return undefined;
+    const removeTimer = window.setTimeout(() => setIsStarting(false), 700);
+    return () => window.clearTimeout(removeTimer);
+  }, [isStartupLeaving]);
   return (
     <div className="relative">
       <div className="site-grid-background" aria-hidden="true" />
       {/* 🔹 Loader Blur Effect */}
       <Navbar />
       {isStarting && (
-        <div className="route-loading-overlay" role="status" aria-label="Loading portfolio">
+        <div className={`route-loading-overlay ${isStartupLeaving ? "is-leaving" : ""}`} role="status" aria-label="Loading portfolio">
           <div className="route-loading-indicator">
-            <InfinityLoop className="h-12 w-16 text-[var(--color-text)]" />
-            <span className="text-xs font-medium tracking-[0.16em] text-[var(--color-secondary-text)]">LOADING</span>
+            <InfinityLoop className="h-12 w-16 text-[var(--logo-bg)]" />
+            <span className="text-xs font-medium uppercase tracking-[0.16em] text-[var(--logo-bg)]">thinking...</span>
           </div>
         </div>
       )}
 
       {/* 🔹 Wrap Routes in Suspense for lazy loading fallback */}
       <Suspense fallback={<div className="min-h-[40vh]" aria-label="Loading page" />}>
+        <StartupReady onReady={handleStartupReady} />
         <AnimatePresence mode="wait">
           <ScrollToTop />
           <Routes location={location} key={location.pathname}>
