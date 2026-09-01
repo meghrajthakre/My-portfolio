@@ -1,6 +1,7 @@
 import { createElement, useEffect, useState } from "react";
 import { Check, Clock3, Code2, Copy, GitFork, Mail, MapPin, Phone } from "lucide-react";
 import { PROFILE } from "./profileContent";
+import { StaggerItem, StaggerReveal } from "../../Animation/StaggerReveal";
 
 const ICON_CLASS = "profile-icon-tile flex size-8 shrink-0 items-center justify-center rounded-lg text-[var(--profile-icon-color)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-[var(--logo-bg)]";
 
@@ -54,25 +55,29 @@ const ProfileDetails = ({ onCopyEmail, isEmailCopied, onCopyPhone, isPhoneCopied
   const indiaTime = useIndiaTime();
 
   return (
-    <div className="mt-4 grid font-mono text-sm font-medium text-[var(--color-text)] sm:grid-cols-2 sm:text-[15px]">
+    <StaggerReveal className="mt-4 grid font-mono text-sm font-medium text-[var(--color-text)] sm:grid-cols-2 sm:text-[15px]" delay={0.18}>
       <div className="hidden flex-col gap-3 py-4 sm:flex">
-        <DetailRow icon={Code2}>Full Stack Developer</DetailRow>
-        <DetailRow icon={GitFork}>Open Source Contributor</DetailRow>
-        <DetailRow icon={MapPin}>India</DetailRow>
+        <StaggerItem><DetailRow icon={Code2}>Full Stack Developer</DetailRow></StaggerItem>
+        <StaggerItem><DetailRow icon={GitFork}>Open Source Contributor</DetailRow></StaggerItem>
+        <StaggerItem><DetailRow icon={MapPin}>India</DetailRow></StaggerItem>
       </div>
 
       <div className="flex flex-col gap-3  px-4 py-4 ">
         <div className="hidden sm:block">
-          <DetailRow icon={Clock3}>{indiaTime} <span className="text-[var(--color-secondary-text)]">/ IST</span></DetailRow>
+          <StaggerItem><DetailRow icon={Clock3}>{indiaTime} <span className="text-[var(--color-secondary-text)]">/ IST</span></DetailRow></StaggerItem>
         </div>
-        <DetailRow icon={Mail} onClick={onCopyEmail} trailingIcon={isEmailCopied ? Check : Copy} underlineOnHover>
-          {PROFILE.email}
-        </DetailRow>
-        <DetailRow icon={Phone} onClick={onCopyPhone} trailingIcon={isPhoneCopied ? Check : Copy} underlineOnHover>
-          {PROFILE.phone}
-        </DetailRow>
+        <StaggerItem>
+          <DetailRow icon={Mail} onClick={onCopyEmail} trailingIcon={isEmailCopied ? Check : Copy} underlineOnHover>
+            {PROFILE.email}
+          </DetailRow>
+        </StaggerItem>
+        <StaggerItem>
+          <DetailRow icon={Phone} onClick={onCopyPhone} trailingIcon={isPhoneCopied ? Check : Copy} underlineOnHover>
+            {PROFILE.phone}
+          </DetailRow>
+        </StaggerItem>
       </div>
-    </div>
+    </StaggerReveal>
   );
 };
 

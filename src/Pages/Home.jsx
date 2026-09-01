@@ -5,6 +5,7 @@ import HomeAbout from "../components/Ui/Layouts/HomeAbout";
 import InfiniteSlider from "../components/Animation/InfiniteSlider";
 import SetUpDevlopement from "../components/Ui/Layouts/SetUpDevlopement";
 import GitHubActivitySkeleton from "../components/Loader/GitHubActivitySkeleton";
+import ScrollReveal from "../components/Animation/ScrollReveal";
 
 // 🔹 Lazy loaded components
 const HomeGitHub = lazy(() => import("../components/Ui/Layouts/HomeGitHub"));
@@ -15,20 +16,24 @@ const Home = () => {
   return (
     <div className="max-w-3xl m-auto px-8">
       <Introduction />
-      <Suspense fallback={<GitHubActivitySkeleton section />}>
-        <HomeGitHub />
-      </Suspense>
-      <HomeProjects />
-      <HomeAbout />
-      <InfiniteSlider />
+      <ScrollReveal>
+        <Suspense fallback={<GitHubActivitySkeleton section />}>
+          <HomeGitHub />
+        </Suspense>
+      </ScrollReveal>
+      <ScrollReveal><HomeProjects /></ScrollReveal>
+      <ScrollReveal><HomeAbout /></ScrollReveal>
+      <ScrollReveal><InfiniteSlider /></ScrollReveal>
 
       {/* 🔹 Lazy-loaded sections */}
-      <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
-        <HomeBlog />
-        <HomeBook />
-      </Suspense>
+      <ScrollReveal>
+        <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
+          <HomeBlog />
+          <HomeBook />
+        </Suspense>
+      </ScrollReveal>
 
-      <SetUpDevlopement />
+      <ScrollReveal><SetUpDevlopement /></ScrollReveal>
     </div>
   );
 };
