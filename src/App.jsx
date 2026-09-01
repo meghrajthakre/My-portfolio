@@ -18,6 +18,7 @@ const Gears = lazy(() => import("./Pages/Gears"));
 const VscodeSetup = lazy(() => import("./Pages/VscodeSetup"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
 import BackToTop from "./components/Ui/BackToTop";
+import BottomBlur from "./components/Ui/BottomBlur";
 
 const StartupReady = ({ onReady }) => {
   useEffect(() => {
@@ -89,6 +90,7 @@ function App() {
         <BackToTop/>
       <Quotes />
       {!isStarting && <Footer />}
+      {!isStarting && <BottomBlur />}
     </div>
   );
 }
