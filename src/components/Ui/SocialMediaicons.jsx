@@ -2,6 +2,7 @@ import React from "react";
 import { FaDiscord, FaEnvelope, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import Tooltip from "../../common/Tooltip";
+import { StaggerItem, StaggerReveal } from "../Animation/StaggerReveal";
 
 const SocialMediaicons = () => {
   const iconClass = `
@@ -46,21 +47,23 @@ const SocialMediaicons = () => {
   ];
 
   return (
-    <div className="flex flex-nowrap items-center gap-5">
+    <StaggerReveal className="flex flex-nowrap items-center gap-5" delay={0.12}>
       {icons.map(({ href, label, svg }) => (
-        <Tooltip key={label} text={label}>
-          <a
-            href={href}
-            target={href.startsWith("http") ? "_blank" : undefined}
-            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-            aria-label={label}
-            className="flex items-center justify-center outline-none focus-visible:text-[var(--profile-icon-hover)]"
-          >
-            {svg}
-          </a>
-        </Tooltip>
+        <StaggerItem key={label}>
+          <Tooltip text={label}>
+            <a
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+              aria-label={label}
+              className="flex items-center justify-center outline-none focus-visible:text-[var(--profile-icon-hover)]"
+            >
+              {svg}
+            </a>
+          </Tooltip>
+        </StaggerItem>
       ))}
-    </div>
+    </StaggerReveal>
 
   );
 
