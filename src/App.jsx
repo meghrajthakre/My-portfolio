@@ -20,7 +20,24 @@ const NotFound = lazy(() => import("./Pages/NotFound"));
 import BackToTop from "./components/Ui/BackToTop";
 
 const StartupReady = ({ onReady }) => {
-  useEffect(() => onReady(), [onReady]);
+  useEffect(() => {
+    let isCancelled = false;
+
+    const revealApp = async () => {
+      if (document.fonts?.ready) {
+        await document.fonts.ready;
+      }
+
+      if (!isCancelled) {
+        window.requestAnimationFrame(onReady);
+      }
+    };
+
+    revealApp();
+    return () => {
+      isCancelled = true;
+    };
+  }, [onReady]);
   return null;
 };
 
@@ -71,7 +88,7 @@ function App() {
       </Suspense>
         <BackToTop/>
       <Quotes />
-      <Footer />
+      {!isStarting && <Footer />}
     </div>
   );
 }
