@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
@@ -6,6 +6,7 @@ import SmoothScroll from "./components/Animation/SmoothScroll";
 import ScrollToTop from "./common/ScrollToTop";
 import Quotes from "./common/Quotes";
 import Footer from "./Pages/Footer";
+import { InfinityLoop } from "./components/Loader/InfinityLoop";
 const Home = lazy(() => import("./Pages/Home"));
 const Projects = lazy(() => import("./Pages/Projects/Projects"));
 const Work = lazy(() => import("./Pages/Work"));
@@ -20,14 +21,28 @@ import BackToTop from "./components/Ui/BackToTop";
 
 function App() {
   const location = useLocation();
+  const [isStarting, setIsStarting] = useState(true);
+
+  useEffect(() => {
+    const startupTimer = window.setTimeout(() => setIsStarting(false), 3000);
+    return () => window.clearTimeout(startupTimer);
+  }, []);
   return (
     <div className="relative">
       <div className="site-grid-background" aria-hidden="true" />
       {/* 🔹 Loader Blur Effect */}
       <Navbar />
+      {isStarting && (
+        <div className="route-loading-overlay" role="status" aria-label="Loading portfolio">
+          <div className="route-loading-indicator">
+            <InfinityLoop className="h-12 w-16 text-[var(--color-text)]" />
+            <span className="text-xs font-medium tracking-[0.16em] text-[var(--color-secondary-text)]">LOADING</span>
+          </div>
+        </div>
+      )}
 
       {/* 🔹 Wrap Routes in Suspense for lazy loading fallback */}
-      <Suspense fallback={<div className="text-center p-10">Loading...</div>}>
+      <Suspense fallback={<div className="min-h-[40vh]" aria-label="Loading page" />}>
         <AnimatePresence mode="wait">
           <ScrollToTop />
           <Routes location={location} key={location.pathname}>

@@ -538,7 +538,97 @@ p {
 .icon-shake:hover {
   animation: icon-shake 0.18s ease-in-out infinite;
 }
+@keyframes route-loader-enter {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(1px);
+  }
+}
 
+@keyframes infinity-loader-dash {
+  to { stroke-dashoffset: 256.59; }
+}
+
+.infinity-loader-path {
+  transform: scale(.8);
+  transform-origin: 50px 50px;
+  animation: infinity-loader-dash 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes wandering-pupil-move {
+  0%, 12%, 100% { transform: translateX(-10px); }
+  38%, 52% { transform: translateX(10px); }
+  70%, 82% { transform: translate(1px, 7px); }
+}
+
+@keyframes wandering-eye-blink {
+  0%, 44%, 50%, 100% { transform: scaleY(1); }
+  47% { transform: scaleY(.08); }
+}
+
+.wandering-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wandering-eye-blink 3.8s ease-in-out infinite;
+}
+
+.wandering-eye-right { animation-delay: 110ms; }
+
+.wandering-pupil {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wandering-pupil-move 2.6s ease-in-out infinite;
+}
+
+.wandering-pupil-delay { animation-delay: 80ms; }
+
+.route-loading-overlay {
+  position: fixed;
+  inset: 60px 0 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--color-bg) 58%, transparent);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  animation: route-loader-enter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, backdrop-filter;
+}
+
+.route-loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--color-border) 65%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--color-card-bg) 72%, transparent);
+  box-shadow: 0 18px 50px -28px color-mix(in srgb, var(--color-text) 35%, transparent);
+  animation: route-loader-enter 420ms cubic-bezier(0.16, 1, 0.3, 1) 60ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-loading-overlay,
+  .route-loading-indicator {
+    animation: none;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .infinity-loader-path { animation-duration: 3s; }
+  .wandering-eye,
+  .wandering-pupil { animation: none; }
+}
 /* Creative blueprint pattern behind the entire portfolio. */
 .site-grid-background {
   position: fixed;
