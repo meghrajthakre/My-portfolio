@@ -4,6 +4,7 @@ import HomeProjects from "../components/Ui/Layouts/HomeProjects";
 import HomeAbout from "../components/Ui/Layouts/HomeAbout";
 import InfiniteSlider from "../components/Animation/InfiniteSlider";
 import SetUpDevlopement from "../components/Ui/Layouts/SetUpDevlopement";
+import GitHubActivitySkeleton from "../components/Loader/GitHubActivitySkeleton";
 
 // 🔹 Lazy loaded components
 const HomeGitHub = lazy(() => import("../components/Ui/Layouts/HomeGitHub"));
@@ -14,7 +15,7 @@ const Home = () => {
   return (
     <div className="max-w-3xl m-auto px-8">
       <Introduction />
-      <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
+      <Suspense fallback={<GitHubActivitySkeleton section />}>
         <HomeGitHub />
       </Suspense>
       <HomeProjects />

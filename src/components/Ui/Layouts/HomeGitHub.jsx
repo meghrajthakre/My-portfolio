@@ -1,6 +1,11 @@
-import React, { useState, useEffect, useRef, Suspense } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import ActivityCalendar from "react-activity-calendar";
+import GitHubActivitySkeleton from "../../Loader/GitHubActivitySkeleton";
 
-const GitHubCalendar = React.lazy(() => import("react-github-calendar"));
+const USERNAME = "meghrajthakre";
+const API_URL = `https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`;
+const CACHE_KEY = `github-activity:${USERNAME}:last`;
+const CACHE_TTL = 30 * 60 * 1000;
 const contributionColors = [
   "var(--github-level-0)",
   "var(--github-level-1)",
@@ -9,80 +14,90 @@ const contributionColors = [
   "var(--github-level-4)",
 ];
 
-const formatContributionDate = (date) =>
-  new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kolkata",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(date).replaceAll("/", ".");
+const readCache = () => {
+  try {
+    const cached = JSON.parse(localStorage.getItem(CACHE_KEY));
+    if (!cached?.data?.contributions?.length) return null;
+    return cached;
+  } catch {
+    return null;
+  }
+};
+
+const formatDate = (value) => new Intl.DateTimeFormat("en-GB", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+  timeZone: "Asia/Kolkata",
+}).format(new Date(`${value}T12:00:00`)).replaceAll("/", ".");
 
 const HomeGitHub = () => {
-  const [totalContributions, setTotalContributions] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const cached = useMemo(readCache, []);
+  const [githubData, setGithubData] = useState(cached?.data ?? null);
+  const [loading, setLoading] = useState(!cached);
+  const [error, setError] = useState(false);
   const [hoveredContribution, setHoveredContribution] = useState(null);
   const calendarRef = useRef(null);
-  const rangeEnd = new Date();
-  const rangeStart = new Date(rangeEnd);
-  rangeStart.setDate(rangeStart.getDate() - 364);
 
   useEffect(() => {
+    if (cached && Date.now() - cached.savedAt < CACHE_TTL) return undefined;
+
+    const controller = new AbortController();
     const fetchContributions = async () => {
       try {
-        const response = await fetch(
-          "https://github-contributions-api.jogruber.de/v4/meghrajthakre"
-        );
+        const response = await fetch(API_URL, { signal: controller.signal });
+        if (!response.ok) throw new Error("GitHub activity request failed");
         const data = await response.json();
+        if (!Array.isArray(data.contributions)) throw new Error("Invalid GitHub activity response");
 
-        if (data.total && typeof data.total === "object") {
-          const totalSum = Object.values(data.total).reduce(
-            (acc, val) => acc + val,
-            0
-          );
-          setTotalContributions(totalSum);
-        }
-      } catch (error) {
-        console.error("Error fetching contributions:", error);
+        setGithubData(data);
+        setError(false);
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ data, savedAt: Date.now() }));
+      } catch (requestError) {
+        if (requestError.name !== "AbortError") setError(true);
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
 
     fetchContributions();
-  }, []);
+    return () => controller.abort();
+  }, [cached]);
+
+  if (loading && !githubData) return <GitHubActivitySkeleton section />;
+
+  const contributions = githubData?.contributions ?? [];
+  const totalContributions = githubData?.total?.lastYear
+    ?? contributions.reduce((sum, day) => sum + day.count, 0);
+  const firstDate = contributions[0]?.date;
+  const lastDate = contributions.at(-1)?.date;
 
   return (
-    <div className="py-4 rounded-xl text-[var(--color-text)] w-full">
+    <section className="w-full py-4 text-[var(--color-text)]">
       <div className="gap-0.5 md:text-left">
         <h3 className="text-base md:text-lg">Featured</h3>
-        <h2 className="text-xl mb-1">GitHub Activity</h2>
+        <h2 className="mb-1 text-xl">GitHub Activity</h2>
       </div>
 
-      {loading ? (
-        <div className="mt-5 flex flex-col items-center gap-2">
-          <div className="w-6 h-6 border-2 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-gray-400 text-sm">Fetching contributions...</p>
+      {error && !githubData ? (
+        <div className="mt-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-card-bg)] p-6 text-center">
+          <p className="text-sm text-[var(--color-secondary-text)]">GitHub activity is temporarily unavailable.</p>
+          <a href={`https://github.com/${USERNAME}`} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm font-semibold underline underline-offset-4">View GitHub profile</a>
         </div>
       ) : (
-        <>
-          <Suspense
-            fallback={
-              <div className="flex justify-center mt-5 text-gray-400 text-sm">
-                Loading calendar...
-              </div>
-            }
-          >
-            <div className="github-calendar github-calendar-scroll w-full max-w-full dashed overflow-x-auto rounded-xl border-[var(--color-border)] p-6 text-[var(--github-calendar-muted)] sm:p-7 md:overflow-x-hidden md:py-9">
-              <div ref={calendarRef} className="relative min-w-[636px]">
-              <GitHubCalendar
-                username="meghrajthakre"
+        <div className="github-calendar github-calendar-scroll mt-5 w-full max-w-full overflow-x-auto rounded-xl border border-dashed border-[var(--color-border)] p-6 text-[var(--github-calendar-muted)] sm:p-7 md:overflow-x-hidden md:py-9">
+          <div>
+            <div ref={calendarRef} className="relative min-w-[636px]">
+              <ActivityCalendar
+                data={contributions}
                 blockSize={10}
                 blockMargin={2}
                 blockRadius={2}
                 fontSize={14}
-                color="text-color"
                 hideTotalCount
                 hideColorLegend
+                maxLevel={4}
+                theme={{ light: contributionColors, dark: contributionColors }}
                 renderBlock={(block, activity) => React.cloneElement(block, {
                   onMouseEnter: (event) => {
                     const bounds = calendarRef.current?.getBoundingClientRect();
@@ -93,76 +108,32 @@ const HomeGitHub = () => {
                       y: event.clientY - bounds.top,
                     });
                   },
-                  onMouseMove: (event) => {
-                    const bounds = calendarRef.current?.getBoundingClientRect();
-                    if (!bounds) return;
-                    setHoveredContribution((current) => current && ({
-                      ...current,
-                      x: event.clientX - bounds.left,
-                      y: event.clientY - bounds.top,
-                    }));
-                  },
                   onMouseLeave: () => setHoveredContribution(null),
                 })}
-                theme={{
-                  light: [
-                    "#EEEEEE", // 🩶 empty (official GitHub light gray)
-                    "#156813", // 💚 level 1
-                    "#40c463", // 💚 level 2
-                    "#30a14e", // 💚 level 3
-                    "#216e39", // 💚 level 4 (darkest)
-                  ],
-                  dark: [
-                    "#7D7E7E", // empty
-                    "#1DB213", // level 1
-                    "#006d32", // level 2
-                    "#26a641", // level 3
-                    "#39d353", // level 4
-                  ],
-                }}
-
               />
-                {hoveredContribution && (
-                  <div
-                    role="tooltip"
-                    className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-[calc(100%+12px)] whitespace-nowrap rounded-lg bg-[var(--color-text)] px-3 py-2 text-xs font-medium text-[var(--color-bg)] shadow-xl"
-                    style={{ left: hoveredContribution.x, top: hoveredContribution.y }}
-                  >
-                    {hoveredContribution.activity.count} {hoveredContribution.activity.count === 1 ? "contribution" : "contributions"} on {formatContributionDate(new Date(`${hoveredContribution.activity.date}T12:00:00`))}
-                    <span className="absolute left-1/2 top-full size-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-[var(--color-text)]" />
-                  </div>
-                )}
-                <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
-                  <span>
-                    {totalContributions.toLocaleString("en-US")} contributions, {formatContributionDate(rangeStart)} – {formatContributionDate(rangeEnd)}. Source:{" "}
-                    <a
-                      href="https://github.com/meghrajthakre"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2 transition-colors hover:text-[var(--color-text)]"
-                    >
-                      GitHub
-                    </a>
-                  </span>
 
-                  <div className="flex items-center gap-1" aria-label="Contribution intensity legend">
-                    <span className="mr-1">Less</span>
-                    {contributionColors.map((color) => (
-                      <span
-                        key={color}
-                        className="size-[14px] rounded-[3px]"
-                        style={{ backgroundColor: color }}
-                      />
-                    ))}
-                    <span className="ml-1">More</span>
-                  </div>
+              {hoveredContribution && (
+                <div role="tooltip" className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-[calc(100%+10px)] whitespace-nowrap rounded-lg bg-[var(--color-text)] px-3 py-2 text-xs font-medium text-[var(--color-bg)] shadow-xl" style={{ left: hoveredContribution.x, top: hoveredContribution.y }}>
+                  {hoveredContribution.activity.count} {hoveredContribution.activity.count === 1 ? "contribution" : "contributions"} on {formatDate(hoveredContribution.activity.date)}
+                </div>
+              )}
+
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+                <span>
+                  {totalContributions.toLocaleString("en-IN")} contributions{firstDate && lastDate ? `, ${formatDate(firstDate)} – ${formatDate(lastDate)}. ` : ". "}
+                  Source: <a href={`https://github.com/${USERNAME}`} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[var(--color-text)]">GitHub</a>
+                </span>
+                <div className="flex items-center gap-1" aria-label="Contribution intensity legend">
+                  <span className="mr-1">Less</span>
+                  {contributionColors.map((color) => <span key={color} className="size-[13px] rounded-[3px]" style={{ backgroundColor: color }} />)}
+                  <span className="ml-1">More</span>
                 </div>
               </div>
             </div>
-          </Suspense>
-        </>
+          </div>
+        </div>
       )}
-    </div>
+    </section>
   );
 };
 
