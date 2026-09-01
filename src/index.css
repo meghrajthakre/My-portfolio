@@ -546,29 +546,40 @@ p {
 @keyframes route-loader-enter {
   from {
     opacity: 0;
+    backdrop-filter: blur(0px) saturate(100%);
+    -webkit-backdrop-filter: blur(0px) saturate(100%);
+  }
+  55% {
+    opacity: 1;
   }
   to {
     opacity: 1;
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
   }
 }
 
 @keyframes route-loader-exit {
   from {
     opacity: 1;
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
   }
   to {
     opacity: 0;
+    backdrop-filter: blur(0px) saturate(100%);
+    -webkit-backdrop-filter: blur(0px) saturate(100%);
   }
 }
 
 @keyframes route-indicator-enter {
-  from { opacity: 0; transform: translateY(6px) scale(.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(8px) scale(.96); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
 
 @keyframes route-indicator-exit {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to { opacity: 0; transform: translateY(-6px) scale(.96); }
+  from { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  to { opacity: 0; transform: translateY(-4px) scale(.97); filter: blur(3px); }
 }
 
 @keyframes infinity-loader-dash {
@@ -615,11 +626,11 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  animation: route-loader-enter 650ms cubic-bezier(.22, 1, .36, 1) both;
-  will-change: opacity;
+  background: color-mix(in srgb, var(--color-bg) 22%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  animation: route-loader-enter 800ms cubic-bezier(.22, 1, .36, 1) both;
+  will-change: opacity, backdrop-filter;
 }
 
 .route-loading-indicator {
@@ -627,24 +638,26 @@ p {
   flex-direction: column;
   align-items: center;
   gap: .5rem;
-  animation: route-indicator-enter 600ms cubic-bezier(.22, 1, .36, 1) 80ms both;
+  animation: route-indicator-enter 700ms cubic-bezier(.22, 1, .36, 1) 120ms both;
+  will-change: opacity, transform, filter;
 }
 
 .route-loading-overlay.is-leaving {
   pointer-events: none;
-  animation: route-loader-exit 750ms cubic-bezier(.4, 0, .2, 1) forwards;
+  animation: route-loader-exit 550ms cubic-bezier(.4, 0, 1, 1) forwards;
 }
 
 .route-loading-overlay.is-leaving .route-loading-indicator {
-  animation: route-indicator-exit 420ms ease-out forwards;
+  animation: route-indicator-exit 380ms cubic-bezier(.4, 0, 1, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .route-loading-overlay,
   .route-loading-indicator {
     animation: none;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    filter: none;
   }
   .infinity-loader-path { animation-duration: 3s; }
   .wandering-eye,
