@@ -22,6 +22,8 @@ PORT=5000
 NODE_ENV=development
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/portfolio
 CLIENT_URL=http://localhost:5173
+GITHUB_TOKEN=your_github_personal_access_token
+GITHUB_CONTRIBUTIONS_API_URL=https://github-contributions-api.jogruber.de/v4
 ```
 
 Multiple frontend URLs can be comma-separated in `CLIENT_URL`.
@@ -31,6 +33,7 @@ Multiple frontend URLs can be comma-separated in `CLIENT_URL`.
 - `GET /` - welcome message
 - `GET /api/health` - backend and database health
 - `POST /api/messages` - save a contact message
+- `GET /api/github/:username/contributions` - fetch and cache GitHub contribution activity
 
 Example request body:
 

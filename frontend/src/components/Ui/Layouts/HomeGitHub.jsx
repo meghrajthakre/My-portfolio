@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import ActivityCalendar from "react-activity-calendar";
 import GitHubActivitySkeleton from "../../Loader/GitHubActivitySkeleton";
+import { getGithubContributions } from "../../../services/githubService";
 
 const USERNAME = "meghrajthakre";
-const API_URL = `https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`;
 const CACHE_KEY = `github-activity:${USERNAME}:last`;
 const CACHE_TTL = 30 * 60 * 1000;
 const contributionColors = [
@@ -45,10 +45,7 @@ const HomeGitHub = () => {
     const controller = new AbortController();
     const fetchContributions = async () => {
       try {
-        const response = await fetch(API_URL, { signal: controller.signal });
-        if (!response.ok) throw new Error("GitHub activity request failed");
-        const data = await response.json();
-        if (!Array.isArray(data.contributions)) throw new Error("Invalid GitHub activity response");
+        const data = await getGithubContributions(USERNAME, { signal: controller.signal });
 
         setGithubData(data);
         setError(false);
