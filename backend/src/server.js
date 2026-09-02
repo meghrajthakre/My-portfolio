@@ -9,10 +9,19 @@ const startServer = async () => {
     await connectDB();
 
     app.listen(port, () => {
-      console.log(`Server running at http://localhost:${port}`);
+      const serverUrl = `http://localhost:${port}`;
+
+      console.log(`
+╭──────────────────────────────────────────╮
+│  🚀 MT Portfolio API is up and running!  │
+├──────────────────────────────────────────┤
+│  🌐 ${serverUrl.padEnd(36)} │
+│  ✅ Database connected successfully      │
+╰──────────────────────────────────────────╯
+      `);
     });
   } catch (error) {
-    console.error(`Server startup failed: ${error.message}`);
+    console.error(`\n❌ Unable to start the server\n   ${error.message}\n`);
     process.exit(1);
   }
 };
