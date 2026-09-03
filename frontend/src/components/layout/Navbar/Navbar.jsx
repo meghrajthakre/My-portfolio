@@ -7,19 +7,11 @@ import { NAV_ITEMS } from "./navigation";
 import SearchDialog from "./SearchDialog";
 import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "./useTheme";
-import { getVisitSummary } from "../../../services/analyticsService";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [visitorStats, setVisitorStats] = useState(undefined);
   const { isDark, setIsDark } = useTheme();
-
-  useEffect(() => {
-    getVisitSummary()
-      .then(setVisitorStats)
-      .catch(() => setVisitorStats(null));
-  }, []);
 
   useEffect(() => {
     const handleKeyboard = (event) => {
@@ -91,22 +83,6 @@ const Navbar = () => {
             <ThemeToggle isDark={isDark} onToggle={setIsDark} />
           </div>
         </nav>
-        {visitorStats !== null && (
-          <div
-            role="status"
-            className="flex h-6 items-center justify-center gap-2 border-t border-[color-mix(in_srgb,var(--color-border)_32%,transparent)] bg-[var(--color-bg)]/70 px-3 text-[11px] text-[var(--color-secondary-text)]"
-          >
-            {visitorStats ? (
-              <>
-                <span><strong className="font-semibold text-[var(--color-text)]">{visitorStats.totalVisits.toLocaleString("en-IN")}</strong> visits</span>
-                <span aria-hidden="true">·</span>
-                <span><strong className="font-semibold text-[var(--color-text)]">{visitorStats.uniqueVisitors.toLocaleString("en-IN")}</strong> unique visitors</span>
-              </>
-            ) : (
-              <span className="animate-pulse">Loading visitor stats...</span>
-            )}
-          </div>
-        )}
       </header>
 
       <SearchDialog

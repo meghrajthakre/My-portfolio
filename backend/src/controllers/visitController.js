@@ -53,6 +53,8 @@ export const startVisit = asyncHandler(async (req, res) => {
     result = await Visit.updateOne({ sessionId }, { $addToSet: { paths: path } }, { runValidators: true });
   }
 
+  publicSummaryCache = null;
+
   res.status(result.upsertedCount === 1 ? 201 : 200).json({
     success: true,
     created: result.upsertedCount === 1,
@@ -85,6 +87,8 @@ export const endVisit = asyncHandler(async (req, res) => {
     error.status = 404;
     throw error;
   }
+
+  publicSummaryCache = null;
 
   res.status(200).json({ success: true });
 });
@@ -132,19 +136,23 @@ export const getPublicVisitSummary = asyncHandler(async (req, res) => {
     return res.status(200).json(publicSummaryCache.data);
   }
 
-  const [summary] = await Visit.aggregate([
-    {
-      $group: {
-        _id: null,
-        totalVisits: { $sum: 1 },
-        uniqueVisitors: { $addToSet: "$visitorId" },
+  const [summary, onlineVisitors] = await Promise.all([
+    Visit.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalVisits: { $sum: 1 },
+          uniqueVisitors: { $addToSet: "$visitorId" },
+        },
       },
-    },
+    ]),
+    Visit.countDocuments({ endedAt: null }),
   ]);
 
   const data = {
     totalVisits: summary?.totalVisits ?? 0,
     uniqueVisitors: summary?.uniqueVisitors.length ?? 0,
+    onlineVisitors,
   };
   publicSummaryCache = { data, savedAt: Date.now() };
 
