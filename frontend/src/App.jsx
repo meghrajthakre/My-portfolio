@@ -19,6 +19,7 @@ const VscodeSetup = lazy(() => import("./Pages/VscodeSetup"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
 import BackToTop from "./components/Ui/BackToTop";
 import BottomBlur from "./components/Ui/BottomBlur";
+import { useVisitorAnalytics } from "./hooks/useVisitorAnalytics";
 
 const StartupReady = ({ onReady }) => {
   useEffect(() => {
@@ -44,6 +45,7 @@ const StartupReady = ({ onReady }) => {
 
 function App() {
   const location = useLocation();
+  useVisitorAnalytics();
   const [isStarting, setIsStarting] = useState(true);
   const [isStartupLeaving, setIsStartupLeaving] = useState(false);
 
