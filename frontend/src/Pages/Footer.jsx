@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import BrandLogo from "../components/layout/Navbar/BrandLogo";
-import { getVisitSummary } from "../services/analyticsService";
 import { getGithubBuildNumber } from "../services/githubService";
 
 const SOURCE_URL = "https://github.com/meghrajthakre/My-portfolio";
@@ -18,19 +17,13 @@ const FooterCell = ({ label, children, className = "" }) => (
 );
 
 const Footer = () => {
-  const [visitorStats, setVisitorStats] = useState(null);
   const [buildNumber, setBuildNumber] = useState(null);
 
   useEffect(() => {
     let active = true;
-    getVisitSummary().then((data) => active && setVisitorStats(data)).catch(() => active && setVisitorStats(null));
     getGithubBuildNumber("meghrajthakre", "My-portfolio").then((data) => active && setBuildNumber(data.buildNumber)).catch(() => active && setBuildNumber(null));
     return () => { active = false; };
   }, []);
-
-  const analytics = visitorStats
-    ? [`${visitorStats.totalVisits.toLocaleString("en-IN")} visits`, `${visitorStats.uniqueVisitors.toLocaleString("en-IN")} unique`, `${visitorStats.onlineVisitors ?? 0} online`]
-    : ["First-party analytics", "Loading insights…"];
 
   return (
     <footer className="mx-auto mt-20 w-full max-w-3xl px-5 pb-9 font-[var(--font-main)] max-sm:mt-14">
@@ -54,18 +47,11 @@ const Footer = () => {
           <FooterCell label="Typeface">Hanken Grotesk</FooterCell>
         </div>
 
-        <div className="grid grid-cols-1 min-[441px]:grid-cols-2">
-          <FooterCell label="Stack" className="min-h-[137px]"><div>react@19.1.1</div><div>tailwindcss@4.1.16</div><div>vite@7.1.7</div><div>express@5</div></FooterCell>
-          <FooterCell label="Analytics" className="min-h-[137px]">
-            {analytics.map((item, index) => <div key={item} className="flex items-center gap-2">{index === analytics.length - 1 && visitorStats && <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_9px_#22c55e]" />}{item}</div>)}
-          </FooterCell>
-        </div>
-
         <div className={`border-b border-r border-dashed ${border} p-[17px_20px_15px]`}>
           <span className={labelStyles}>Inspired by</span>
           <div className="grid grid-cols-2 gap-x-3 gap-y-1 sm:grid-cols-4 sm:gap-x-6">
             {["Tailwind CSS", "shadcn/ui", "Vercel", "chanhdai.com", "Devouring Details", "Skiper UI", "ramx.in", "shadcncraft"].map((item, index) => (
-              <div className="flex min-w-0 gap-2.5" key={item}><span className="italic text-[var(--color-secondary-text)]">{String(index + 1).padStart(2, "0")}</span><strong className="text-[13px] font-semibold text-[var(--color-text)] sm:whitespace-nowrap sm:text-[15px]">{item}</strong></div>
+              <div className="flex min-w-0 gap-2.5" key={item}><span className="not-italic text-[var(--color-secondary-text)]">{String(index + 1).padStart(2, "0")}</span><strong className="text-[13px] font-semibold text-[var(--color-text)] sm:whitespace-nowrap sm:text-[15px]">{item}</strong></div>
             ))}
           </div>
         </div>
