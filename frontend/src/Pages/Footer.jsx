@@ -64,7 +64,7 @@ const Footer = () => {
         <div className="footer-inspired">
           <span className="footer-label">Inspired by</span>
           <div className="footer-inspired-grid">
-            {["Tailwind CSS", "shadcn/ui", "Vercel", "Evil Charts", "Devouring Details", "Skiper UI", "Making Software", "shadcncraft"].map((item, index) => (
+            {["Tailwind CSS", "shadcn/ui", "Vercel", "chhandai.com", "Devouring Details", "Skiper UI", "ramx.in", "shadcncraft"].map((item, index) => (
               <div key={item}><span>{String(index + 1).padStart(2, "0")}</span><strong>{item}</strong></div>
             ))}
           </div>
