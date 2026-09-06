@@ -762,3 +762,52 @@ p {
   .site-grid-background::before { left: -7rem; }
   .site-grid-background::after { right: -4rem; }
 }
+
+/* Reference-inspired portfolio footer */
+.footer-shell { width: 100%; max-width: 768px; margin: 5rem auto 0; padding: 0 32px 36px; font-family: var(--font-main); }
+.footer-shell * { font-family: inherit; }
+.footer-frame { overflow: hidden; border: 1px solid color-mix(in srgb, var(--color-border) 72%, transparent); background: color-mix(in srgb, var(--color-card-bg) 58%, var(--color-bg)); color: var(--color-text); box-shadow: 0 -30px 80px color-mix(in srgb, var(--color-bg) 70%, transparent); }
+.footer-heading { min-height: 55px; display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 0 20px; border-bottom: 1px solid var(--color-border); }
+.footer-heading p { margin: 0; color: var(--color-secondary-text); font-size: 16px; line-height: 1.4; text-align: right; }
+.footer-domain { color: var(--color-text); font-size: 16px; font-weight: 700; white-space: nowrap; }
+.footer-grid { display: grid; }
+.footer-grid-four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.footer-grid-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.footer-cell { min-width: 0; min-height: 81px; padding: 17px 20px; border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.footer-grid > .footer-cell:last-child { border-right: 0; }
+.footer-label { display: block; margin-bottom: 8px; color: color-mix(in srgb, var(--color-secondary-text) 80%, #8298c8); font-family: var(--font-main) !important; font-size: 11px; line-height: 1; letter-spacing: .08em; text-transform: uppercase; }
+.footer-value, .footer-value * { font-family: var(--font-main); }
+.footer-value { overflow-wrap: anywhere; color: var(--color-text); font-size: 16px; font-weight: 500; line-height: 1.45; }
+.footer-tall { min-height: 137px; }
+.render-mark { width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 13px solid currentColor; }
+.footer-online::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 8px 2px 1px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 9px #22c55e; }
+.footer-inspired { padding: 17px 20px 15px; border-bottom: 1px solid var(--color-border); }
+.footer-inspired-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px 24px; }
+.footer-inspired-grid div { display: flex; gap: 10px; min-width: 0; }
+.footer-inspired-grid span { color: var(--color-secondary-text); font-family: var(--font-main); font-style: italic; }
+.footer-inspired-grid strong { color: var(--color-text); font-size: 15px; font-weight: 600; white-space: nowrap; }
+.footer-bottom { min-height: 66px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; padding: 0 20px; }
+.footer-bottom > span { font-size: 12px; }
+.footer-bottom nav { display: flex; align-items: center; justify-content: flex-end; gap: 13px; color: var(--color-secondary-text); }
+.footer-bottom nav a { display: grid; place-items: center; font-size: 18px; transition: color .2s ease; }
+.footer-bottom nav a:hover { color: var(--color-text); }
+.footer-bottom nav i { width: 1px; height: 22px; background: var(--color-border); }
+
+@media (max-width: 760px) {
+  .footer-shell { margin-top: 3.5rem; padding: 0 20px 28px; }
+  .footer-heading { align-items: flex-start; flex-direction: column; gap: 4px; padding: 15px; }
+  .footer-heading p { font-size: 13px; text-align: left; }
+  .footer-grid-four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-grid-four > .footer-cell:nth-child(2n) { border-right: 0; }
+  .footer-cell, .footer-inspired { padding: 15px; }
+  .footer-inspired-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px 12px; }
+  .footer-inspired-grid strong { font-size: 13px; white-space: normal; }
+  .footer-bottom { grid-template-columns: 1fr auto; padding: 0 15px; }
+  .footer-bottom > span { display: none; }
+}
+
+@media (max-width: 440px) {
+  .footer-grid-two { grid-template-columns: 1fr; }
+  .footer-grid-two > .footer-cell { border-right: 0; }
+  .footer-value { font-size: 14px; }
+}

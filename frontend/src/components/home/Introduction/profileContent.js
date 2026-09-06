@@ -5,8 +5,9 @@ export const PROFILE = {
     "Web Developer.",
     "Creative Developer.",
     "Open source contributor.",
-    "Creating with code. Small details matter.",
-    "Cyber Security."
+    "Creating with code.",
+    "Learning Cyber Security.",
+    "Small details matter."
   ],
   email: "mthakre.dev@gmail.com",
   phone: "+91 83903 02033",

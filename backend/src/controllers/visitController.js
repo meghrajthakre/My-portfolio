@@ -136,7 +136,7 @@ export const getPublicVisitSummary = asyncHandler(async (req, res) => {
     return res.status(200).json(publicSummaryCache.data);
   }
 
-  const [summary, onlineVisitors] = await Promise.all([
+  const [summaryResult, onlineVisitors] = await Promise.all([
     Visit.aggregate([
       {
         $group: {
@@ -149,9 +149,10 @@ export const getPublicVisitSummary = asyncHandler(async (req, res) => {
     Visit.countDocuments({ endedAt: null }),
   ]);
 
+  const summary = summaryResult[0];
   const data = {
     totalVisits: summary?.totalVisits ?? 0,
-    uniqueVisitors: summary?.uniqueVisitors.length ?? 0,
+    uniqueVisitors: summary?.uniqueVisitors?.length ?? 0,
     onlineVisitors,
   };
   publicSummaryCache = { data, savedAt: Date.now() };

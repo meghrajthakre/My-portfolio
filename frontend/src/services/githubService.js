@@ -18,3 +18,12 @@ export const getGithubContributions = async (username, { signal } = {}) => {
 
   return data;
 };
+
+export const getGithubBuildNumber = async (owner, repo, { signal } = {}) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/github/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/build-number`,
+    { signal },
+  );
+  if (!response.ok) throw new Error("GitHub build number request failed");
+  return response.json();
+};

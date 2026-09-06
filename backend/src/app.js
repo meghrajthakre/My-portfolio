@@ -8,26 +8,9 @@ import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const app = express();
 
-const allowedOrigins = new Set([
-  "http://localhost:5173",
-  "https://my-portfolio-1-0.onrender.com",
-  ...(process.env.CLIENT_URL || "")
-    .split(",")
-    .map((origin) => origin.trim())
-    .filter(Boolean),
-]);
-
 app.use(
   cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      const error = new Error("This origin is not allowed by CORS");
-      error.status = 403;
-      return callback(error);
-    },
+    origin: true,
     credentials: true,
   }),
 );
