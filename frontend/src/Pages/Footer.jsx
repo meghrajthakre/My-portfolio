@@ -1,26 +1,11 @@
 import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import BrandLogo from "../components/layout/Navbar/BrandLogo";
+import FooterAnalytics from "../components/footer/FooterAnalytics";
 import { getGithubBuildNumber } from "../services/githubService";
 
 const SOURCE_URL = "https://github.com/meghrajthakre/My-portfolio";
-const border = "border-[var(--color-border)]";
-const labelStyles = "mb-2 block text-[11px] uppercase leading-none tracking-[0.08em] text-[var(--color-secondary-text)]";
-const linkStyles = "text-[var(--color-text)] underline decoration-[var(--color-secondary-text)] underline-offset-4 transition-colors hover:text-[var(--logo-bg)]";
-const today = new Intl.DateTimeFormat("en-CA", {
-  timeZone: "Asia/Kolkata",
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-}).format(new Date());
-
-const FooterCell = ({ label, children, className = "" }) => (
-  <div className={`min-h-[81px] min-w-0 border-b border-r border-dashed ${border} p-[17px_20px] ${className}`}>
-    <span className={labelStyles}>{label}</span>
-    <div className="break-words text-base font-medium leading-[1.45] text-[var(--color-text)] max-[440px]:text-sm">{children}</div>
-  </div>
-);
+const linkStyles = "text-[var(--color-secondary-text)] transition-colors hover:text-[var(--color-text)]";
 
 const Footer = () => {
   const [build, setBuild] = useState(null);
@@ -30,49 +15,34 @@ const Footer = () => {
     getGithubBuildNumber("meghrajthakre", "My-portfolio")
       .then((data) => active && setBuild(data))
       .catch(() => active && setBuild(null));
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, []);
 
   return (
-    <footer className="mx-auto  mt-20 w-full max-w-3xl px-8 pb-15  font-[var(--font-main)] max-sm:mt-14">
-      <div className={` rounded-xl overflow-hidden border-l border-t border-dashed ${border}`}>
-        <div className={`flex min-h-[55px] items-center justify-between gap-8 border-b border-r border-dashed ${border} px-5 max-sm:flex-col max-sm:items-start max-sm:gap-1 max-sm:py-4`}>
-          <a href="https://thakre.services" target="_blank" rel="noreferrer" className="whitespace-nowrap text-base font-bold text-[var(--color-text)]">thakre.services</a>
-          <p className="m-0 text-right text-base leading-snug text-[var(--color-secondary-text)] max-sm:text-left max-sm:text-[13px]">A full-stack dev portfolio, built with code and curiosity.</p>
-        </div>
+    <footer className="mx-auto mt-20 w-full max-w-3xl px-8 pb-14 font-[var(--font-main)] max-sm:mt-14">
+      <div className="grid grid-cols-1 items-center gap-4 border-t border-[var(--color-border)] pt-6 text-center text-sm sm:grid-cols-[1fr_auto_1fr] sm:text-left">
+        <span className="text-[var(--color-secondary-text)]">
+          © 2026 Meghraj Thakre
+          <a className={`${linkStyles} ml-2 underline underline-offset-4`} href={`${SOURCE_URL}/commits`} target="_blank" rel="noreferrer">
+            build {build?.buildNumber ?? "—"}
+          </a>
+        </span>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4">
-          <FooterCell label="Crafted by"><a className={linkStyles} href="https://github.com/meghrajthakre" target="_blank" rel="noreferrer">@meghrajthakre</a></FooterCell>
-          <FooterCell label="Build"><a className={linkStyles} href={`${SOURCE_URL}/commits`} target="_blank" rel="noreferrer">{build?.buildNumber ?? "—"}</a></FooterCell>
-          <FooterCell label="Date">{today}</FooterCell>
-          <FooterCell label="Registry">portfolio v1.0</FooterCell>
-        </div>
+        <FooterAnalytics />
 
-        <div className="grid grid-cols-2 sm:grid-cols-4">
-          <FooterCell label="Deployed on"><a className={`${linkStyles} inline-flex items-center gap-2`} href="https://my-portfolio-1-0.onrender.com" target="_blank" rel="noreferrer"><span aria-hidden="true" className="h-0 w-0 border-x-[7px] border-b-[13px] border-x-transparent border-b-current" /> Render</a></FooterCell>
-          <FooterCell label="Source code"><a className={linkStyles} href={SOURCE_URL} target="_blank" rel="noreferrer">GitHub</a></FooterCell>
-          <FooterCell label="License"><a className={linkStyles} href={`${SOURCE_URL}/blob/main/LICENSE`} target="_blank" rel="noreferrer">MIT License</a></FooterCell>
-          <FooterCell label="Typeface">Hanken Grotesk</FooterCell>
-        </div>
-
-        <div className={`border-b border-r border-dashed ${border} p-[17px_20px_15px]`}>
-          <span className={labelStyles}>Inspired by</span>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-1 sm:grid-cols-4 sm:gap-x-6">
-            {["Tailwind CSS", "shadcn/ui", "Vercel", "chanhdai.com", "Devouring Details", "Skiper UI", "ramx.in", "shadcncraft"].map((item, index) => (
-              <div className="flex min-w-0 gap-2.5" key={item}><span className="not-italic text-[var(--color-secondary-text)]">{String(index + 1).padStart(2, "0")}</span><strong className="text-[13px] font-semibold text-[var(--color-text)] sm:whitespace-nowrap sm:text-[15px]">{item}</strong></div>
-            ))}
-          </div>
-        </div>
-
-        <div className={`grid min-h-[66px] grid-cols-[1fr_auto] items-center gap-5 border-b border-r border-dashed ${border} px-5 sm:grid-cols-[1fr_auto_1fr]`}>
-          <BrandLogo className="h-8 w-12 text-[var(--color-secondary-text)]" />
-          <span className="hidden text-xs text-[var(--color-secondary-text)] sm:block">© 2026 · Meghraj Thakre</span>
-          <nav className="flex items-center justify-end gap-3 text-lg text-[var(--color-secondary-text)]" aria-label="Social links">
-            <a className="transition-colors hover:text-[var(--color-text)]" href="https://x.com/meghraj_thakre1" target="_blank" rel="noreferrer" aria-label="X profile"><FaXTwitter /></a><i className={`h-[22px] w-px bg-[var(--color-border)]`} />
-            <a className="transition-colors hover:text-[var(--color-text)]" href={SOURCE_URL} target="_blank" rel="noreferrer" aria-label="GitHub repository"><FaGithub /></a><i className={`h-[22px] w-px bg-[var(--color-border)]`} />
-            <a className="transition-colors hover:text-[var(--color-text)]" href="https://www.linkedin.com/in/meghraj-thakre-01a09b23a/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile"><FaLinkedin /></a>
-          </nav>
-        </div>
+        <nav className="flex items-center justify-center gap-4 text-base sm:justify-end" aria-label="Social links">
+          <a className={linkStyles} href="https://x.com/meghraj_thakre1" target="_blank" rel="noreferrer" aria-label="X profile">
+            <FaXTwitter />
+          </a>
+          <a className={linkStyles} href={SOURCE_URL} target="_blank" rel="noreferrer" aria-label="GitHub repository">
+            <FaGithub />
+          </a>
+          <a className={linkStyles} href="https://www.linkedin.com/in/meghraj-thakre-01a09b23a/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+            <FaLinkedin />
+          </a>
+        </nav>
       </div>
     </footer>
   );

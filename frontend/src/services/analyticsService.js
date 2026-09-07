@@ -14,10 +14,19 @@ const post = async (path, body) => {
 export const startVisit = (payload) => post("/api/visits/start", payload);
 export const endVisit = (payload) => post("/api/visits/end", payload);
 
-export const getVisitSummary = async () => {
-  const response = await fetch(`${API_BASE_URL}/api/visits/summary`);
+export const getVisitSummary = async ({ signal } = {}) => {
+  const response = await fetch(`${API_BASE_URL}/api/visits/summary`, { signal });
   if (!response.ok) throw new Error("Visitor summary request failed");
-  return response.json();
+  const data = await response.json();
+
+  if (
+    !Number.isFinite(data.totalVisits)
+    || !Number.isFinite(data.uniqueVisitors)
+  ) {
+    throw new Error("Invalid visitor summary response");
+  }
+
+  return data;
 };
 
 export const beaconEndVisit = (payload) => {

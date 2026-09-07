@@ -143,6 +143,7 @@ export const getPublicVisitSummary = asyncHandler(async (req, res) => {
           _id: null,
           totalVisits: { $sum: 1 },
           uniqueVisitors: { $addToSet: "$visitorId" },
+          averageTimeSpent: { $avg: "$duration" },
         },
       },
     ]),
@@ -153,6 +154,7 @@ export const getPublicVisitSummary = asyncHandler(async (req, res) => {
   const data = {
     totalVisits: summary?.totalVisits ?? 0,
     uniqueVisitors: summary?.uniqueVisitors?.length ?? 0,
+    averageTimeSpent: Math.round(summary?.averageTimeSpent ?? 0),
     onlineVisitors,
   };
   publicSummaryCache = { data, savedAt: Date.now() };
