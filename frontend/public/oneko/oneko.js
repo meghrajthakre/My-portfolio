@@ -14,7 +14,7 @@
     { id: "dog", label: "Bruno the Dog", file: "/oneko/dog.png" },
     { id: "fox", label: "Rusty the Fox", file: "/oneko/fox.png" },
     { id: "bunny", label: "Coco the Bunny", file: "/oneko/bunny.png" },
-    { id: "ghost", label: "Boo the Ghost", file: "/oneko/ghost.png" },
+    { id: "valentine", label: "Valentine", file: "/oneko/valentine.png" },
     { id: "black", label: "Shadow the Cat", file: "/oneko/black.png" },
   ];
 
@@ -23,8 +23,12 @@
 
   try {
     const savedSkin = localStorage.getItem(SKIN_STORAGE_KEY);
-    const savedIndex = skins.findIndex((skin) => skin.id === savedSkin);
-    if (savedIndex >= 0) skinIndex = savedIndex;
+    const migratedSkin = savedSkin === "ghost" || savedSkin === "eevee" ? "valentine" : savedSkin;
+    const savedIndex = skins.findIndex((skin) => skin.id === migratedSkin);
+    if (savedIndex >= 0) {
+      skinIndex = savedIndex;
+      if (savedSkin !== migratedSkin) localStorage.setItem(SKIN_STORAGE_KEY, migratedSkin);
+    }
   } catch {
     // Storage can be unavailable in private or restricted browser contexts.
   }
