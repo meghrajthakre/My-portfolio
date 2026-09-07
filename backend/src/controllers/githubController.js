@@ -39,6 +39,24 @@ export const getGithubBuildNumber = async (req, res, next) => {
     return res.status(200).json(cached.data);
   }
 
+  const renderRepo = process.env.RENDER_GIT_REPO_SLUG?.toLowerCase();
+  const renderCommit = process.env.RENDER_GIT_COMMIT;
+
+  // Render already knows which Git commit is currently deployed. Prefer that
+  // value so the footer does not consume GitHub API quota on production.
+  if (
+    (!renderRepo || renderRepo === cacheKey)
+    && typeof renderCommit === "string"
+    && /^[a-f0-9]{7,40}$/i.test(renderCommit)
+  ) {
+    const data = {
+      buildNumber: renderCommit.slice(0, 7),
+      buildDate: process.env.BUILD_DATE || null,
+    };
+    buildCache.set(cacheKey, { data, savedAt: Date.now() });
+    return res.status(200).json(data);
+  }
+
   try {
     let response = await fetchLatestCommit(owner, repo);
 

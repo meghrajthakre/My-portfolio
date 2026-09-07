@@ -28,7 +28,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="mx-auto mt-20 w-full max-w-3xl px-5 pb-9 font-[var(--font-main)] max-sm:mt-14">
+    <footer className="mx-auto mt-20 w-full max-w-3xl px-8 pb-15 font-[var(--font-main)] max-sm:mt-14">
       <div className={`overflow-hidden border-l border-t border-dashed ${border}`}>
         <div className={`flex min-h-[55px] items-center justify-between gap-8 border-b border-r border-dashed ${border} px-5 max-sm:flex-col max-sm:items-start max-sm:gap-1 max-sm:py-4`}>
           <a href="https://thakre.services" target="_blank" rel="noreferrer" className="whitespace-nowrap text-base font-bold text-[var(--color-text)]">thakre.services</a>

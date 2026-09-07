@@ -25,6 +25,8 @@ CLIENT_URL=http://localhost:5173
 ANALYTICS_ADMIN_KEY=replace_with_a_long_random_secret
 GITHUB_TOKEN=your_github_personal_access_token
 GITHUB_CONTRIBUTIONS_API_URL=https://github-contributions-api.jogruber.de/v4
+# Optional ISO date used with Render's automatic RENDER_GIT_COMMIT value
+BUILD_DATE=2026-09-07
 ```
 
 Multiple frontend URLs can be comma-separated in `CLIENT_URL`.
