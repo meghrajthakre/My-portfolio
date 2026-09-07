@@ -10,6 +10,23 @@ const buildCache = new Map();
 
 const REPO_PART_PATTERN = /^[a-z0-9._-]{1,100}$/i;
 
+const getGithubHeaders = (includeToken = true) => ({
+  Accept: "application/vnd.github+json",
+  "X-GitHub-Api-Version": "2022-11-28",
+  "User-Agent": "mt-portfolio-backend",
+  ...(includeToken && process.env.GITHUB_TOKEN && {
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+  }),
+});
+
+const fetchLatestCommit = (owner, repo, includeToken = true) => fetch(
+  `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/commits?per_page=1`,
+  {
+    headers: getGithubHeaders(includeToken),
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT),
+  },
+);
+
 export const getGithubBuildNumber = async (req, res, next) => {
   const { owner, repo } = req.params;
   if (!REPO_PART_PATTERN.test(owner) || !REPO_PART_PATTERN.test(repo)) {
@@ -23,24 +40,35 @@ export const getGithubBuildNumber = async (req, res, next) => {
   }
 
   try {
-    const response = await fetch(
-      `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/commits?per_page=1`,
-      {
-        headers: { Accept: "application/vnd.github+json" },
-        signal: AbortSignal.timeout(REQUEST_TIMEOUT),
-      },
-    );
+    let response = await fetchLatestCommit(owner, repo);
+
+    // Public repo data should still work if a configured token is stale or
+    // does not have the correct repository permission.
+    if (process.env.GITHUB_TOKEN && (response.status === 401 || response.status === 403)) {
+      response = await fetchLatestCommit(owner, repo, false);
+    }
 
     if (!response.ok) {
-      const error = new Error("GitHub repository service is unavailable");
-      error.status = response.status;
+      const isRateLimited = response.status === 403 && response.headers.get("x-ratelimit-remaining") === "0";
+      const error = new Error(isRateLimited ? "GitHub API rate limit reached" : "GitHub repository service is unavailable");
+      error.status = isRateLimited ? 503 : response.status;
       throw error;
     }
 
     const commits = await response.json();
-    const link = response.headers.get("link") || "";
-    const lastPage = link.match(/[?&]page=(\d+)>; rel="last"/);
-    const data = { buildNumber: lastPage ? Number(lastPage[1]) : commits.length };
+    const latestCommitSha = commits[0]?.sha;
+
+    if (typeof latestCommitSha !== "string") {
+      const error = new Error("Invalid GitHub commits response");
+      error.status = 502;
+      throw error;
+    }
+
+    const commitDate = commits[0]?.commit?.committer?.date || commits[0]?.commit?.author?.date;
+    const data = {
+      buildNumber: latestCommitSha.slice(0, 7),
+      buildDate: commitDate ? commitDate.slice(0, 10) : null,
+    };
 
     buildCache.set(cacheKey, { data, savedAt: Date.now() });
     return res.status(200).json(data);

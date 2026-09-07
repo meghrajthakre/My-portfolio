@@ -17,11 +17,13 @@ const FooterCell = ({ label, children, className = "" }) => (
 );
 
 const Footer = () => {
-  const [buildNumber, setBuildNumber] = useState(null);
+  const [build, setBuild] = useState(null);
 
   useEffect(() => {
     let active = true;
-    getGithubBuildNumber("meghrajthakre", "My-portfolio").then((data) => active && setBuildNumber(data.buildNumber)).catch(() => active && setBuildNumber(null));
+    getGithubBuildNumber("meghrajthakre", "My-portfolio")
+      .then((data) => active && setBuild(data))
+      .catch(() => active && setBuild(null));
     return () => { active = false; };
   }, []);
 
@@ -35,8 +37,8 @@ const Footer = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4">
           <FooterCell label="Crafted by"><a className={linkStyles} href="https://github.com/meghrajthakre" target="_blank" rel="noreferrer">@meghrajthakre</a></FooterCell>
-          <FooterCell label="Build"><a className={linkStyles} href={`${SOURCE_URL}/commits`} target="_blank" rel="noreferrer">dc{buildNumber ?? "—"}</a></FooterCell>
-          <FooterCell label="Date">2026-09-06</FooterCell>
+          <FooterCell label="Build"><a className={linkStyles} href={`${SOURCE_URL}/commits`} target="_blank" rel="noreferrer">{build?.buildNumber ?? "—"}</a></FooterCell>
+          <FooterCell label="Date">{build?.buildDate ?? "—"}</FooterCell>
           <FooterCell label="Registry">portfolio v1.0</FooterCell>
         </div>
 

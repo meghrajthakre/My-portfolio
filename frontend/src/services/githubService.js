@@ -24,6 +24,12 @@ export const getGithubBuildNumber = async (owner, repo, { signal } = {}) => {
     `${API_BASE_URL}/api/github/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/build-number`,
     { signal },
   );
-  if (!response.ok) throw new Error("GitHub build number request failed");
-  return response.json();
+  if (!response.ok) throw new Error(`GitHub build request failed (${response.status})`);
+
+  const data = await response.json();
+  if (!/^[a-f0-9]{7}$/i.test(data.buildNumber)) {
+    throw new Error("Invalid GitHub build response");
+  }
+
+  return data;
 };
