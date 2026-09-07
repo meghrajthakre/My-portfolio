@@ -49,4 +49,4 @@ const StaggerItem = ({ children, className = "" }) => {
   );
 };
 
-export { StaggerItem, StaggerReveal };
+export { StaggerItem, StaggerReveal };  

@@ -1,102 +1,152 @@
 export const quotesData = [
   {
     id: 1,
-    quote: "You have the right to work, but never to the fruits of your actions.",
-    author: "Bhagavad Gita"
+    quote: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+    author: "Martin Fowler"
   },
   {
     id: 2,
-    quote: "Change is the law of the universe. You can be a millionaire or a pauper in an instant.",
-    author: "Bhagavad Gita"
+    quote: "Programs must be written for people to read, and only incidentally for machines to execute.",
+    author: "Harold Abelson"
   },
   {
     id: 3,
-    quote: "A person can rise through the efforts of his own mind; or draw himself down, in the same manner.",
-    author: "Bhagavad Gita"
+    quote: "Simplicity is prerequisite for reliability.",
+    author: "Edsger Dijkstra"
   },
   {
     id: 4,
-    quote: "Set your heart upon your work, but never on its reward.",
-    author: "Bhagavad Gita"
+    quote: "The computer was born to solve problems that did not exist before.",
+    author: "Bill Gates"
   },
   {
     id: 5,
-    quote: "The soul is neither born, and nor does it die.",
-    author: "Bhagavad Gita"
+    quote: "Talk is cheap. Show me the code.",
+    author: "Linus Torvalds"
   },
   {
     id: 6,
-    quote: "Man is made by his belief. As he believes, so he is.",
-    author: "Bhagavad Gita"
+    quote: "First, solve the problem. Then, write the code.",
+    author: "John Johnson"
   },
   {
     id: 7,
-    quote: "When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place.",
-    author: "Bhagavad Gita"
+    quote: "Code is like humor. When you have to explain it, it's bad.",
+    author: "Cory House"
   },
   {
     id: 8,
-    quote: "Perform your duty with a balanced mind in success and failure. Such equanimity is called Yoga.",
-    author: "Bhagavad Gita"
+    quote: "Debugging is twice as hard as writing the code in the first place.",
+    author: "Brian Kernighan"
   },
   {
     id: 9,
-    quote: "He who has no attachments can truly love others, for his love is pure and divine.",
-    author: "Bhagavad Gita"
+    quote: "Premature optimization is the root of all evil.",
+    author: "Donald Knuth"
   },
   {
     id: 10,
-    quote: "One who sees inaction in action, and action in inaction, is truly wise.",
-    author: "Bhagavad Gita"
+    quote: "The best way to predict the future is to invent it.",
+    author: "Alan Kay"
   },
   {
     id: 11,
-    quote: "The mind acts like an enemy for those who cannot control it.",
-    author: "Bhagavad Gita"
+    quote: "Every great design begins with an even better story.",
+    author: "Lorinda Mamo"
   },
   {
     id: 12,
-    quote: "Those who are motivated only by desire for the fruits of action are miserable, for they are constantly anxious about the results.",
-    author: "Bhagavad Gita"
+    quote: "Design is not just what it looks like and feels like. Design is how it works.",
+    author: "Steve Jobs"
   },
   {
     id: 13,
-    quote: "Neither in this world nor elsewhere is there any happiness in store for him who always doubts.",
-    author: "Bhagavad Gita"
+    quote: "Good design is as little design as possible.",
+    author: "Dieter Rams"
   },
   {
     id: 14,
-    quote: "Lust, anger, and greed are the three gates to self-destruction. Abandon them.",
-    author: "Bhagavad Gita"
+    quote: "Design is intelligence made visible.",
+    author: "Alina Wheeler"
   },
   {
     id: 15,
-    quote: "The wise man lets go of all results, whether good or bad, and is focused on the action alone.",
-    author: "Bhagavad Gita"
+    quote: "Art is not what you see, but what you make others see.",
+    author: "Edgar Degas"
   },
   {
     id: 16,
-    quote: "Whatever happened, happened for the good. Whatever is happening, is happening for the good. Whatever will happen, will also happen for the good.",
-    author: "Bhagavad Gita"
+    quote: "Every artist was first an amateur.",
+    author: "Ralph Waldo Emerson"
   },
   {
     id: 17,
-    quote: "Calmness, gentleness, silence, self-restraint, and purity—these are the disciplines of the mind.",
-    author: "Bhagavad Gita"
+    quote: "Creativity is intelligence having fun.",
+    author: "Albert Einstein"
   },
   {
     id: 18,
-    quote: "A person who is not disturbed by happiness and distress, and remains steady in both, is eligible for liberation.",
-    author: "Bhagavad Gita"
+    quote: "The chief enemy of creativity is good sense.",
+    author: "Pablo Picasso"
   },
   {
     id: 19,
-    quote: "For one who has conquered the mind, the mind is the best of friends; but for one who has failed to do so, it is the greatest enemy.",
-    author: "Bhagavad Gita"
+    quote: "Art enables us to find ourselves and lose ourselves at the same time.",
+    author: "Thomas Merton"
   },
   {
     id: 20,
-    quote: "From passion comes anger, from anger comes delusion, from delusion loss of memory, and from loss of memory, the ruin of reason.",
-    author: "Bhagavad Gita"
+    quote: "Everything you can imagine is real.",
+    author: "Pablo Picasso"
+  },
+  {
+    id: 21,
+    quote: "Programming is the art of telling another human what one wants the computer to do.",
+    author: "Donald Knuth"
+  },
+  {
+    id: 22,
+    quote: "The best programmers are not marginally better than average, they are an order-of-magnitude better.",
+    author: "Randall E. Stross"
+  },
+  {
+    id: 23,
+    quote: "Make it work, make it right, make it fast.",
+    author: "Kent Beck"
+  },
+  {
+    id: 24,
+    quote: "Clean code always looks like it was written by someone who cares.",
+    author: "Robert C. Martin"
+  },
+  {
+    id: 25,
+    quote: "A user interface is like a joke. If you have to explain it, it's not that good.",
+    author: "Martin LeBlanc"
+  },
+  {
+    id: 26,
+    quote: "There are two ways of constructing software: make it so simple there are obviously no deficiencies, or so complicated there are no obvious deficiencies.",
+    author: "C.A.R. Hoare"
+  },
+  {
+    id: 27,
+    quote: "Details are not details. They make the product.",
+    author: "Charles Eames"
+  },
+  {
+    id: 28,
+    quote: "The best code is no code at all.",
+    author: "Jeff Atwood"
+  },
+  {
+    id: 29,
+    quote: "Design is where science and art break even.",
+    author: "Robin Mathew"
+  },
+  {
+    id: 30,
+    quote: "I am always doing that which I cannot do, in order that I may learn how to do it.",
+    author: "Pablo Picasso"
   }
 ];
