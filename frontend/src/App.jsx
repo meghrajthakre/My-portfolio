@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
 import SmoothScroll from "./components/Animation/SmoothScroll";
 import ScrollToTop from "./common/ScrollToTop";
-import Quotes from "./common/Quotes";
+import Quotes from "./components/quotes/Quotes";
 import Footer from "./Pages/Footer";
 import { InfinityLoop } from "./components/Loader/InfinityLoop";
 const Home = lazy(() => import("./Pages/Home"));

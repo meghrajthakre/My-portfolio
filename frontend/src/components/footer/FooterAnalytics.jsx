@@ -33,7 +33,10 @@ const FooterAnalytics = () => {
       aria-live="polite"
       title={`${stats.uniqueVisitors ?? 0} unique visitors`}
     >
-      <span className="text-[var(--logo-bg)]" aria-hidden="true">◉</span>
+      <span
+        className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-emerald-500 shadow-[0_0_7px_rgba(16,185,129,0.75)]"
+        aria-hidden="true"
+      />
       <strong className="font-semibold tabular-nums text-[var(--color-text)]">
         {stats.totalVisits === null ? "—" : stats.totalVisits.toLocaleString("en-IN")}
       </strong>
