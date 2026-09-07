@@ -8,6 +8,12 @@ const SOURCE_URL = "https://github.com/meghrajthakre/My-portfolio";
 const border = "border-[var(--color-border)]";
 const labelStyles = "mb-2 block text-[11px] uppercase leading-none tracking-[0.08em] text-[var(--color-secondary-text)]";
 const linkStyles = "text-[var(--color-text)] underline decoration-[var(--color-secondary-text)] underline-offset-4 transition-colors hover:text-[var(--logo-bg)]";
+const today = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Kolkata",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+}).format(new Date());
 
 const FooterCell = ({ label, children, className = "" }) => (
   <div className={`min-h-[81px] min-w-0 border-b border-r border-dashed ${border} p-[17px_20px] ${className}`}>
@@ -28,8 +34,8 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="mx-auto mt-20 w-full max-w-3xl px-8 pb-15 font-[var(--font-main)] max-sm:mt-14">
-      <div className={`overflow-hidden border-l border-t border-dashed ${border}`}>
+    <footer className="mx-auto  mt-20 w-full max-w-3xl px-8 pb-15  font-[var(--font-main)] max-sm:mt-14">
+      <div className={` rounded-xl overflow-hidden border-l border-t border-dashed ${border}`}>
         <div className={`flex min-h-[55px] items-center justify-between gap-8 border-b border-r border-dashed ${border} px-5 max-sm:flex-col max-sm:items-start max-sm:gap-1 max-sm:py-4`}>
           <a href="https://thakre.services" target="_blank" rel="noreferrer" className="whitespace-nowrap text-base font-bold text-[var(--color-text)]">thakre.services</a>
           <p className="m-0 text-right text-base leading-snug text-[var(--color-secondary-text)] max-sm:text-left max-sm:text-[13px]">A full-stack dev portfolio, built with code and curiosity.</p>
@@ -38,7 +44,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4">
           <FooterCell label="Crafted by"><a className={linkStyles} href="https://github.com/meghrajthakre" target="_blank" rel="noreferrer">@meghrajthakre</a></FooterCell>
           <FooterCell label="Build"><a className={linkStyles} href={`${SOURCE_URL}/commits`} target="_blank" rel="noreferrer">{build?.buildNumber ?? "—"}</a></FooterCell>
-          <FooterCell label="Date">{build?.buildDate ?? "—"}</FooterCell>
+          <FooterCell label="Date">{today}</FooterCell>
           <FooterCell label="Registry">portfolio v1.0</FooterCell>
         </div>
 
