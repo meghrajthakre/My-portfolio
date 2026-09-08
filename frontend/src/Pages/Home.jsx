@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import Introduction from "../components/home/Introduction";
 import HomeProjects from "../components/Ui/Layouts/HomeProjects";
-import HomeAbout from "../components/Ui/Layouts/HomeAbout";
 import InfiniteSlider from "../components/Animation/InfiniteSlider";
 import SetUpDevlopement from "../components/Ui/Layouts/SetUpDevlopement";
 import GitHubActivitySkeleton from "../components/Loader/GitHubActivitySkeleton";
@@ -22,7 +21,6 @@ const Home = () => {
         </Suspense>
       </ScrollReveal>
       <ScrollReveal><HomeProjects /></ScrollReveal>
-      <ScrollReveal><HomeAbout /></ScrollReveal>
       <ScrollReveal><InfiniteSlider /></ScrollReveal>
 
       {/* 🔹 Lazy-loaded sections */}
