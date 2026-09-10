@@ -1,6 +1,5 @@
 import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
 import SmoothScroll from "./components/Animation/SmoothScroll";
 import RouteTransition from "./components/Animation/RouteTransition";
@@ -75,22 +74,20 @@ function App() {
       <Suspense fallback={<div className="min-h-[40vh]" aria-label="Loading page" />}>
         <StartupReady onReady={handleStartupReady} />
         <ScrollToTop />
-        <AnimatePresence mode="wait" initial={false}>
-          <RouteTransition key={location.pathname}>
-            <Routes location={location}>
-              <Route index path="/" element={<Home />} />
-              <Route path="/work" element={<Work />} />
-              <Route path="/blogs" element={<Blog />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/projects/:id" element={<ProjectDetails />} />
-              <Route path="/resume" element={<Resume />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/gears" element={<Gears />} />
-              <Route path="/vscode-setup" element={<VscodeSetup />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </RouteTransition>
-        </AnimatePresence>
+        <RouteTransition routeKey={location.pathname}>
+          <Routes location={location}>
+            <Route index path="/" element={<Home />} />
+            <Route path="/work" element={<Work />} />
+            <Route path="/blogs" element={<Blog />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<ProjectDetails />} />
+            <Route path="/resume" element={<Resume />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/gears" element={<Gears />} />
+            <Route path="/vscode-setup" element={<VscodeSetup />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </RouteTransition>
       </Suspense>
         <BackToTop/>
       <Quotes />
