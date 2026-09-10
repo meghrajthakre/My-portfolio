@@ -1,8 +1,9 @@
 import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
 import SmoothScroll from "./components/Animation/SmoothScroll";
+import RouteTransition from "./components/Animation/RouteTransition";
 import ScrollToTop from "./common/ScrollToTop";
 import Quotes from "./components/quotes/Quotes";
 import Footer from "./Pages/Footer";
@@ -45,7 +46,6 @@ const StartupReady = ({ onReady }) => {
 
 function App() {
   const location = useLocation();
-  const shouldReduceMotion = useReducedMotion();
   useVisitorAnalytics();
   const [isStarting, setIsStarting] = useState(true);
   const [isStartupLeaving, setIsStartupLeaving] = useState(false);
@@ -74,15 +74,9 @@ function App() {
       {/* 🔹 Wrap Routes in Suspense for lazy loading fallback */}
       <Suspense fallback={<div className="min-h-[40vh]" aria-label="Loading page" />}>
         <StartupReady onReady={handleStartupReady} />
+        <ScrollToTop />
         <AnimatePresence mode="wait" initial={false}>
-          <ScrollToTop />
-          <motion.main
-            key={location.pathname}
-            initial={shouldReduceMotion ? false : { opacity: 0, filter: "blur(4px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            exit={shouldReduceMotion ? {} : { opacity: 0, filter: "blur(2px)" }}
-            transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeOut" }}
-          >
+          <RouteTransition key={location.pathname}>
             <Routes location={location}>
               <Route index path="/" element={<Home />} />
               <Route path="/work" element={<Work />} />
@@ -95,7 +89,7 @@ function App() {
               <Route path="/vscode-setup" element={<VscodeSetup />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </motion.main>
+          </RouteTransition>
         </AnimatePresence>
       </Suspense>
         <BackToTop/>
