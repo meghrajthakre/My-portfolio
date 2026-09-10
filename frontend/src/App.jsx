@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
 import SmoothScroll from "./components/Animation/SmoothScroll";
 import ScrollToTop from "./common/ScrollToTop";
@@ -45,6 +45,7 @@ const StartupReady = ({ onReady }) => {
 
 function App() {
   const location = useLocation();
+  const shouldReduceMotion = useReducedMotion();
   useVisitorAnalytics();
   const [isStarting, setIsStarting] = useState(true);
   const [isStartupLeaving, setIsStartupLeaving] = useState(false);
@@ -73,20 +74,28 @@ function App() {
       {/* 🔹 Wrap Routes in Suspense for lazy loading fallback */}
       <Suspense fallback={<div className="min-h-[40vh]" aria-label="Loading page" />}>
         <StartupReady onReady={handleStartupReady} />
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           <ScrollToTop />
-          <Routes location={location} key={location.pathname}>
-            <Route index path="/" element={<Home />} />
-            <Route path="/work" element={<Work />} />
-            <Route path="/blogs" element={<Blog />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:id" element={<ProjectDetails />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/gears" element={<Gears />} />
-            <Route path="/vscode-setup" element={<VscodeSetup />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <motion.main
+            key={location.pathname}
+            initial={shouldReduceMotion ? false : { opacity: 0, filter: "blur(4px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            exit={shouldReduceMotion ? {} : { opacity: 0, filter: "blur(2px)" }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeOut" }}
+          >
+            <Routes location={location}>
+              <Route index path="/" element={<Home />} />
+              <Route path="/work" element={<Work />} />
+              <Route path="/blogs" element={<Blog />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/projects/:id" element={<ProjectDetails />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/gears" element={<Gears />} />
+              <Route path="/vscode-setup" element={<VscodeSetup />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </motion.main>
         </AnimatePresence>
       </Suspense>
         <BackToTop/>
