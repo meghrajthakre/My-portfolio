@@ -1,6 +1,7 @@
 import { PROFILE } from "./profileContent";
 import ProfileDetails from "./ProfileDetails";
 import ProfileName from "./ProfileName";
+import NowPlaying from "./NowPlaying";
 import RotatingRole from "./RotatingRole";
 import { useCopyEmail } from "./useCopyEmail";
 
@@ -32,6 +33,7 @@ const ProfileHeader = () => {
       <p className="mt-6 max-w-[60ch] text-pretty text-[15px] leading-7 text-[var(--color-secondary-text)] sm:text-base">
         {PROFILE.bio}
       </p>
+      <NowPlaying />
 
       <ProfileDetails
         onCopyEmail={copyEmail}
