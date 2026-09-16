@@ -25,6 +25,8 @@ CLIENT_URL=http://localhost:5173
 ANALYTICS_ADMIN_KEY=replace_with_a_long_random_secret
 GITHUB_TOKEN=your_github_personal_access_token
 GITHUB_CONTRIBUTIONS_API_URL=https://github-contributions-api.jogruber.de/v4
+LASTFM_API_KEY=your_lastfm_api_key
+LASTFM_USERNAME=your_lastfm_username
 # Optional ISO date used with Render's automatic RENDER_GIT_COMMIT value
 BUILD_DATE=2026-09-07
 ```
@@ -37,6 +39,7 @@ Multiple frontend URLs can be comma-separated in `CLIENT_URL`.
 - `GET /api/health` - backend and database health
 - `POST /api/messages` - save a contact message
 - `GET /api/github/:username/contributions` - fetch and cache GitHub contribution activity
+- `GET /api/music/now-playing` - fetch and cache the latest Last.fm track
 - `POST /api/visits/start` - start a visit or record another path for its session
 - `POST /api/visits/end` - record visit end time and duration
 - `GET /api/visits/summary` - public total visits and unique visitors for the portfolio UI

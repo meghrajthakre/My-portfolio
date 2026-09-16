@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import messageRoutes from "./routes/messageRoutes.js";
 import githubRoutes from "./routes/githubRoutes.js";
+import musicRoutes from "./routes/musicRoutes.js";
 import visitRoutes from "./routes/visitRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
@@ -37,6 +38,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/messages", messageRoutes);
 app.use("/api/github", githubRoutes);
+app.use("/api/music", musicRoutes);
 app.use("/api/visits", visitRoutes);
 
 app.use(notFound);
