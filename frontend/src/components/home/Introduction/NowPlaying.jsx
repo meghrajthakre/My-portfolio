@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Music2 } from "lucide-react";
+import { FaSpotify } from "react-icons/fa";
 import { getNowPlaying } from "../../../services/musicService";
 
 const REFRESH_INTERVAL = 30_000;
@@ -34,10 +34,10 @@ const NowPlaying = () => {
   const content = <>{label} — {track.title} <span aria-hidden="true">·</span> {track.artist}</>;
 
   return (
-    <div className="mt-4 flex items-center gap-2 text-sm text-[var(--color-secondary-text)]" aria-live="polite">
-      <Music2 className="size-4 shrink-0 text-[var(--color-accent)]" aria-hidden="true" />
+    <div className="mt-4 flex items-center gap-2 text-sm leading-5 text-[var(--color-secondary-text)] sm:text-sm" aria-live="polite">
+      <FaSpotify className="size-[15px] shrink-0 text-[#1ed760]" aria-hidden="true" />
       {track.url ? (
-        <a href={track.url} target="_blank" rel="noreferrer" className="truncate hover:text-[var(--color-text)] hover:underline hover:underline-offset-4" aria-label={`${label}: ${track.title} by ${track.artist}`}>
+        <a href={track.url} target="_blank" rel="noreferrer" className="truncate hover:text-[var(--color-text)]" aria-label={`${label}: ${track.title} by ${track.artist}`}>
           {content}
         </a>
       ) : (
