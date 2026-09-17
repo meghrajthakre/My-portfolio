@@ -6,6 +6,7 @@ const REFRESH_INTERVAL = 30_000;
 
 const NowPlaying = () => {
   const [track, setTrack] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -16,6 +17,8 @@ const NowPlaying = () => {
         setTrack(data.status === "offline" || !data.title || !data.artist ? null : data);
       } catch (error) {
         if (error.name !== "AbortError") setTrack(null);
+      } finally {
+        if (!controller.signal.aborted) setIsLoading(false);
       }
     };
 
@@ -28,7 +31,16 @@ const NowPlaying = () => {
     };
   }, []);
 
-  if (!track) return null;
+  if (!track && !isLoading) return null;
+
+  if (isLoading && !track) {
+    return (
+      <div className="mt-4 flex items-center gap-2 text-sm leading-5 text-[var(--color-secondary-text)] sm:text-sm" role="status" aria-live="polite">
+        <FaSpotify className="size-[15px] shrink-0 animate-pulse text-[#1ed760]" aria-hidden="true" />
+        <span>Loading music...</span>
+      </div>
+    );
+  }
 
   const label = track.status === "now_playing" ? "Now playing" : "Last played";
   const content = <>{label} — {track.title} <span aria-hidden="true">·</span> {track.artist}</>;
