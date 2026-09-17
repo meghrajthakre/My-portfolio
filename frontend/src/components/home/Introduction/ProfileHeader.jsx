@@ -34,20 +34,20 @@ const ProfileHeader = () => {
         {PROFILE.bio}
       </p>
       <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm" aria-label="Contact details">
-        <div className="group flex items-center gap-2 text-[var(--color-secondary-text)]">
-          <Mail aria-hidden="true" size={15} strokeWidth={1.8} />
-          <span className="font-medium text-[var(--color-text)]">{PROFILE.email}</span>
-          <button type="button" onClick={copyEmail} aria-label="Copy email address" title="Copy email" className="inline-flex size-6 items-center justify-center rounded text-[var(--color-secondary-text)] opacity-0 transition-all hover:bg-[var(--color-icons-bg)] hover:text-[var(--color-text)] focus-visible:opacity-100 group-hover:opacity-100">
-            {isEmailCopied ? <Check aria-hidden="true" size={14} /> : <Copy aria-hidden="true" size={14} />}
-          </button>
-        </div>
-        <div className="group flex items-center gap-2 text-[var(--color-secondary-text)]">
-          <Phone aria-hidden="true" size={15} strokeWidth={1.8} />
-          <span className="font-medium text-[var(--color-text)]">{PROFILE.phone}</span>
-          <button type="button" onClick={copyPhone} aria-label="Copy phone number" title="Copy phone number" className="inline-flex size-6 items-center justify-center rounded text-[var(--color-secondary-text)] opacity-0 transition-all hover:bg-[var(--color-icons-bg)] hover:text-[var(--color-text)] focus-visible:opacity-100 group-hover:opacity-100">
-            {isPhoneCopied ? <Check aria-hidden="true" size={14} /> : <Copy aria-hidden="true" size={14} />}
-          </button>
-        </div>
+        <button type="button" onClick={copyEmail} aria-label="Copy email address" className="group flex min-h-8 cursor-pointer items-center gap-2 text-left text-[var(--color-secondary-text)] transition-colors hover:text-[var(--color-accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--logo-bg)]">
+          <Mail aria-hidden="true" size={16} strokeWidth={1.8} />
+          <span className="text-[13px] font-medium text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)] sm:text-sm">{PROFILE.email}</span>
+          <span aria-hidden="true" className="inline-flex size-5 items-center justify-center rounded text-[var(--color-secondary-text)] opacity-0 transition-all group-hover:text-[var(--color-accent)] group-hover:opacity-100">
+            {isEmailCopied ? <Check aria-hidden="true" size={15} className="group-hover:!text-[var(--color-accent)]" /> : <Copy aria-hidden="true" size={15} className="group-hover:!text-[var(--color-accent)]" />}
+          </span>
+        </button>
+        <button type="button" onClick={copyPhone} aria-label="Copy phone number" className="group flex min-h-8 cursor-pointer items-center gap-2 text-left text-[var(--color-secondary-text)] transition-colors hover:text-[var(--color-accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--logo-bg)]">
+          <Phone aria-hidden="true" size={16} strokeWidth={1.8} />
+          <span className="text-[13px] font-medium text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)] sm:text-sm">{PROFILE.phone}</span>
+          <span aria-hidden="true" className="inline-flex size-5 items-center justify-center rounded text-[var(--color-secondary-text)] opacity-0 transition-all group-hover:text-[var(--color-accent)] group-hover:opacity-100">
+            {isPhoneCopied ? <Check aria-hidden="true" size={15} className="group-hover:!text-[var(--color-accent)]" /> : <Copy aria-hidden="true" size={15} className="group-hover:!text-[var(--color-accent)]" />}
+          </span>
+        </button>
       </div>
       <NowPlaying />
     </header>
