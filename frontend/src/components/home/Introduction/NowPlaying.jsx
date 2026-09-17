@@ -2,11 +2,30 @@ import { useEffect, useState } from "react";
 import { FaSpotify } from "react-icons/fa";
 import { getNowPlaying } from "../../../services/musicService";
 
-const REFRESH_INTERVAL = 30_000;
+const REFRESH_INTERVAL = 60_000;
+const TRACK_CACHE_KEY = "now-playing:last-track";
+
+const readCachedTrack = () => {
+  try {
+    const cached = JSON.parse(localStorage.getItem(TRACK_CACHE_KEY));
+    if (!cached?.title || !cached?.artist || !["now_playing", "last_played"].includes(cached.status)) return null;
+    return cached;
+  } catch {
+    return null;
+  }
+};
+
+const saveCachedTrack = (nextTrack) => {
+  try {
+    localStorage.setItem(TRACK_CACHE_KEY, JSON.stringify(nextTrack));
+  } catch {
+    // Storage can be unavailable in private browsing or when the quota is full.
+  }
+};
 
 const NowPlaying = () => {
-  const [track, setTrack] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [track, setTrack] = useState(readCachedTrack);
+  const [isLoading, setIsLoading] = useState(() => !readCachedTrack());
 
   useEffect(() => {
     const controller = new AbortController();
@@ -14,9 +33,12 @@ const NowPlaying = () => {
     const loadTrack = async () => {
       try {
         const data = await getNowPlaying({ signal: controller.signal });
-        setTrack(data.status === "offline" || !data.title || !data.artist ? null : data);
+        const nextTrack = data.status === "offline" || !data.title || !data.artist ? null : data;
+        setTrack(nextTrack);
+        if (nextTrack) saveCachedTrack(nextTrack);
       } catch (error) {
-        if (error.name !== "AbortError") setTrack(null);
+        // Keep the cached track visible when the API is temporarily unavailable.
+        if (error.name !== "AbortError") setTrack((currentTrack) => currentTrack ?? readCachedTrack());
       } finally {
         if (!controller.signal.aborted) setIsLoading(false);
       }

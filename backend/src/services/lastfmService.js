@@ -1,8 +1,9 @@
 const LASTFM_API_URL = "https://ws.audioscrobbler.com/2.0/";
-const CACHE_TTL = 25 * 1000;
-const REQUEST_TIMEOUT = 8_000;
+const CACHE_TTL = 60 * 1000;
+const REQUEST_TIMEOUT = 3_000;
 
 let cache = null;
+let refreshPromise = null;
 
 const offlineTrack = () => ({
   isPlaying: false,
@@ -49,6 +50,29 @@ const getCachedMusic = () => (
 export const getNowPlaying = async () => {
   const cached = getCachedMusic();
   if (cached) return cached;
+
+  // An expired value is still useful for this non-critical widget. Return it
+  // immediately and refresh it once for all concurrent visitors.
+  if (cache) {
+    if (!refreshPromise) {
+      refreshPromise = fetchLatestTrack().finally(() => {
+        refreshPromise = null;
+      });
+      refreshPromise.catch(() => {});
+    }
+    return cache.data;
+  }
+
+  if (!refreshPromise) {
+    refreshPromise = fetchLatestTrack().finally(() => {
+      refreshPromise = null;
+    });
+  }
+
+  return refreshPromise;
+};
+
+const fetchLatestTrack = async () => {
 
   const apiKey = process.env.LASTFM_API_KEY;
   const username = process.env.LASTFM_USERNAME;
