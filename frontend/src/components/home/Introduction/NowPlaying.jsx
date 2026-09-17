@@ -57,9 +57,9 @@ const NowPlaying = () => {
 
   if (isLoading && !track) {
     return (
-      <div className="mt-4 flex items-center gap-2 text-sm leading-5 text-[var(--color-secondary-text)] sm:text-sm" role="status" aria-live="polite">
-        <FaSpotify className="size-[15px] shrink-0 animate-pulse text-[#1ed760]" aria-hidden="true" />
-        <span>Loading music...</span>
+      <div className="mt-4 flex h-5 items-center gap-2" role="status" aria-label="Loading now playing">
+        <span className="size-[15px] shrink-0 animate-pulse rounded-full bg-[var(--color-icons-bg)]" aria-hidden="true" />
+        <span className="h-3 w-52 max-w-[65vw] animate-pulse rounded-full bg-[var(--color-icons-bg)]" aria-hidden="true" />
       </div>
     );
   }
