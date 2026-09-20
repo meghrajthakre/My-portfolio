@@ -21,7 +21,7 @@ const Home = () => {
         </Suspense>
       </ScrollReveal>
       <ScrollReveal><HomeProjects /></ScrollReveal>
-      <ScrollReveal><InfiniteSlider /></ScrollReveal>
+      <InfiniteSlider />
 
       {/* 🔹 Lazy-loaded sections */}
       <ScrollReveal>

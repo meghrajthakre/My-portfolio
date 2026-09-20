@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 
-const StaggerReveal = ({ children, className = "", delay = 0, staggerAmount = 0.09 }) => {
+const StaggerReveal = ({ children, className = "", delay = 0, staggerAmount = 0.09, viewport }) => {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -8,7 +8,7 @@ const StaggerReveal = ({ children, className = "", delay = 0, staggerAmount = 0.
       className={className}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.15, margin: "0px 0px -60px 0px" }}
+      viewport={viewport ?? { once: true, amount: 0.15, margin: "0px 0px -60px 0px" }}
       variants={{
         hidden: {},
         visible: {
@@ -24,7 +24,7 @@ const StaggerReveal = ({ children, className = "", delay = 0, staggerAmount = 0.
   );
 };
 
-const StaggerItem = ({ children, className = "" }) => {
+const StaggerItem = ({ children, className = "", duration = 0.55 }) => {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -38,7 +38,7 @@ const StaggerItem = ({ children, className = "" }) => {
           y: 0,
           scale: 1,
           transition: {
-            duration: reduceMotion ? 0 : 0.55,
+            duration: reduceMotion ? 0 : duration,
             ease: [0.16, 1, 0.3, 1],
           },
         },

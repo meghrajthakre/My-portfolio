@@ -20,9 +20,9 @@ const SkillMarquee = ({ skills, direction = "left", label, secondsPerItem = 3.2 
         className="flex w-max motion-reduce:animate-none"
         style={{ animation: `${animation} ${duration} linear infinite` }}
       >
-        <StaggerReveal className="flex" delay={0.05} staggerAmount={0.07}>
+        <StaggerReveal className="flex" delay={0} staggerAmount={0.04} viewport={{ once: true, amount: 0, margin: "0px" }}>
           {skills.map((skill) => (
-            <StaggerItem key={skill.name}>
+            <StaggerItem key={skill.name} duration={0.28}>
               <SkillCard skill={skill} />
             </StaggerItem>
           ))}
