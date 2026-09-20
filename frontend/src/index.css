@@ -762,3 +762,13 @@ p {
   .site-grid-background::before { left: -7rem; }
   .site-grid-background::after { right: -4rem; }
 }
+/* marquee css */
+@keyframes marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marquee-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
