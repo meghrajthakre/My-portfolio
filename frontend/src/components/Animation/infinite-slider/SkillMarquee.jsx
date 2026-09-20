@@ -1,4 +1,5 @@
 import SkillCard from "./SkillCard";
+import { StaggerItem, StaggerReveal } from "../StaggerReveal";
 
 /**
  * CSS-only seamless ticker. No JS, no observers.
@@ -19,12 +20,18 @@ const SkillMarquee = ({ skills, direction = "left", label, secondsPerItem = 3.2 
         className="flex w-max motion-reduce:animate-none"
         style={{ animation: `${animation} ${duration} linear infinite` }}
       >
-        {skills.map((skill) => (
-          <SkillCard key={skill.name} skill={skill} />
-        ))}
-        {skills.map((skill) => (
-          <SkillCard key={`${skill.name}-duplicate`} skill={skill} hidden />
-        ))}
+        <StaggerReveal className="flex" delay={0.05} staggerAmount={0.07}>
+          {skills.map((skill) => (
+            <StaggerItem key={skill.name}>
+              <SkillCard skill={skill} />
+            </StaggerItem>
+          ))}
+        </StaggerReveal>
+        <div className="flex" aria-hidden="true">
+          {skills.map((skill) => (
+            <SkillCard key={`${skill.name}-duplicate`} skill={skill} hidden />
+          ))}
+        </div>
       </div>
     </div>
   );
