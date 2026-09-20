@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { FaCss3Alt, FaHtml5, FaJs, FaNodeJs, FaReact } from "react-icons/fa";
+import { StaggerItem, StaggerReveal } from "./StaggerReveal";
 import {
   SiAdobephotoshop,
   SiCanva,
@@ -147,34 +148,53 @@ const SkillMarquee = ({ skills, direction = "left", label, baseSpeed = 38 }) => 
   );
 };
 
-const Row = ({ title, count, children }) => (
-  <div className="grid grid-cols-[7rem_minmax(0,1fr)] items-center gap-4 max-sm:grid-cols-1 max-sm:gap-1">
-    <div className="flex items-baseline gap-2 max-sm:px-1">
-      <span className="text-[.95rem] font-semibold text-[var(--color-text)]">{title}</span>
-      <span className="text-[.8rem] text-[var(--color-secondary-text)]">{count}</span>
+const SkillLabel = ({ title, direction }) => {
+  const pointsRight = direction === "left";
+
+  return (
+    <StaggerReveal className="w-32 max-sm:mb-1" delay={0.08}>
+      <StaggerItem>
+        <p
+          className={`w-32 text-center text-lg font-semibold leading-none text-[var(--color-secondary-text)] ${pointsRight ? "-rotate-12" : "rotate-12"}`}
+          style={{ fontFamily: "'Caveat', cursive" }}
+        >
+          {title}
+        </p>
+      </StaggerItem>
+      <StaggerItem>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 90 44"
+          className={`-mt-5 h-15 w-20 text-[var(--color-secondary-text)] ${pointsRight ? "translate-x-10" : "translate-x-2 -scale-x-100"}`}
+        >
+          <path d="M10 4c-2 14 3 24 15 28 10 3 22 1 32-4" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+          <path d="m48 24 10 3-4 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </StaggerItem>
+    </StaggerReveal>
+  );
+};
+
+const Row = ({ title, titlePosition = "left", children }) => (
+  <div className="relative">
+    <div className={`pointer-events-none absolute top-1/2 hidden -translate-y-1/2 lg:block ${titlePosition === "right" ? "left-[calc(100%+3rem)]" : "right-[calc(100%+3rem)]"}`}>
+      <SkillLabel title={title} direction={titlePosition} />
     </div>
     {children}
   </div>
 );
 
 const InfiniteSlider = () => (
-  <section className="py-12 sm:py-16" aria-labelledby="skills-heading">
-    <div className="mb-8 flex items-end justify-between gap-6 max-sm:block">
-      <h2 id="skills-heading" className="max-w-md">
-        Skills &amp; technologies
-      </h2>
-      <p className="max-w-64 text-right text-[.9rem] leading-6 text-[var(--color-secondary-text)] max-sm:mt-2 max-sm:text-left">
-        Crafting polished digital experiences, from intuitive interfaces to reliable APIs.
-      </p>
-    </div>
-
+  <section className="py-12 sm:py-16" aria-label="Skills">
+    <div className="relative">
     <div className="flex flex-col gap-3">
-      <Row title="Development" count={developmentSkills.length}>
+      <Row title="Development" titlePosition="right">
         <SkillMarquee skills={developmentSkills} direction="left" label="Development skills" baseSpeed={36} />
       </Row>
-      <Row title="Workflow" count={workflowSkills.length}>
+      <Row title="Workflow">
         <SkillMarquee skills={workflowSkills} direction="right" label="Workflow skills" baseSpeed={30} />
       </Row>
+    </div>
     </div>
   </section>
 );
