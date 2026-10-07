@@ -69,11 +69,11 @@ const NowPlaying = () => {
         aria-label="Loading now playing"
       >
         <span
-          className="size-[15px] shrink-0 animate-pulse rounded-full bg-[var(--color-icons-bg)]"
+          className="size-[15px] shrink-0 motion-safe:animate-pulse rounded-full bg-[var(--color-icons-bg)]"
           aria-hidden="true"
         />
         <span
-          className="h-3 w-52 max-w-[65vw] animate-pulse rounded-full bg-[var(--color-icons-bg)]"
+          className="h-3 w-52 max-w-[65vw] motion-safe:animate-pulse rounded-full bg-[var(--color-icons-bg)]"
           aria-hidden="true"
         />
       </div>

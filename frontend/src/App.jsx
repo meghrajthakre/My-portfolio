@@ -1,11 +1,11 @@
 import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
-import SmoothScroll from "./components/Animation/SmoothScroll";
 import ScrollToTop from "./common/ScrollToTop";
 import Quotes from "./components/quotes/Quotes";
 import Footer from "./Pages/Footer";
 import { InfinityLoop } from "./components/Loader/InfinityLoop";
+import LoadingFallback from "./components/Loader/LoadingFallback";
 const Home = lazy(() => import("./Pages/Home"));
 const Projects = lazy(() => import("./Pages/Projects/Projects"));
 const Work = lazy(() => import("./Pages/Work"));
@@ -69,7 +69,7 @@ function App() {
       )}
 
       {/* 🔹 Wrap Routes in Suspense for lazy loading fallback */}
-      <Suspense fallback={<div className="min-h-[40vh]" aria-label="Loading page" />}>
+      <Suspense fallback={<LoadingFallback />}>
         <StartupReady onReady={handleStartupReady} />
         <ScrollToTop />
         <Routes>

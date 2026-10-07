@@ -5,6 +5,7 @@ import InfiniteSlider from "../components/Animation/InfiniteSlider";
 import SetUpDevlopement from "../components/Ui/Layouts/SetUpDevlopement";
 import GitHubActivitySkeleton from "../components/Loader/GitHubActivitySkeleton";
 import ScrollReveal from "../components/Animation/ScrollReveal";
+import LoadingFallback from "../components/Loader/LoadingFallback";
 
 // 🔹 Lazy loaded components
 const HomeGitHub = lazy(() => import("../components/Ui/Layouts/HomeGitHub"));
@@ -25,7 +26,7 @@ const Home = () => {
 
       {/* 🔹 Lazy-loaded sections */}
       <ScrollReveal>
-        <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
+        <Suspense fallback={<LoadingFallback section />}>
           <HomeBlog />
           <HomeBook />
         </Suspense>

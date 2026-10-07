@@ -1,5 +1,5 @@
 const SkeletonBlock = ({ className = "" }) => (
-  <span className={`block animate-pulse rounded bg-[var(--color-icons-bg)] ${className}`} />
+  <span className={`block motion-safe:animate-pulse rounded bg-[var(--color-icons-bg)] ${className}`} />
 );
 
 const GitHubActivitySkeleton = ({ section = false }) => (

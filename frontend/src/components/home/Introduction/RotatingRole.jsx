@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion as Motion } from "motion/react";
+import { AnimatePresence, motion as Motion, useReducedMotion } from "motion/react";
 import ShinyText from "../../Animation/ShinyText";
 
 const CHANGE_INTERVAL = 3600;
 
 const RotatingRole = ({ roles }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (roles.length < 2) return undefined;
+    if (reduceMotion || roles.length < 2) return undefined;
 
     const intervalId = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % roles.length);
     }, CHANGE_INTERVAL);
 
     return () => window.clearInterval(intervalId);
-  }, [roles.length]);
+  }, [reduceMotion, roles.length]);
 
   return (
     <span className="relative inline-flex h-[1.5em] w-[160px] items-center overflow-hidden sm:w-[240px]" aria-live="polite">
@@ -23,10 +24,10 @@ const RotatingRole = ({ roles }) => {
         <Motion.span
           key={roles[activeIndex]}
           className="absolute left-0 inline-flex w-full whitespace-nowrap"
-          initial={{ opacity: 0, y: -8 }}
+          initial={reduceMotion ? false : { opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 12 }}
-          transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+          exit={reduceMotion ? undefined : { opacity: 0, y: 12 }}
+          transition={reduceMotion ? { duration: 0 } : { duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
         >
           <ShinyText
             text={roles[activeIndex]}
@@ -38,7 +39,7 @@ const RotatingRole = ({ roles }) => {
             direction="left"
             yoyo={false}
             pauseOnHover={false}
-            disabled={false}
+            disabled={reduceMotion}
             className="w-full"
           />
         </Motion.span>

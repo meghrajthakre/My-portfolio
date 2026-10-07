@@ -44,7 +44,7 @@ const BlogCard = () => {
             <div className="flex py-6 items-center justify-between">
               {/* ✅ Active System */}
               <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
+                <span className="w-3 h-3 rounded-full bg-green-500 motion-safe:animate-pulse"></span>
                 <h3 className="text-[var(--color-text)] font-medium">
                   {project.status}
                 </h3>
