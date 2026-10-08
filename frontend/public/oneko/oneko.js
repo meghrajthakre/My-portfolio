@@ -8,7 +8,6 @@
   if (isReducedMotion) return;
 
   const nekoEl = document.createElement("div");
-  const petTooltip = document.createElement("div");
   const SKIN_STORAGE_KEY = "portfolio:oneko-skin";
   const skins = [
     { id: "cat", label: "Milo the Cat", file: "/oneko/oneko.gif" },
@@ -113,7 +112,6 @@
     skinIndex = (index + skins.length) % skins.length;
     const skin = skins[skinIndex];
     nekoEl.style.backgroundImage = `url(${skin.file})`;
-    petTooltip.textContent = `Yo! ${skin.label} here \u00b7 Right-click for a new buddy`;
     nekoEl.dataset.skin = skin.id;
 
     if (persist) {
@@ -349,37 +347,6 @@
     nekoEl.style.top = `${nekoPosY - 16}px`;
     nekoEl.style.zIndex = 2147483647;
 
-    Object.assign(petTooltip.style, {
-      position: "absolute",
-      left: "50%",
-      bottom: "40px",
-      zIndex: "1",
-      padding: "6px 9px",
-      border: "1px solid var(--color-border)",
-      borderRadius: "7px",
-      background: "var(--color-text)",
-      color: "var(--color-bg)",
-      boxShadow: "0 10px 28px rgba(0, 0, 0, 0.22)",
-      fontSize: "11px",
-      fontWeight: "600",
-      lineHeight: "1.2",
-      whiteSpace: "nowrap",
-      pointerEvents: "none",
-      opacity: "0",
-      transform: "translate(-50%, 4px) scale(0.98)",
-      transition: "opacity 140ms ease, transform 140ms ease",
-    });
-    nekoEl.appendChild(petTooltip);
-
-    nekoEl.addEventListener("mouseenter", () => {
-      petTooltip.style.opacity = "1";
-      petTooltip.style.transform = "translate(-50%, 0) scale(1)";
-    });
-    nekoEl.addEventListener("mouseleave", () => {
-      petTooltip.style.opacity = "0";
-      petTooltip.style.transform = "translate(-50%, 4px) scale(0.98)";
-    });
-
     skins.forEach((skin) => {
       const image = new Image();
       image.src = skin.file;
@@ -389,7 +356,6 @@
     nekoEl.addEventListener("contextmenu", function (event) {
       event.preventDefault();
       event.stopPropagation();
-      petTooltip.style.opacity = "0";
       openSkinChooser();
     });
 
