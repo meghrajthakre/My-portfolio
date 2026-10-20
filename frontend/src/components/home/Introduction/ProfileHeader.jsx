@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Check, Copy, Mail, Phone } from "lucide-react";
 import { PROFILE } from "./profileContent";
 import ProfileName from "./ProfileName";
@@ -6,21 +7,67 @@ import RotatingRole from "./RotatingRole";
 import { useCopyEmail } from "./useCopyEmail";
 
 const ProfileHeader = () => {
+  const avatarRef = useRef(null);
+  const reactionTimer = useRef(null);
+  const clickTimer = useRef(null);
+  const [direction, setDirection] = useState("front");
+  const [reaction, setReaction] = useState("");
+
+  useEffect(() => {
+    const updateDirection = (event) => {
+      const rect = avatarRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const dx = event.clientX - (rect.left + rect.width / 2);
+      const dy = event.clientY - (rect.top + rect.height / 2);
+      if (Math.hypot(dx, dy) < 24) return setDirection("front");
+      const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+      if (angle >= -22.5 && angle < 22.5) setDirection("right");
+      else if (angle >= 22.5 && angle < 67.5) setDirection("down-right");
+      else if (angle >= 67.5 && angle < 112.5) setDirection("down");
+      else if (angle >= 112.5 && angle < 157.5) setDirection("down-left");
+      else if (angle >= 157.5 || angle < -157.5) setDirection("left");
+      else if (angle >= -157.5 && angle < -112.5) setDirection("up-left");
+      else if (angle >= -112.5 && angle < -67.5) setDirection("up");
+      else setDirection("up-right");
+    };
+    window.addEventListener("pointermove", updateDirection, { passive: true });
+    return () => window.removeEventListener("pointermove", updateDirection);
+  }, []);
+
+  useEffect(() => () => {
+    window.clearTimeout(reactionTimer.current);
+    window.clearTimeout(clickTimer.current);
+  }, []);
+
+  const handleAvatarClick = () => {
+    window.clearTimeout(clickTimer.current);
+    if (reaction === "happy") {
+      setReaction("love");
+      window.clearTimeout(reactionTimer.current);
+      reactionTimer.current = window.setTimeout(() => setReaction(""), 1000);
+      return;
+    }
+    setReaction("happy");
+    reactionTimer.current = window.setTimeout(() => setReaction(""), 800);
+    clickTimer.current = window.setTimeout(() => setReaction(""), 800);
+  };
+
   const { isCopied: isEmailCopied, copyEmail } = useCopyEmail(PROFILE.email);
   const { isCopied: isPhoneCopied, copyEmail: copyPhone } = useCopyEmail(PROFILE.phoneHref);
 
   return (
     <header>
       <div className="flex items-center gap-4 sm:gap-6">
-        <img
-          src={PROFILE.avatar}
-          alt={PROFILE.name}
-          width="112"
-          height="112"
-          fetchPriority="high"
-          style={{ backgroundColor: "var(--logo-bg)" }}
-          className="size-20 shrink-0 rounded-full object-cover sm:size-28"
-        />
+        <button
+          ref={avatarRef}
+          type="button"
+          onClick={handleAvatarClick}
+          aria-label={`${PROFILE.name}'s interactive avatar. Move the pointer to change its gaze; click for a happy face and double click for hearts.`}
+          className="profile-avatar relative size-20 shrink-0 overflow-hidden rounded-full sm:size-28"
+        >
+          <span className={`profile-avatar-sprite profile-avatar-${direction}${reaction ? ` profile-avatar-${reaction}` : ""}`} role="img" aria-label={reaction === "love" ? "Love-struck" : reaction === "happy" ? "Happy" : PROFILE.name} />
+          {reaction === "love" && <span aria-hidden="true" className="profile-avatar-hearts">♥ ♥ ♥</span>}
+        </button>
 
         <div className="flex min-w-0 flex-col justify-center gap-2">
           <ProfileName name={PROFILE.name} />
