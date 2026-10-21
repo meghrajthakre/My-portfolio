@@ -194,7 +194,6 @@
   appearance: none;
   -webkit-appearance: none;
   cursor: pointer;
-  background: #000;
   image-rendering: pixelated;
   -webkit-tap-highlight-color: transparent;
   line-height: 0;
@@ -223,7 +222,7 @@
   display: block;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 70% 78%;
   image-rendering: pixelated;
 }
 
@@ -241,21 +240,36 @@
 
 .profile-avatar-hearts {
   position: absolute;
-  inset: 2px 0 auto;
-  z-index: 1;
-  color: #ff4c79;
-  font-size: 0.7rem;
-  letter-spacing: 0.18rem;
-  text-shadow: 0 1px 2px #111;
-  animation: avatar-hearts 0.35s ease-in-out infinite alternate;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
 }
 
-@keyframes avatar-hearts {
-  to { transform: translateY(-3px) scale(1.08); }
+.profile-avatar-hearts span {
+  position: absolute;
+  color: #ff4c79;
+  font-size: clamp(0.75rem, 1.7vw, 1.25rem);
+  line-height: 1;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%);
+  opacity: 0;
+  animation: avatar-heart-float 0.7s ease-out both;
+}
+
+.profile-avatar-hearts span:nth-child(1) { left: 12%; top: 50%; animation-delay: 0s; }
+.profile-avatar-hearts span:nth-child(2) { left: 24%; top: 30%; animation-delay: 0.06s; }
+.profile-avatar-hearts span:nth-child(3) { left: 42%; top: 18%; animation-delay: 0.12s; }
+.profile-avatar-hearts span:nth-child(4) { right: 18%; top: 28%; animation-delay: 0.18s; }
+.profile-avatar-hearts span:nth-child(5) { right: 8%; top: 48%; animation-delay: 0.24s; }
+.profile-avatar-hearts span:nth-child(6) { left: 48%; top: 8%; animation-delay: 0.3s; }
+
+@keyframes avatar-heart-float {
+  0% { opacity: 0; transform: translateY(10px) scale(0.5); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-26px) scale(1.2); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .profile-avatar-hearts { animation: none; }
+  .profile-avatar-hearts span { animation: none; opacity: 1; }
 }
 
 @keyframes profile-role-enter {

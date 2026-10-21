@@ -10,6 +10,7 @@ const ProfileHeader = () => {
   const avatarRef = useRef(null);
   const reactionTimer = useRef(null);
   const clickTimer = useRef(null);
+  const directionRef = useRef("front");
   const [direction, setDirection] = useState("front");
   const [reaction, setReaction] = useState("");
 
@@ -19,19 +20,42 @@ const ProfileHeader = () => {
       if (!rect) return;
       const dx = event.clientX - (rect.left + rect.width / 2);
       const dy = event.clientY - (rect.top + rect.height / 2);
-      if (Math.hypot(dx, dy) < 24) return setDirection("front");
+      const distance = Math.hypot(dx, dy);
+      if (distance < (directionRef.current === "front" ? 30 : 18)) {
+        directionRef.current = "front";
+        return setDirection("front");
+      }
       const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
-      if (angle >= -22.5 && angle < 22.5) setDirection("right");
-      else if (angle >= 22.5 && angle < 67.5) setDirection("down-right");
-      else if (angle >= 67.5 && angle < 112.5) setDirection("down");
-      else if (angle >= 112.5 && angle < 157.5) setDirection("down-left");
-      else if (angle >= 157.5 || angle < -157.5) setDirection("left");
-      else if (angle >= -157.5 && angle < -112.5) setDirection("up-left");
-      else if (angle >= -112.5 && angle < -67.5) setDirection("up");
-      else setDirection("up-right");
+      let nextDirection;
+      if (angle >= -22.5 && angle < 22.5) nextDirection = "right";
+      else if (angle >= 22.5 && angle < 67.5) nextDirection = "down-right";
+      else if (angle >= 67.5 && angle < 112.5) nextDirection = "down";
+      else if (angle >= 112.5 && angle < 157.5) nextDirection = "down-left";
+      else if (angle >= 157.5 || angle < -157.5) nextDirection = "left";
+      else if (angle >= -157.5 && angle < -112.5) nextDirection = "up-left";
+      else if (angle >= -112.5 && angle < -67.5) nextDirection = "up";
+      else nextDirection = "up-right";
+
+      const directionCenters = {
+        right: 0,
+        "down-right": 45,
+        down: 90,
+        "down-left": 135,
+        left: 180,
+        "up-left": -135,
+        up: -90,
+        "up-right": -45,
+      };
+      const angleFromCenter = Math.abs(((angle - directionCenters[nextDirection] + 540) % 360) - 180);
+      if (directionRef.current === "front" || directionRef.current === nextDirection || angleFromCenter <= 18) {
+        directionRef.current = nextDirection;
+        setDirection(nextDirection);
+      }
     };
     window.addEventListener("pointermove", updateDirection, { passive: true });
-    return () => window.removeEventListener("pointermove", updateDirection);
+    return () => {
+      window.removeEventListener("pointermove", updateDirection);
+    };
   }, []);
 
   useEffect(() => () => {
@@ -40,16 +64,21 @@ const ProfileHeader = () => {
   }, []);
 
   const handleAvatarClick = () => {
-    window.clearTimeout(clickTimer.current);
-    if (reaction === "happy") {
-      setReaction("love");
+    if (clickTimer.current) {
+      window.clearTimeout(clickTimer.current);
+      clickTimer.current = null;
       window.clearTimeout(reactionTimer.current);
+      setReaction("love");
       reactionTimer.current = window.setTimeout(() => setReaction(""), 1000);
       return;
     }
-    setReaction("happy");
-    reactionTimer.current = window.setTimeout(() => setReaction(""), 800);
-    clickTimer.current = window.setTimeout(() => setReaction(""), 800);
+
+    clickTimer.current = window.setTimeout(() => {
+      clickTimer.current = null;
+      setReaction("happy");
+      window.clearTimeout(reactionTimer.current);
+      reactionTimer.current = window.setTimeout(() => setReaction(""), 800);
+    }, 220);
   };
 
   const { isCopied: isEmailCopied, copyEmail } = useCopyEmail(PROFILE.email);
@@ -63,10 +92,15 @@ const ProfileHeader = () => {
           type="button"
           onClick={handleAvatarClick}
           aria-label={`${PROFILE.name}'s interactive avatar. Move the pointer to change its gaze; click for a happy face and double click for hearts.`}
-          className="profile-avatar relative size-20 shrink-0 overflow-hidden rounded-full sm:size-28"
+          className="profile-avatar relative size-24 shrink-0 overflow-hidden sm:size-34"
         >
           <span className={`profile-avatar-sprite profile-avatar-${direction}${reaction ? ` profile-avatar-${reaction}` : ""}`} role="img" aria-label={reaction === "love" ? "Love-struck" : reaction === "happy" ? "Happy" : PROFILE.name} />
-          {reaction === "love" && <span aria-hidden="true" className="profile-avatar-hearts">♥ ♥ ♥</span>}
+          {reaction === "love" && (
+            <span aria-hidden="true" className="profile-avatar-hearts">
+              <span>&hearts;</span><span>&hearts;</span><span>&hearts;</span>
+              <span>&hearts;</span><span>&hearts;</span><span>&hearts;</span>
+            </span>
+          )}
         </button>
 
         <div className="flex min-w-0 flex-col justify-center gap-2">
