@@ -8,14 +8,40 @@ import { useCopyEmail } from "./useCopyEmail";
 
 const ProfileHeader = () => {
   const avatarRef = useRef(null);
+  const idleTimer = useRef(null);
+  const wakingTimer = useRef(null);
   const reactionTimer = useRef(null);
   const clickTimer = useRef(null);
   const directionRef = useRef("front");
+  const sleepingRef = useRef(false);
+  const lastPointerPosition = useRef(null);
   const [direction, setDirection] = useState("front");
   const [reaction, setReaction] = useState("");
+  const [sleeping, setSleeping] = useState(false);
+  const [waking, setWaking] = useState(false);
 
   useEffect(() => {
+    const resetIdleTimer = () => {
+      window.clearTimeout(idleTimer.current);
+      idleTimer.current = window.setTimeout(() => {
+        sleepingRef.current = true;
+        setSleeping(true);
+        setWaking(false);
+      }, 1800);
+    };
     const updateDirection = (event) => {
+      const previousPosition = lastPointerPosition.current;
+      lastPointerPosition.current = { x: event.clientX, y: event.clientY };
+      if (previousPosition && Math.hypot(event.clientX - previousPosition.x, event.clientY - previousPosition.y) < 2) return;
+
+      if (sleepingRef.current) {
+        sleepingRef.current = false;
+        setWaking(true);
+        window.clearTimeout(wakingTimer.current);
+        wakingTimer.current = window.setTimeout(() => setWaking(false), 650);
+      }
+      setSleeping(false);
+      resetIdleTimer();
       const rect = avatarRef.current?.getBoundingClientRect();
       if (!rect) return;
       const dx = event.clientX - (rect.left + rect.width / 2);
@@ -52,18 +78,35 @@ const ProfileHeader = () => {
         setDirection(nextDirection);
       }
     };
+    resetIdleTimer();
     window.addEventListener("pointermove", updateDirection, { passive: true });
     return () => {
       window.removeEventListener("pointermove", updateDirection);
+      window.clearTimeout(idleTimer.current);
+      window.clearTimeout(wakingTimer.current);
     };
   }, []);
 
   useEffect(() => () => {
     window.clearTimeout(reactionTimer.current);
     window.clearTimeout(clickTimer.current);
+    window.clearTimeout(wakingTimer.current);
   }, []);
 
   const handleAvatarClick = () => {
+    window.clearTimeout(idleTimer.current);
+    if (sleepingRef.current) {
+      sleepingRef.current = false;
+      setWaking(true);
+      window.clearTimeout(wakingTimer.current);
+      wakingTimer.current = window.setTimeout(() => setWaking(false), 650);
+    }
+    setSleeping(false);
+    idleTimer.current = window.setTimeout(() => {
+      sleepingRef.current = true;
+      setSleeping(true);
+      setWaking(false);
+    }, 1800);
     if (clickTimer.current) {
       window.clearTimeout(clickTimer.current);
       clickTimer.current = null;
@@ -83,6 +126,7 @@ const ProfileHeader = () => {
 
   const { isCopied: isEmailCopied, copyEmail } = useCopyEmail(PROFILE.email);
   const { isCopied: isPhoneCopied, copyEmail: copyPhone } = useCopyEmail(PROFILE.phoneHref);
+  const displayedDirection = sleeping ? "sleep" : direction;
 
   return (
     <header>
@@ -91,10 +135,11 @@ const ProfileHeader = () => {
           ref={avatarRef}
           type="button"
           onClick={handleAvatarClick}
-          aria-label={`${PROFILE.name}'s interactive avatar. Move the pointer to change its gaze; click for a happy face and double click for hearts.`}
+          aria-label={sleeping ? `${PROFILE.name}'s avatar is sleeping. Move the pointer to wake it.` : `${PROFILE.name}'s interactive avatar. Move the pointer to change its gaze; click for a happy face and double click for hearts.`}
           className="profile-avatar relative size-24 shrink-0 overflow-hidden sm:size-34"
         >
-          <span className={`profile-avatar-sprite profile-avatar-${direction}${reaction ? ` profile-avatar-${reaction}` : ""}`} role="img" aria-label={reaction === "love" ? "Love-struck" : reaction === "happy" ? "Happy" : PROFILE.name} />
+          <span className={`profile-avatar-sprite profile-avatar-${displayedDirection}${waking ? " profile-avatar-awake profile-avatar-waking" : reaction ? ` profile-avatar-${reaction}` : ""}`} role="img" aria-label={sleeping ? "Sleeping" : waking ? "Waking up" : reaction === "love" ? "Love-struck" : reaction === "happy" ? "Happy" : PROFILE.name} />
+          {sleeping && <span aria-hidden="true" className="profile-avatar-zzz">Zzz</span>}
           {reaction === "love" && (
             <span aria-hidden="true" className="profile-avatar-hearts">
               <span>&hearts;</span><span>&hearts;</span><span>&hearts;</span>
