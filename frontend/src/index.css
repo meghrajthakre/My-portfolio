@@ -275,40 +275,38 @@
 .profile-avatar-sleep { background-image: url('/Logo/streamer-sleep.png'); }
 .profile-avatar-awake { background-image: url('/Logo/streamer-awake.png'); }
 
-.profile-avatar-flowers {
+.profile-avatar-hearts {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
 }
 
-.profile-avatar-flowers span {
+.profile-avatar-hearts span {
   position: absolute;
-  top: 38%;
-  left: 50%;
-  font-size: clamp(0.8rem, 1.8vw, 1.25rem);
+  color: #ff4c79;
+  font-size: clamp(0.75rem, 1.7vw, 1.25rem);
   line-height: 1;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%);
   opacity: 0;
-  animation: avatar-flower-fall 1.2s cubic-bezier(0.2, 0.65, 0.4, 1) both;
+  animation: avatar-heart-float 0.7s ease-out both;
 }
 
-.profile-avatar-flowers span:nth-child(1) { --flower-x: -40px; animation-delay: 0s; }
-.profile-avatar-flowers span:nth-child(2) { --flower-x: -27px; animation-delay: 0.06s; }
-.profile-avatar-flowers span:nth-child(3) { --flower-x: -13px; animation-delay: 0.12s; }
-.profile-avatar-flowers span:nth-child(4) { --flower-x: 2px; animation-delay: 0.03s; }
-.profile-avatar-flowers span:nth-child(5) { --flower-x: 16px; animation-delay: 0.1s; }
-.profile-avatar-flowers span:nth-child(6) { --flower-x: 30px; animation-delay: 0.16s; }
-.profile-avatar-flowers span:nth-child(7) { --flower-x: 43px; animation-delay: 0.08s; }
-.profile-avatar-flowers span:nth-child(8) { --flower-x: 8px; animation-delay: 0.2s; }
+.profile-avatar-hearts span:nth-child(1) { left: 12%; top: 50%; animation-delay: 0s; }
+.profile-avatar-hearts span:nth-child(2) { left: 24%; top: 30%; animation-delay: 0.06s; }
+.profile-avatar-hearts span:nth-child(3) { left: 42%; top: 18%; animation-delay: 0.12s; }
+.profile-avatar-hearts span:nth-child(4) { right: 18%; top: 28%; animation-delay: 0.18s; }
+.profile-avatar-hearts span:nth-child(5) { right: 8%; top: 48%; animation-delay: 0.24s; }
+.profile-avatar-hearts span:nth-child(6) { left: 48%; top: 8%; animation-delay: 0.3s; }
 
-@keyframes avatar-flower-fall {
-  0% { opacity: 0; transform: translate3d(0, -5px, 0) rotate(0) scale(0.45); }
-  12% { opacity: 1; }
-  100% { opacity: 0; transform: translate3d(var(--flower-x), 105px, 0) rotate(300deg) scale(0.9); }
+@keyframes avatar-heart-float {
+  0% { opacity: 0; transform: translateY(10px) scale(0.5); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-26px) scale(1.2); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .profile-avatar-flowers span { animation: none; opacity: 1; }
+  .profile-avatar-hearts span { animation: none; opacity: 1; }
   .profile-avatar-zzz { animation: none; opacity: 1; }
 }
 
