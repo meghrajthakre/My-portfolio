@@ -1,200 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { Check, Copy, Mail, Phone } from "lucide-react";
 import { PROFILE } from "./profileContent";
 import ProfileName from "./ProfileName";
 import NowPlaying from "./NowPlaying";
 import RotatingRole from "./RotatingRole";
 import { useCopyEmail } from "./useCopyEmail";
+import { ParticleShower } from "./ParticleShower";
+import { chooseTheme } from "./profileFlowerThemes.js";
+import "./ProfileHeader.css";
 
-// Pick a theme: "garden" | "music" | "cosmic" | "autumn" | "festive" | "dev" | "random"
-const ACTIVE_THEME = "random";
-
-// items: [glyph, floatiness 0-1 (1 = drifts like a leaf, 0 = drops like a stone), glow?]
-const THEMES = {
-  garden: {
-    petalShare: 0.22,
-    colors: ["#ffb7c5", "#ff8fab", "#ffd6a5", "#e0aaff", "#fff1a8", "#c1f0d1"],
-    items: [["🪷", 0.4], ["🪻", 0.4], ["🏵️", 0.4], ["💮", 0.55], ["🌸", 0.55], ["🌼", 0.45], ["🌺", 0.4], ["🌻", 0.3], ["🦋", 0.95], ["🍃", 1]],
-  },
-  music: {
-    petalShare: 0,
-    colors: [],
-    items: [["🎵", 0.7], ["🎶", 0.7], ["🎧", 0.2], ["🎸", 0.15], ["🥁", 0.15], ["🎹", 0.15], ["🎷", 0.15], ["🎻", 0.15]],
-  },
-  cosmic: {
-    petalShare: 0.18,
-    colors: ["#fff3b0", "#ffd166", "#cdb4ff", "#ffffff"],
-    items: [["⭐", 0.5, true], ["🌟", 0.5, true], ["✨", 0.8, true], ["💫", 0.7, true], ["🌙", 0.35], ["🪐", 0.2], ["☄️", 0.3]],
-  },
-  autumn: {
-    petalShare: 0.25,
-    colors: ["#d9480f", "#f08c00", "#c2255c", "#a05a2c", "#e8a33d"],
-    items: [["🍁", 0.9], ["🍂", 0.95], ["🍃", 1], ["🌰", 0.1], ["🍄", 0.15], ["🌾", 0.7]],
-  },
-  festive: {
-    petalShare: 0.3,
-    colors: ["#ff9f1c", "#ff4d6d", "#c77dff", "#ffd60a", "#2ec4b6"],
-    items: [["🪔", 0.2], ["🪷", 0.4], ["🏵️", 0.4], ["✨", 0.8, true], ["🎆", 0.3], ["🧡", 0.4], ["🪁", 0.5]],
-  },
-  dev: {
-    petalShare: 0,
-    colors: [],
-    items: [["💻", 0.15], ["🐛", 0.3], ["🐞", 0.35], ["⚡", 0.3, true], ["🚀", 0.2], ["☕", 0.2], ["⌨️", 0.15], ["🧩", 0.2]],
-  },
-};
-
-const FLOWER_CSS = `
-.flower-fx {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-/* Outer layer: curtain from the navbar, fall, squash-and-bounce on the floor, rest, fade. */
-.flower-fx-item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: var(--size);
-  line-height: 1;
-  opacity: 0;
-  will-change: transform, opacity;
-  animation: flower-fx-flight var(--dur) var(--delay) linear both;
-}
-
-/* Inner layer: sways and flips in 3D while falling, then settles flat once it lands. */
-.flower-fx-item > span {
-  display: block;
-  animation: flower-fx-sway var(--dur) var(--delay) ease-in-out both;
-}
-
-.flower-fx-glyph {
-  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.18));
-}
-
-.flower-fx-glow {
-  filter: drop-shadow(0 0 6px rgb(255 214 102 / 0.95)) drop-shadow(0 0 14px rgb(255 190 80 / 0.5));
-}
-
-/* Pure-CSS petal: no emoji, so it looks the same on every device. */
-.flower-fx-petal {
-  width: 0.7em;
-  height: 0.95em;
-  border-radius: 100% 0 100% 0;
-  background: radial-gradient(circle at 30% 25%, #fff9 0, transparent 45%), var(--petal);
-  box-shadow: inset -2px -2px 4px rgb(0 0 0 / 0.08);
-}
-
-@keyframes flower-fx-flight {
-  0% {
-    opacity: 0;
-    transform: translate3d(var(--sx), var(--sy), 0) scale(0.2) rotate(0deg);
-    animation-timing-function: cubic-bezier(0.15, 0.7, 0.3, 1);
-  }
-  6% { opacity: var(--opacity); }
-  16% {
-    opacity: var(--opacity);
-    transform: translate3d(calc(var(--sx) + var(--bx)), calc(var(--sy) + var(--by)), 0) scale(1) rotate(calc(var(--spin) * 0.15));
-    animation-timing-function: cubic-bezier(0.4, 0, 0.85, 0.55);
-  }
-  /* first touch: squash */
-  72% {
-    opacity: var(--opacity);
-    transform: translate3d(calc(var(--sx) + var(--mx)), calc(var(--floor) - var(--size) - var(--rest)), 0) scale(1.15, 0.8) rotate(calc(var(--spin) * 0.85));
-    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1);
-  }
-  /* hop up, stretched */
-  79% {
-    transform: translate3d(calc(var(--sx) + (var(--mx) * 3 + var(--ex)) / 4), calc(var(--floor) - var(--size) - var(--rest) - var(--hop)), 0) scale(0.94, 1.08) rotate(calc(var(--spin) * 0.93));
-    animation-timing-function: cubic-bezier(0.4, 0, 0.85, 0.55);
-  }
-  /* second touch */
-  85% {
-    transform: translate3d(calc(var(--sx) + (var(--mx) + var(--ex)) / 2), calc(var(--floor) - var(--size) - var(--rest)), 0) scale(1.08, 0.9) rotate(calc(var(--spin) * 0.98));
-    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1);
-  }
-  /* tiny final hop */
-  89% {
-    transform: translate3d(calc(var(--sx) + var(--ex)), calc(var(--floor) - var(--size) - var(--rest) - var(--hop) * 0.25), 0) scale(1, 1) rotate(var(--spin));
-    animation-timing-function: cubic-bezier(0.4, 0, 0.85, 0.55);
-  }
-  /* rest on the floor, then fade away */
-  93% {
-    opacity: var(--opacity);
-    transform: translate3d(calc(var(--sx) + var(--ex)), calc(var(--floor) - var(--size) - var(--rest)), 0) scale(1.04, 0.95) rotate(var(--spin));
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(calc(var(--sx) + var(--ex)), calc(var(--floor) - var(--size) - var(--rest)), 0) scale(1) rotate(var(--spin));
-  }
-}
-
-@keyframes flower-fx-sway {
-  0%, 16% { transform: perspective(320px) translateX(0) rotateY(0deg) rotateZ(0deg); }
-  28% { transform: perspective(320px) translateX(calc(var(--sway) * -1)) rotateY(-65deg) rotateZ(-14deg); }
-  40% { transform: perspective(320px) translateX(var(--sway)) rotateY(65deg) rotateZ(14deg); }
-  52% { transform: perspective(320px) translateX(calc(var(--sway) * -0.8)) rotateY(-55deg) rotateZ(-10deg); }
-  64% { transform: perspective(320px) translateX(calc(var(--sway) * 0.5)) rotateY(40deg) rotateZ(8deg); }
-  74%, 100% { transform: perspective(320px) translateX(0) rotateY(0deg) rotateZ(0deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .flower-fx-item { animation: flower-fx-fade 1.6s var(--delay) linear both; }
-  .flower-fx-item > span { animation: none; }
-  @keyframes flower-fx-fade {
-    0%, 100% { opacity: 0; transform: translate3d(var(--sx), var(--sy), 0); }
-    30%, 70% { opacity: var(--opacity); transform: translate3d(var(--sx), var(--sy), 0); }
-  }
-}
-`;
-
-const rand = (min, max) => min + Math.random() * (max - min);
-const pick = (list) => list[Math.floor(Math.random() * list.length)];
-const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-
-// A curtain of particles that sweeps across the navbar, falls with a bit of wind, bounces and fades.
-const createFlowerShower = () => {
-  const width = window.innerWidth;
-  const theme = THEMES[ACTIVE_THEME] ?? THEMES[pick(Object.keys(THEMES))];
-  const count = width < 640 ? 36 : 64;
-  const wind = rand(-110, 110); // one shared lean so the whole shower feels like one gust
-  const sweepFromLeft = Math.random() < 0.5;
-  return Array.from({ length: count }, (_, index) => {
-    const depth = Math.random(); // 0 = far/small/faint, 1 = close/big/bold
-    const isPetal = theme.petalShare > 0 && Math.random() < theme.petalShare;
-    const [glyph, floaty, glow] = isPetal ? ["", 0.95, false] : pick(theme.items);
-    const size = 13 + depth * 24;
-    const sx = rand(0, Math.max(width - size, 1));
-    const targetX = clamp(sx + wind * rand(0.4, 1) + rand(-80, 80), 0, Math.max(width - size, 1));
-    const ex = targetX - sx;
-    const wave = sx / width;
-    return {
-      id: `${Date.now()}-${index}`,
-      isPetal,
-      glyph,
-      glow,
-      color: theme.colors.length ? pick(theme.colors) : "#ffffff",
-      sx,
-      sy: rand(58, 96),
-      bx: rand(-40, 40),
-      by: rand(14, 60),
-      mx: ex * rand(0.8, 0.95),
-      ex,
-      hop: rand(14, 40) * (1 - floaty * 0.65),
-      rest: rand(0, 20),
-      spin: rand(-540, 540) * (1 - floaty * 0.4),
-      sway: 10 + floaty * 36,
-      delay: (sweepFromLeft ? wave : 1 - wave) * 0.9 + rand(0, 0.45),
-      duration: rand(4.6, 5.8) + floaty * 1.1,
-      size,
-      opacity: 0.6 + depth * 0.4,
-      blur: depth < 0.15 ? 1.5 : 0,
-    };
-  });
-};
 
 const ProfileHeader = () => {
   const avatarRef = useRef(null);
@@ -202,7 +16,6 @@ const ProfileHeader = () => {
   const wakingTimer = useRef(null);
   const reactionTimer = useRef(null);
   const clickTimer = useRef(null);
-  const flowerTimer = useRef(null);
   const directionRef = useRef("front");
   const sleepingRef = useRef(false);
   const lastPointerPosition = useRef(null);
@@ -210,7 +23,7 @@ const ProfileHeader = () => {
   const [reaction, setReaction] = useState("");
   const [sleeping, setSleeping] = useState(false);
   const [waking, setWaking] = useState(false);
-  const [flowerShower, setFlowerShower] = useState([]);
+  const [shower, setShower] = useState(null);
 
   useEffect(() => {
     const resetIdleTimer = () => {
@@ -286,7 +99,6 @@ const ProfileHeader = () => {
     window.clearTimeout(reactionTimer.current);
     window.clearTimeout(clickTimer.current);
     window.clearTimeout(wakingTimer.current);
-    window.clearTimeout(flowerTimer.current);
   }, []);
 
   const handleAvatarClick = () => {
@@ -318,9 +130,12 @@ const ProfileHeader = () => {
     window.clearTimeout(reactionTimer.current);
     setReaction("love");
     reactionTimer.current = window.setTimeout(() => setReaction(""), 1000);
-    setFlowerShower(createFlowerShower());
-    window.clearTimeout(flowerTimer.current);
-    flowerTimer.current = window.setTimeout(() => setFlowerShower([]), 9500);
+
+    const rect = avatarRef.current?.getBoundingClientRect();
+    const origin = rect
+      ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+      : { x: window.innerWidth / 2, y: 120 };
+    setShower({ id: Date.now(), theme: chooseTheme(), origin });
   };
 
   const { isCopied: isEmailCopied, copyEmail } = useCopyEmail(PROFILE.email);
@@ -335,7 +150,7 @@ const ProfileHeader = () => {
           type="button"
           onClick={handleAvatarClick}
           onDoubleClick={handleAvatarDoubleClick}
-          aria-label={sleeping ? `${PROFILE.name}'s avatar is sleeping. Move the pointer to wake it.` : `${PROFILE.name}'s interactive avatar. Move the pointer to change its gaze; click for a happy face and double click for a full-screen flower shower.`}
+          aria-label={sleeping ? `${PROFILE.name}'s avatar is sleeping. Move the pointer to wake it.` : `${PROFILE.name}'s interactive avatar. Move the pointer to change its gaze; click for a happy face and double click for a full-screen particle shower.`}
           className="profile-avatar relative size-24 shrink-0 overflow-hidden sm:size-34"
         >
           <span className={`profile-avatar-sprite profile-avatar-${displayedDirection}${waking ? " profile-avatar-awake" : reaction ? ` profile-avatar-${reaction}` : ""}`} role="img" aria-label={sleeping ? "Sleeping" : waking ? "Waking up" : reaction === "love" ? "Love-struck" : reaction === "happy" ? "Happy" : PROFILE.name} />
@@ -374,37 +189,13 @@ const ProfileHeader = () => {
         </button>
       </div>
       <NowPlaying />
-      {flowerShower.length > 0 && createPortal(
-        <div aria-hidden="true" className="flower-fx" style={{ "--floor": `${window.innerHeight}px` }}>
-          <style>{FLOWER_CSS}</style>
-          {flowerShower.map((f) => (
-            <span
-              key={f.id}
-              className="flower-fx-item"
-              style={{
-                "--sx": `${f.sx}px`,
-                "--sy": `${f.sy}px`,
-                "--bx": `${f.bx}px`,
-                "--by": `${f.by}px`,
-                "--mx": `${f.mx}px`,
-                "--ex": `${f.ex}px`,
-                "--hop": `${f.hop}px`,
-                "--rest": `${f.rest}px`,
-                "--spin": `${f.spin}deg`,
-                "--sway": `${f.sway}px`,
-                "--size": `${f.size}px`,
-                "--opacity": f.opacity,
-                "--petal": f.color,
-                "--dur": `${f.duration}s`,
-                "--delay": `${f.delay}s`,
-                filter: f.blur ? `blur(${f.blur}px)` : undefined,
-              }}
-            >
-              <span className={f.isPetal ? "flower-fx-petal" : f.glow ? "flower-fx-glyph flower-fx-glow" : "flower-fx-glyph"}>{f.glyph}</span>
-            </span>
-          ))}
-        </div>,
-        document.body,
+      {shower && (
+        <ParticleShower
+          key={shower.id}
+          theme={shower.theme}
+          origin={shower.origin}
+          onDone={() => setShower(null)}
+        />
       )}
     </header>
   );
