@@ -139,7 +139,11 @@ const ProfileHeader = () => {
           className="profile-avatar relative size-24 shrink-0 overflow-hidden sm:size-34"
         >
           <span className={`profile-avatar-sprite profile-avatar-${displayedDirection}${waking ? " profile-avatar-awake profile-avatar-waking" : reaction ? ` profile-avatar-${reaction}` : ""}`} role="img" aria-label={sleeping ? "Sleeping" : waking ? "Waking up" : reaction === "love" ? "Love-struck" : reaction === "happy" ? "Happy" : PROFILE.name} />
-          {sleeping && <span aria-hidden="true" className="profile-avatar-zzz">Zzz</span>}
+          {sleeping && (
+            <span aria-hidden="true" className="profile-avatar-zzz">
+              <span>Z</span><span>z</span><span>z</span><span>z</span>
+            </span>
+          )}
           {reaction === "love" && (
             <span aria-hidden="true" className="profile-avatar-hearts">
               <span>&hearts;</span><span>&hearts;</span><span>&hearts;</span>
