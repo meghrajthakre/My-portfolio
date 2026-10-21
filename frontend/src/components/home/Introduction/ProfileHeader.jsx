@@ -32,6 +32,9 @@ const ProfileHeader = () => {
     const updateDirection = (event) => {
       const previousPosition = lastPointerPosition.current;
       lastPointerPosition.current = { x: event.clientX, y: event.clientY };
+      // Browsers can dispatch a zero-delta pointer event when a page gains focus.
+      // Treat only physical cursor movement as activity so loading the site won't wake the avatar.
+      if (Number.isFinite(event.movementX) && Number.isFinite(event.movementY) && event.movementX === 0 && event.movementY === 0) return;
       if (previousPosition && Math.hypot(event.clientX - previousPosition.x, event.clientY - previousPosition.y) < 2) return;
 
       if (sleepingRef.current) {
@@ -136,7 +139,7 @@ const ProfileHeader = () => {
           type="button"
           onClick={handleAvatarClick}
           aria-label={sleeping ? `${PROFILE.name}'s avatar is sleeping. Move the pointer to wake it.` : `${PROFILE.name}'s interactive avatar. Move the pointer to change its gaze; click for a happy face and double click for hearts.`}
-          className="profile-avatar relative size-24 shrink-0 overflow-hidden sm:size-34"
+          className="profile-avatar relative size-24 shrink-0 overflow-visible sm:size-34"
         >
           <span className={`profile-avatar-sprite profile-avatar-${displayedDirection}${waking ? " profile-avatar-awake" : reaction ? ` profile-avatar-${reaction}` : ""}`} role="img" aria-label={sleeping ? "Sleeping" : waking ? "Waking up" : reaction === "love" ? "Love-struck" : reaction === "happy" ? "Happy" : PROFILE.name} />
           {sleeping && (
@@ -145,9 +148,9 @@ const ProfileHeader = () => {
             </span>
           )}
           {reaction === "love" && (
-            <span aria-hidden="true" className="profile-avatar-hearts">
-              <span>&hearts;</span><span>&hearts;</span><span>&hearts;</span>
-              <span>&hearts;</span><span>&hearts;</span><span>&hearts;</span>
+            <span aria-hidden="true" className="profile-avatar-flowers">
+              <span>🌸</span><span>🌼</span><span>🌺</span><span>🌸</span>
+              <span>🌼</span><span>🌺</span><span>🌸</span><span>🌼</span>
             </span>
           )}
         </button>
