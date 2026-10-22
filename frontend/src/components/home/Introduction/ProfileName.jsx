@@ -15,7 +15,7 @@ const ProfileName = ({ name }) => {
   return (
     <div className="flex min-w-0 items-center gap-2">
       <h1
-        className="profile-name min-w-0 truncate text-xl leading-tight tracking-[-0.02em] text-[var(--color-text)] sm:text-[30px]"
+        className="profile-name min-w-0 whitespace-nowrap text-lg leading-tight tracking-[-0.02em] text-[var(--color-text)] sm:text-[30px]"
       >
         {name}
       </h1>

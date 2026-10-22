@@ -151,7 +151,7 @@ const ProfileHeader = () => {
           onClick={handleAvatarClick}
           onDoubleClick={handleAvatarDoubleClick}
           aria-label={sleeping ? `${PROFILE.name}'s avatar is sleeping. Move the pointer to wake it.` : `${PROFILE.name}'s interactive avatar. Move the pointer to change its gaze; click for a happy face and double click for a full-screen particle shower.`}
-          className="profile-avatar relative size-24 shrink-0 overflow-hidden sm:size-34"
+          className="profile-avatar relative size-20 shrink-0 sm:size-34"
         >
           <span className={`profile-avatar-sprite profile-avatar-${displayedDirection}${waking ? " profile-avatar-awake" : reaction ? ` profile-avatar-${reaction}` : ""}`} role="img" aria-label={sleeping ? "Sleeping" : waking ? "Waking up" : reaction === "love" ? "Love-struck" : reaction === "happy" ? "Happy" : PROFILE.name} />
           {sleeping && (
