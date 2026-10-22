@@ -61,8 +61,8 @@ const PortfolioTerminalDialog = () => {
       case "contact": lines = [`Email: ${PROFILE.email}`, `Phone: ${PROFILE.phone}`, "You can also use the Contact page in the main navigation."]; break;
       case "matrix":
         window.dispatchEvent(new CustomEvent("portfolio-matrix-command"));
-        lines = ["Digital rain enabled for 12 seconds."];
-        break;
+        setIsOpen(false);
+        return;
       default: lines = [`Unknown command: ${command}. Type help to see available commands.`];
     }
     setHistory((current) => [...current, { id: Date.now(), command: enteredCommand, lines }]);
