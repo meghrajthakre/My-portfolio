@@ -6,7 +6,7 @@ import { StaggerItem, StaggerReveal } from "../Animation/StaggerReveal";
 
 const SocialMediaicons = () => {
   const iconClass = `
-    w-[24px] h-[24px]
+    w-5 h-5
     text-[var(--profile-icon-color)]
     transition-all duration-200 ease-out
     group-hover:-translate-y-0.5 group-hover:scale-110
@@ -47,7 +47,7 @@ const SocialMediaicons = () => {
   ];
 
   return (
-    <StaggerReveal className="flex flex-nowrap items-center gap-5" delay={0.12}>
+    <StaggerReveal className="flex flex-nowrap items-center gap-4" delay={0.12}>
       {icons.map(({ href, label, svg }) => (
         <StaggerItem key={label}>
           <Tooltip text={label}>

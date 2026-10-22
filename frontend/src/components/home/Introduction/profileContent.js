@@ -13,5 +13,5 @@ export const PROFILE = {
   phone: "+91 83903 02033",
   phoneHref: "+918390302033",
   avatar: "/Logo/logo (1).webp",
-  bio: "Break things, and fix them faster than I broke them.",
+  bio: "I build AI-powered web apps that make everyday tasks easier.",
 };
