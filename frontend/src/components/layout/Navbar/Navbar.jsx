@@ -2,9 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import CircleCanvas from "../../Ui/CircleCanvas";
-import { ProjectsData } from "../../../data/ProjectsData";
-import { techStack } from "../../../data/techStack";
-import { PROFILE } from "../../home/Introduction/profileContent";
 import BrandLogo from "./BrandLogo";
 import { NAV_ITEMS } from "./navigation";
 import SearchDialog from "./SearchDialog";
@@ -23,6 +20,7 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isRetroActive, setIsRetroActive] = useState(false);
   const [isMatrixActive, setIsMatrixActive] = useState(false);
+  const [showMatrixNotice, setShowMatrixNotice] = useState(false);
   const [matrixRun, setMatrixRun] = useState(0);
   const { isDark, setIsDark } = useTheme();
 
@@ -73,36 +71,26 @@ const Navbar = () => {
     };
   }, [isRetroActive]);
 
+  useEffect(() => {
+    if (!showMatrixNotice) return undefined;
+    const timerId = window.setTimeout(() => setShowMatrixNotice(false), 3500);
+    return () => window.clearTimeout(timerId);
+  }, [showMatrixNotice]);
+
   const handleSelect = (path) => {
     setIsSearchOpen(false);
     navigate(path);
   };
 
-  const handleTerminalCommand = (command) => {
-    switch (command) {
-      case "help":
-        return ["Available commands: help, about, projects, skills, contact, matrix, sleep, wake, happy, clear, exit."];
-      case "about":
-        return [`${PROFILE.name} — ${PROFILE.bio}`, `Roles: ${PROFILE.roles.join(" | ")}`];
-      case "projects":
-        return ["Featured projects:", ...ProjectsData.map(({ title }) => `• ${title}`)];
-      case "skills":
-        return [`Current tech stack: ${techStack.map(({ name }) => name).join(", ")}`];
-      case "contact":
-        return [`Email: ${PROFILE.email}`, `Phone: ${PROFILE.phone}`, "You can also use the Contact page in the main navigation."];
-      case "matrix":
-        setIsMatrixActive(true);
-        setMatrixRun((run) => run + 1);
-        return ["Digital rain enabled for 12 seconds. Run matrix again to restart it."];
-      case "sleep":
-      case "wake":
-      case "happy":
-        window.dispatchEvent(new CustomEvent("portfolio-avatar-command", { detail: { command } }));
-        return [command === "sleep" ? "The pixel avatar is settling in for a nap." : command === "wake" ? "The pixel avatar is awake." : "A little happiness for the pixel avatar!"];
-      default:
-        return [`Unknown command: ${command}. Type help to see the available commands.`];
-    }
-  };
+  useEffect(() => {
+    const handleMatrixCommand = () => {
+      setIsMatrixActive(true);
+      setMatrixRun((run) => run + 1);
+      setShowMatrixNotice(true);
+    };
+    window.addEventListener("portfolio-matrix-command", handleMatrixCommand);
+    return () => window.removeEventListener("portfolio-matrix-command", handleMatrixCommand);
+  }, []);
 
   const handleThemeSelect = (nextIsDark) => {
     setIsSearchOpen(false);
@@ -120,6 +108,12 @@ const Navbar = () => {
     <>
       <CircleCanvas isDark={isDark} />
       {isMatrixActive && <MatrixRain key={matrixRun} onDone={handleMatrixDone} />}
+
+      {showMatrixNotice && (
+        <div role="status" aria-live="polite" className="fixed left-1/2 top-20 z-[70] -translate-x-1/2 rounded-xl border border-[var(--color-border)] bg-[var(--color-card-bg)] px-4 py-3 text-center text-sm font-semibold text-[var(--color-text)] shadow-lg">
+          You found the developer&apos;s secret! 🎉
+        </div>
+      )}
 
       {isRetroActive && (
         <div role="status" aria-live="polite" className="fixed bottom-4 right-4 z-[70] flex max-w-[calc(100vw-2rem)] items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-card-bg)] p-3 text-sm text-[var(--color-text)] shadow-lg">
@@ -176,7 +170,6 @@ const Navbar = () => {
         onClose={() => setIsSearchOpen(false)}
         onSelect={handleSelect}
         onThemeSelect={handleThemeSelect}
-        onTerminalCommand={handleTerminalCommand}
       />
     </>
   );

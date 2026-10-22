@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
+import PortfolioTerminalDialog from "./components/layout/Navbar/PortfolioTerminalDialog";
 import ScrollToTop from "./common/ScrollToTop";
 import Quotes from "./components/quotes/Quotes";
 import Footer from "./Pages/Footer";
@@ -59,6 +60,7 @@ function App() {
       <div className="site-grid-background" aria-hidden="true" />
       {/* 🔹 Loader Blur Effect */}
       <Navbar />
+      <PortfolioTerminalDialog />
       {isStarting && (
         <div className={`route-loading-overlay ${isStartupLeaving ? "is-leaving" : ""}`} role="status" aria-label="Loading portfolio">
           <div className="route-loading-indicator">
