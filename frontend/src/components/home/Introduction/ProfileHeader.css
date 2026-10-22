@@ -84,10 +84,10 @@
 .profile-avatar-down-left { background-image: url('/Logo/streamer-down-left.png'); }
 .profile-avatar-down { background-image: url('/Logo/streamer-down.png'); }
 .profile-avatar-down-right { background-image: url('/Logo/streamer-down-right.png'); }
-.profile-avatar-happy { background-image: url('/Logo/streamer-happy.png'); }
-.profile-avatar-love { background-image: url('/Logo/streamer-love.png'); }
-.profile-avatar-sleep { background-image: url('/Logo/streamer-sleep.png'); }
-.profile-avatar-awake { background-image: url('/Logo/streamer-awake.png'); }
+.profile-avatar-happy { background-image: url('/Logo/streamer-happy.png'), url('/Logo/streamer-front.png'); }
+.profile-avatar-love { background-image: url('/Logo/streamer-love.png'), url('/Logo/streamer-front.png'); }
+.profile-avatar-sleep { background-image: url('/Logo/streamer-sleep.png'), url('/Logo/streamer-front.png'); }
+.profile-avatar-awake { background-image: url('/Logo/streamer-awake.png'), url('/Logo/streamer-front.png'); }
 
 .profile-avatar-hearts {
   position: absolute;
@@ -121,6 +121,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .profile-avatar-hearts span { animation: none; opacity: 1; }
-  .profile-avatar-zzz { animation: none; opacity: 1; }
+  .profile-avatar-zzz span { animation: none; opacity: 1; }
 }
-

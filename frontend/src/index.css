@@ -130,6 +130,19 @@
   --scrollbar-thumb-hover: #737373;
 }
 
+:root.retro-mode {
+  --color-bg: #07120b;
+  --color-text: #c8ffd2;
+  --color-secondary-text: #79bd88;
+  --color-accent: #39ff75;
+  --color-border: #245b34;
+  --color-icons-bg: #102218;
+  --color-card-bg: #0b1a10;
+  --profile-icon-bg: #102218;
+  --logo-bg: #39ff75;
+  --font-main: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+}
+
 /* =============================
    🔲 Profile Icon Tile
    Double-frame icon treatment used throughout the profile intro.

@@ -34,6 +34,32 @@ const ProfileHeader = () => {
         setWaking(false);
       }, 1800);
     };
+    const handleAvatarCommand = (event) => {
+      const { command } = event.detail ?? {};
+      if (command === "sleep") {
+        window.clearTimeout(idleTimer.current);
+        window.clearTimeout(wakingTimer.current);
+        sleepingRef.current = true;
+        setSleeping(true);
+        setWaking(false);
+        setReaction("");
+      } else if (command === "wake") {
+        sleepingRef.current = false;
+        setSleeping(false);
+        setWaking(true);
+        window.clearTimeout(wakingTimer.current);
+        wakingTimer.current = window.setTimeout(() => setWaking(false), 650);
+        resetIdleTimer();
+      } else if (command === "happy") {
+        sleepingRef.current = false;
+        setSleeping(false);
+        setWaking(false);
+        setReaction("happy");
+        window.clearTimeout(reactionTimer.current);
+        reactionTimer.current = window.setTimeout(() => setReaction(""), 800);
+        resetIdleTimer();
+      }
+    };
     const updateDirection = (event) => {
       const previousPosition = lastPointerPosition.current;
       lastPointerPosition.current = { x: event.clientX, y: event.clientY };
@@ -88,8 +114,10 @@ const ProfileHeader = () => {
     };
     resetIdleTimer();
     window.addEventListener("pointermove", updateDirection, { passive: true });
+    window.addEventListener("portfolio-avatar-command", handleAvatarCommand);
     return () => {
       window.removeEventListener("pointermove", updateDirection);
+      window.removeEventListener("portfolio-avatar-command", handleAvatarCommand);
       window.clearTimeout(idleTimer.current);
       window.clearTimeout(wakingTimer.current);
     };
