@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Check, Copy, Mail, Phone } from "lucide-react";
 import { PROFILE } from "./profileContent";
 import ProfileName from "./ProfileName";
@@ -9,6 +9,39 @@ import { ParticleShower } from "./ParticleShower";
 import { chooseTheme } from "./profileFlowerThemes.js";
 import "./ProfileHeader.css";
 
+const IDLE_MS = 1800;
+const WAKE_MS = 650;
+
+// Screen-space angle (y points down) of each gaze sprite's centre, in degrees.
+const SECTORS = ["right", "down-right", "down", "down-left", "left", "up-left", "up", "up-right"];
+const SECTOR_SIZE = 45;
+// How far past a sector boundary the cursor must go before the gaze flips.
+const HYSTERESIS_DEG = 7;
+// Minimum real cursor travel (px) that counts as activity.
+const ACTIVITY_PX = 2;
+
+const SPRITE_NAMES = ["front", ...SECTORS, "happy", "love", "sleep", "awake"];
+
+/**
+ * Pure gaze resolver. Given the cursor offset from the avatar centre, returns the
+ * sprite direction. A dead-zone around the avatar keeps it facing front, and
+ * hysteresis on the sector boundaries stops it flickering between two sprites
+ * when the cursor sits near a boundary.
+ */
+function resolveGaze(dx, dy, previous, deadZone) {
+  const distance = Math.hypot(dx, dy);
+  // Wider zone to leave "front", narrower to return to it (hysteresis on radius too).
+  if (distance < (previous === "front" ? deadZone : deadZone * 0.65)) return "front";
+
+  const angle = ((Math.atan2(dy, dx) * 180) / Math.PI + 360) % 360;
+
+  const previousIndex = SECTORS.indexOf(previous);
+  if (previousIndex !== -1) {
+    const diff = Math.abs(((angle - previousIndex * SECTOR_SIZE + 540) % 360) - 180);
+    if (diff <= SECTOR_SIZE / 2 + HYSTERESIS_DEG) return previous;
+  }
+  return SECTORS[Math.round(angle / SECTOR_SIZE) % SECTORS.length];
+}
 
 const ProfileHeader = () => {
   const avatarRef = useRef(null);
@@ -16,40 +49,86 @@ const ProfileHeader = () => {
   const wakingTimer = useRef(null);
   const reactionTimer = useRef(null);
   const clickTimer = useRef(null);
+  const frameRef = useRef(0);
   const directionRef = useRef("front");
   const sleepingRef = useRef(false);
-  const lastPointerPosition = useRef(null);
+  const pointerRef = useRef(null); // latest cursor position, used for gaze
+  const activityAnchor = useRef(null); // last position that counted as "real" movement
   const [direction, setDirection] = useState("front");
   const [reaction, setReaction] = useState("");
   const [sleeping, setSleeping] = useState(false);
   const [waking, setWaking] = useState(false);
   const [shower, setShower] = useState(null);
 
+  const applyDirection = useCallback((next) => {
+    if (directionRef.current === next) return;
+    directionRef.current = next;
+    setDirection(next);
+  }, []);
+
+  const goToSleep = useCallback(() => {
+    sleepingRef.current = true;
+    setSleeping(true);
+    setWaking(false);
+  }, []);
+
+  const scheduleSleep = useCallback(() => {
+    window.clearTimeout(idleTimer.current);
+    idleTimer.current = window.setTimeout(goToSleep, IDLE_MS);
+  }, [goToSleep]);
+
+  const wakeUp = useCallback(() => {
+    if (sleepingRef.current) {
+      sleepingRef.current = false;
+      setWaking(true);
+      window.clearTimeout(wakingTimer.current);
+      wakingTimer.current = window.setTimeout(() => setWaking(false), WAKE_MS);
+    }
+    setSleeping(false);
+  }, []);
+
+  // Recompute gaze from the last known cursor position. Runs at most once per frame
+  // and also after scroll/resize, when the avatar moves under a stationary cursor.
+  const updateGaze = useCallback(() => {
+    frameRef.current = 0;
+    const pointer = pointerRef.current;
+    const rect = avatarRef.current?.getBoundingClientRect();
+    if (!pointer || !rect) return;
+    const dx = pointer.x - (rect.left + rect.width / 2);
+    const dy = pointer.y - (rect.top + rect.height / 2);
+    const deadZone = Math.max(24, rect.width * 0.35);
+    applyDirection(resolveGaze(dx, dy, directionRef.current, deadZone));
+  }, [applyDirection]);
+
+  const requestGazeUpdate = useCallback(() => {
+    if (!frameRef.current) frameRef.current = window.requestAnimationFrame(updateGaze);
+  }, [updateGaze]);
+
+  // Preload every sprite so the first gaze change never flashes an empty frame.
   useEffect(() => {
-    const resetIdleTimer = () => {
-      window.clearTimeout(idleTimer.current);
-      idleTimer.current = window.setTimeout(() => {
-        sleepingRef.current = true;
-        setSleeping(true);
-        setWaking(false);
-      }, 1800);
-    };
+    const images = SPRITE_NAMES.map((name) => {
+      const img = new Image();
+      img.src = `/Logo/streamer-${name}.png`;
+      return img;
+    });
+    return () => images.forEach((img) => { img.src = ""; });
+  }, []);
+
+  useEffect(() => {
     const handleAvatarCommand = (event) => {
       const { command } = event.detail ?? {};
       if (command === "sleep") {
         window.clearTimeout(idleTimer.current);
         window.clearTimeout(wakingTimer.current);
-        sleepingRef.current = true;
-        setSleeping(true);
-        setWaking(false);
+        goToSleep();
         setReaction("");
       } else if (command === "wake") {
         sleepingRef.current = false;
         setSleeping(false);
         setWaking(true);
         window.clearTimeout(wakingTimer.current);
-        wakingTimer.current = window.setTimeout(() => setWaking(false), 650);
-        resetIdleTimer();
+        wakingTimer.current = window.setTimeout(() => setWaking(false), WAKE_MS);
+        scheduleSleep();
       } else if (command === "happy") {
         sleepingRef.current = false;
         setSleeping(false);
@@ -57,71 +136,60 @@ const ProfileHeader = () => {
         setReaction("happy");
         window.clearTimeout(reactionTimer.current);
         reactionTimer.current = window.setTimeout(() => setReaction(""), 800);
-        resetIdleTimer();
+        scheduleSleep();
       }
     };
-    const updateDirection = (event) => {
-      const previousPosition = lastPointerPosition.current;
-      lastPointerPosition.current = { x: event.clientX, y: event.clientY };
+
+    const handlePointerMove = (event) => {
+      const position = { x: event.clientX, y: event.clientY };
+      pointerRef.current = position;
+
       // Browsers can dispatch a zero-delta pointer event when a page gains focus.
-      // Treat only physical cursor movement as activity so loading the site won't wake the avatar.
+      // Only real cursor movement counts as activity, so loading the site won't wake the avatar.
       if (Number.isFinite(event.movementX) && Number.isFinite(event.movementY) && event.movementX === 0 && event.movementY === 0) return;
-      if (previousPosition && Math.hypot(event.clientX - previousPosition.x, event.clientY - previousPosition.y) < 2) return;
 
-      if (sleepingRef.current) {
-        sleepingRef.current = false;
-        setWaking(true);
-        window.clearTimeout(wakingTimer.current);
-        wakingTimer.current = window.setTimeout(() => setWaking(false), 650);
-      }
-      setSleeping(false);
-      resetIdleTimer();
-      const rect = avatarRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      const dx = event.clientX - (rect.left + rect.width / 2);
-      const dy = event.clientY - (rect.top + rect.height / 2);
-      const distance = Math.hypot(dx, dy);
-      if (distance < (directionRef.current === "front" ? 30 : 18)) {
-        directionRef.current = "front";
-        return setDirection("front");
-      }
-      const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
-      let nextDirection;
-      if (angle >= -22.5 && angle < 22.5) nextDirection = "right";
-      else if (angle >= 22.5 && angle < 67.5) nextDirection = "down-right";
-      else if (angle >= 67.5 && angle < 112.5) nextDirection = "down";
-      else if (angle >= 112.5 && angle < 157.5) nextDirection = "down-left";
-      else if (angle >= 157.5 || angle < -157.5) nextDirection = "left";
-      else if (angle >= -157.5 && angle < -112.5) nextDirection = "up-left";
-      else if (angle >= -112.5 && angle < -67.5) nextDirection = "up";
-      else nextDirection = "up-right";
+      // Measure against the last *counted* position so slow drags still accumulate
+      // instead of being discarded 1px at a time.
+      const anchor = activityAnchor.current;
+      if (anchor && Math.hypot(position.x - anchor.x, position.y - anchor.y) < ACTIVITY_PX) return;
+      activityAnchor.current = position;
 
-      const directionCenters = {
-        right: 0,
-        "down-right": 45,
-        down: 90,
-        "down-left": 135,
-        left: 180,
-        "up-left": -135,
-        up: -90,
-        "up-right": -45,
-      };
-      const angleFromCenter = Math.abs(((angle - directionCenters[nextDirection] + 540) % 360) - 180);
-      if (directionRef.current === "front" || directionRef.current === nextDirection || angleFromCenter <= 18) {
-        directionRef.current = nextDirection;
-        setDirection(nextDirection);
-      }
+      wakeUp();
+      scheduleSleep();
+      requestGazeUpdate();
     };
-    resetIdleTimer();
-    window.addEventListener("pointermove", updateDirection, { passive: true });
+
+    // Cursor left the page or the window lost focus: look straight ahead.
+    const handleLeave = () => {
+      pointerRef.current = null;
+      activityAnchor.current = null;
+      window.cancelAnimationFrame(frameRef.current);
+      frameRef.current = 0;
+      applyDirection("front");
+    };
+    const handleMouseOut = (event) => {
+      if (!event.relatedTarget) handleLeave();
+    };
+
+    scheduleSleep();
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("scroll", requestGazeUpdate, { passive: true });
+    window.addEventListener("resize", requestGazeUpdate, { passive: true });
+    window.addEventListener("blur", handleLeave);
+    document.addEventListener("mouseout", handleMouseOut);
     window.addEventListener("portfolio-avatar-command", handleAvatarCommand);
     return () => {
-      window.removeEventListener("pointermove", updateDirection);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("scroll", requestGazeUpdate);
+      window.removeEventListener("resize", requestGazeUpdate);
+      window.removeEventListener("blur", handleLeave);
+      document.removeEventListener("mouseout", handleMouseOut);
       window.removeEventListener("portfolio-avatar-command", handleAvatarCommand);
+      window.cancelAnimationFrame(frameRef.current);
       window.clearTimeout(idleTimer.current);
       window.clearTimeout(wakingTimer.current);
     };
-  }, []);
+  }, [applyDirection, goToSleep, requestGazeUpdate, scheduleSleep, wakeUp]);
 
   useEffect(() => () => {
     window.clearTimeout(reactionTimer.current);
@@ -130,19 +198,8 @@ const ProfileHeader = () => {
   }, []);
 
   const handleAvatarClick = () => {
-    window.clearTimeout(idleTimer.current);
-    if (sleepingRef.current) {
-      sleepingRef.current = false;
-      setWaking(true);
-      window.clearTimeout(wakingTimer.current);
-      wakingTimer.current = window.setTimeout(() => setWaking(false), 650);
-    }
-    setSleeping(false);
-    idleTimer.current = window.setTimeout(() => {
-      sleepingRef.current = true;
-      setSleeping(true);
-      setWaking(false);
-    }, 1800);
+    wakeUp();
+    scheduleSleep();
     window.clearTimeout(clickTimer.current);
     clickTimer.current = window.setTimeout(() => {
       clickTimer.current = null;
