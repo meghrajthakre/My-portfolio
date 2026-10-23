@@ -786,6 +786,14 @@ p {
   .site-grid-background::after { right: -4rem; }
 }
 /* marquee css */
+.navbar-blur-fade {
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  backdrop-filter: blur(20px) saturate(130%);
+  background: linear-gradient(90deg, transparent 0%, rgb(127 127 127 / 4%) 18%, rgb(127 127 127 / 4%) 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+}
+
 @keyframes marquee-left {
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
