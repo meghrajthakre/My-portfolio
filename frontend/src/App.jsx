@@ -1,11 +1,10 @@
-import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
+import React, { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import PortfolioTerminalDialog from "./components/layout/Navbar/PortfolioTerminalDialog";
 import ScrollToTop from "./common/ScrollToTop";
 import Quotes from "./components/quotes/Quotes";
 import Footer from "./Pages/Footer";
-import { InfinityLoop } from "./components/Loader/InfinityLoop";
 import LoadingFallback from "./components/Loader/LoadingFallback";
 const Home = lazy(() => import("./Pages/Home"));
 const Projects = lazy(() => import("./Pages/Projects/Projects"));
@@ -21,58 +20,15 @@ import BackToTop from "./components/Ui/BackToTop";
 import BottomBlur from "./components/Ui/BottomBlur";
 import { useVisitorAnalytics } from "./hooks/useVisitorAnalytics";
 
-const StartupReady = ({ onReady }) => {
-  useEffect(() => {
-    let isCancelled = false;
-
-    const revealApp = async () => {
-      if (document.fonts?.ready) {
-        await document.fonts.ready;
-      }
-
-      if (!isCancelled) {
-        window.requestAnimationFrame(onReady);
-      }
-    };
-
-    revealApp();
-    return () => {
-      isCancelled = true;
-    };
-  }, [onReady]);
-  return null;
-};
-
 function App() {
   useVisitorAnalytics();
-  const [isStarting, setIsStarting] = useState(true);
-  const [isStartupLeaving, setIsStartupLeaving] = useState(false);
-
-  const handleStartupReady = useCallback(() => setIsStartupLeaving(true), []);
-
-  useEffect(() => {
-    if (!isStartupLeaving) return undefined;
-    const removeTimer = window.setTimeout(() => setIsStarting(false), 700);
-    return () => window.clearTimeout(removeTimer);
-  }, [isStartupLeaving]);
   return (
     <div className="relative">
       <div className="site-grid-background" aria-hidden="true" />
-      {/* 🔹 Loader Blur Effect */}
       <Navbar />
       <PortfolioTerminalDialog />
-      {isStarting && (
-        <div className={`route-loading-overlay ${isStartupLeaving ? "is-leaving" : ""}`} role="status" aria-label="Loading portfolio">
-          <div className="route-loading-indicator">
-            <InfinityLoop className="h-12 w-16 text-[var(--logo-bg)]" />
-            <span className="text-xs font-medium uppercase tracking-[0.16em] text-[var(--logo-bg)]">thinking...</span>
-          </div>
-        </div>
-      )}
 
-      {/* 🔹 Wrap Routes in Suspense for lazy loading fallback */}
       <Suspense fallback={<LoadingFallback />}>
-        <StartupReady onReady={handleStartupReady} />
         <ScrollToTop />
         <Routes>
           <Route index path="/" element={<Home />} />
@@ -89,8 +45,8 @@ function App() {
       </Suspense>
         <BackToTop/>
       <Quotes />
-      {!isStarting && <Footer />}
-      {!isStarting && <BottomBlur />}
+      <Footer />
+      <BottomBlur />
     </div>
   );
 }
