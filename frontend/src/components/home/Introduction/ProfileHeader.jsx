@@ -108,7 +108,7 @@ const ProfileHeader = () => {
   useEffect(() => {
     const images = SPRITE_NAMES.map((name) => {
       const img = new Image();
-      img.src = `/Logo/streamer-${name}.png`;
+      img.src = `/Logo/streamer-${name}.webp`;
       return img;
     });
     return () => images.forEach((img) => { img.src = ""; });

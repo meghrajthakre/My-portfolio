@@ -75,19 +75,19 @@
   88%, 100% { opacity: 0; transform: translate3d(18px, -32px, 0) scale(1.12) rotate(-8deg); }
 }
 
-.profile-avatar-front { background-image: url('/Logo/streamer-front.png'); }
-.profile-avatar-up-left { background-image: url('/Logo/streamer-up-left.png'); }
-.profile-avatar-up { background-image: url('/Logo/streamer-up.png'); }
-.profile-avatar-up-right { background-image: url('/Logo/streamer-up-right.png'); }
-.profile-avatar-left { background-image: url('/Logo/streamer-left.png'); }
-.profile-avatar-right { background-image: url('/Logo/streamer-right.png'); }
-.profile-avatar-down-left { background-image: url('/Logo/streamer-down-left.png'); }
-.profile-avatar-down { background-image: url('/Logo/streamer-down.png'); }
-.profile-avatar-down-right { background-image: url('/Logo/streamer-down-right.png'); }
-.profile-avatar-happy { background-image: url('/Logo/streamer-happy.png'), url('/Logo/streamer-front.png'); }
-.profile-avatar-love { background-image: url('/Logo/streamer-love.png'), url('/Logo/streamer-front.png'); }
-.profile-avatar-sleep { background-image: url('/Logo/streamer-sleep.png'), url('/Logo/streamer-front.png'); }
-.profile-avatar-awake { background-image: url('/Logo/streamer-awake.png'), url('/Logo/streamer-front.png'); }
+.profile-avatar-front { background-image: url('/Logo/streamer-front.webp'); }
+.profile-avatar-up-left { background-image: url('/Logo/streamer-up-left.webp'); }
+.profile-avatar-up { background-image: url('/Logo/streamer-up.webp'); }
+.profile-avatar-up-right { background-image: url('/Logo/streamer-up-right.webp'); }
+.profile-avatar-left { background-image: url('/Logo/streamer-left.webp'); }
+.profile-avatar-right { background-image: url('/Logo/streamer-right.webp'); }
+.profile-avatar-down-left { background-image: url('/Logo/streamer-down-left.webp'); }
+.profile-avatar-down { background-image: url('/Logo/streamer-down.webp'); }
+.profile-avatar-down-right { background-image: url('/Logo/streamer-down-right.webp'); }
+.profile-avatar-happy { background-image: url('/Logo/streamer-happy.webp'), url('/Logo/streamer-front.webp'); }
+.profile-avatar-love { background-image: url('/Logo/streamer-love.webp'), url('/Logo/streamer-front.webp'); }
+.profile-avatar-sleep { background-image: url('/Logo/streamer-sleep.webp'), url('/Logo/streamer-front.webp'); }
+.profile-avatar-awake { background-image: url('/Logo/streamer-awake.webp'), url('/Logo/streamer-front.webp'); }
 
 .profile-avatar-hearts {
   position: absolute;
