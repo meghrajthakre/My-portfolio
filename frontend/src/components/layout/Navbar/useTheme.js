@@ -2,15 +2,9 @@ import { useEffect, useState } from "react";
 
 const THEME_STORAGE_KEY = "theme";
 
-const getInitialTheme = () => {
-  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-  if (savedTheme) return savedTheme === "dark";
-
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
-};
-
 export const useTheme = () => {
-  const [isDark, setIsDark] = useState(getInitialTheme);
+  // Start every visit in dark mode, regardless of the saved preference.
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);

@@ -25,16 +25,8 @@
   <script src="/oneko/oneko.js" defer></script>
 
   <script>
-    // Prevent theme flash on load
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    // Always start in dark mode to prevent a light-theme flash on load.
+    document.documentElement.classList.add("dark");
   </script>
   <script>
     let vh = window.innerHeight * 0.01;
