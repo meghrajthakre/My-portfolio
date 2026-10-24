@@ -59,6 +59,7 @@ const ProfileHeader = () => {
   const [sleeping, setSleeping] = useState(false);
   const [waking, setWaking] = useState(false);
   const [shower, setShower] = useState(null);
+  const [avatarLoaded, setAvatarLoaded] = useState(false);
 
   const applyDirection = useCallback((next) => {
     if (directionRef.current === next) return;
@@ -108,6 +109,10 @@ const ProfileHeader = () => {
   useEffect(() => {
     const images = SPRITE_NAMES.map((name) => {
       const img = new Image();
+      if (name === "front") {
+        img.onload = () => setAvatarLoaded(true);
+        img.onerror = () => setAvatarLoaded(true);
+      }
       img.src = `/Logo/streamer-${name}.webp`;
       return img;
     });
@@ -238,6 +243,7 @@ const ProfileHeader = () => {
           aria-label={sleeping ? `${PROFILE.name}'s avatar is sleeping. Move the pointer to wake it.` : `${PROFILE.name}'s interactive avatar. Move the pointer to change its gaze; click for a happy face and double click for a full-screen particle shower.`}
           className="profile-avatar relative size-20 shrink-0 sm:size-34"
         >
+          {!avatarLoaded && <span className="profile-avatar-loading" aria-hidden="true" />}
           <span className={`profile-avatar-sprite profile-avatar-${displayedDirection}${waking ? " profile-avatar-awake" : reaction ? ` profile-avatar-${reaction}` : ""}`} role="img" aria-label={sleeping ? "Sleeping" : waking ? "Waking up" : reaction === "love" ? "Love-struck" : reaction === "happy" ? "Happy" : PROFILE.name} />
           {sleeping && (
             <span aria-hidden="true" className="profile-avatar-zzz">

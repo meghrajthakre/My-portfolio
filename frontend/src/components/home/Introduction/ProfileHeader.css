@@ -28,6 +28,18 @@
   outline-offset: 3px;
 }
 
+.profile-avatar-loading {
+  position: absolute;
+  inset: 11% 15%;
+  border-radius: 0.75rem;
+  background: var(--color-icons-bg);
+  animation: avatar-loading-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes avatar-loading-pulse {
+  50% { opacity: 0.45; }
+}
+
 .profile-avatar-sprite {
   position: absolute;
   width: 100%;
