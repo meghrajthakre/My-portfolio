@@ -1,12 +1,12 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+import Home from "./Pages/Home";
 import Navbar from "./components/layout/Navbar";
 import PortfolioTerminalDialog from "./components/layout/Navbar/PortfolioTerminalDialog";
 import ScrollToTop from "./common/ScrollToTop";
 import Quotes from "./components/quotes/Quotes";
 import Footer from "./Pages/Footer";
 import LoadingFallback from "./components/Loader/LoadingFallback";
-const Home = lazy(() => import("./Pages/Home"));
 const Projects = lazy(() => import("./Pages/Projects/Projects"));
 const Work = lazy(() => import("./Pages/Work"));
 const Blog = lazy(() => import("./Pages/Blog"));
