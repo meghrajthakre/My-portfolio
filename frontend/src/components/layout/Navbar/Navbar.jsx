@@ -250,17 +250,9 @@ const Navbar = () => {
                 key={to}
                 to={to}
                 end={to === "/"} // without this, Home would count as active on every page
-                className={({ isActive }) => `relative flex h-full items-center px-1 text-xs font-medium transition-colors duration-200 hover:text-yellow-400 sm:px-3 sm:text-sm ${isActive ? "text-[var(--color-text)]" : "text-[var(--color-secondary-text)]"}`}
+                className={({ isActive }) => `relative flex h-full items-center px-1 text-xs font-medium transition-colors duration-200 hover:text-[var(--color-text)] sm:px-3 sm:text-sm ${isActive ? "text-[var(--color-text)]" : "text-[var(--color-secondary-text)]"}`}
               >
-                {({ isActive }) => (
-                  <>
-                    {label}
-                    <span
-                      aria-hidden="true"
-                      className={`absolute inset-x-1 bottom-0 h-0.5 rounded-full bg-[var(--color-text)] transition-opacity duration-200 sm:inset-x-3 ${isActive ? "opacity-100" : "opacity-0"}`}
-                    />
-                  </>
-                )}
+                {label}
               </NavLink>
             ))}
           </div>
