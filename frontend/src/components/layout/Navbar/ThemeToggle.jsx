@@ -1,41 +1,20 @@
-import { Moon, Sun } from "lucide-react";
 import { playClickSound } from "../../../lib/playClickSound";
 
-// Bulb flicker (on -> off -> on), bina shadow ke.
-// Ab flicker zyada natural hai: irregular dips, aur end me fully on settle hota hai.
-const bulbCss = `
-  @keyframes tt-bulb {
-    0%   { opacity: 0; }
-    12%  { opacity: 1; }
-    24%  { opacity: 0.15; }
-    38%  { opacity: 1; }
-    52%  { opacity: 0.05; }
-    62%  { opacity: 0.85; }
-    72%  { opacity: 0.3; }
-    100% { opacity: 1; }
-  }
-  .group:hover .tt-flicker,
-  .group:focus-visible .tt-flicker {
-    animation: tt-bulb 420ms linear forwards;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .group:hover .tt-flicker,
-    .group:focus-visible .tt-flicker { animation: none; }
-  }
-`;
-
-// Outer span:
-// - hover pe: turant apni jagah pe aata hai (duration-0) aur flicker chalta hai
-// - hover hatne pe: center (icon) ki taraf piche slide hota hai, fade slide se thoda pehle khatam hota hai
+// Bulb flicker hata diya. Brackets ab sirf smooth slide + fade karte hain.
+// - Hover pe: icon ki taraf se bahar apni jagah pe 450ms me soft ease-out se aate hain
+// - Hover hatne pe: wapas icon ki taraf 350ms me smooth ease-in-out se jaate hain
+// Overshoot/bounce nahi hai, isliye ek hi baar khulte hain.
 const outer =
-  "pointer-events-none absolute size-2 opacity-0 " +
-  "[transition-property:transform,translate,opacity] [transition-duration:320ms,320ms,200ms] " +
-  "ease-[cubic-bezier(0.55,0,0.8,0.2)] motion-reduce:transition-none " +
-  "group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 group-hover:duration-0 " +
-  "group-focus-visible:translate-x-0 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:duration-0";
+  "pointer-events-none absolute size-2 opacity-0 will-change-[transform,opacity] " +
+  "[transition-property:transform,translate,opacity] [transition-duration:350ms,350ms,300ms] " +
+  "ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none " +
+  "group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 " +
+  "group-hover:[transition-duration:450ms,450ms,350ms] group-hover:ease-[cubic-bezier(0.22,1,0.36,1)] " +
+  "group-focus-visible:translate-x-0 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 " +
+  "group-focus-visible:[transition-duration:450ms,450ms,350ms] group-focus-visible:ease-[cubic-bezier(0.22,1,0.36,1)]";
 
 // Theme ke hisaab se color: dark me white, light me black
-const inner = "tt-flicker block size-full border-[var(--color-text)]";
+const inner = "block size-full border-[var(--color-text)]";
 
 const corners = [
   { pos: "-left-0.5 -top-0.5", back: "translate-x-2 translate-y-2", border: "border-l border-t" },
@@ -44,10 +23,13 @@ const corners = [
   { pos: "-bottom-0.5 -right-0.5", back: "-translate-x-2 -translate-y-2", border: "border-b border-r" },
 ];
 
-// Icon swap: smooth ease-out-quint (overshoot nahi), thoda lamba taaki rotate dikhe
+// Icon swap: crossfade with stagger.
+// - jaane wala icon jaldi (200ms, ease-in) nikalta hai
+// - aane wala icon thoda ruk ke (100ms delay) 500ms me smooth ease-out se aata hai
 const icon =
-  "absolute transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] " +
-  "motion-reduce:transition-none will-change-transform";
+  "absolute transition-all motion-reduce:transition-none will-change-transform";
+const iconIn = "duration-500 delay-100 ease-[cubic-bezier(0.22,1,0.36,1)]";
+const iconOut = "duration-200 delay-0 ease-in";
 
 const ThemeToggle = ({ isDark, onToggle }) => {
   const handleClick = () => {
@@ -68,33 +50,41 @@ const ThemeToggle = ({ isDark, onToggle }) => {
       onClick={handleClick}
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
       className="
-        group relative cursor-pointer inline-flex size-9 shrink-0 items-center justify-center
+        theme-toggle-btn group relative cursor-pointer inline-flex size-9 shrink-0 items-center justify-center
         text-[var(--color-text)]
         focus-visible:outline-none
         sm:size-8
       "
     >
-      <style>{bulbCss}</style>
-
       {corners.map(({ pos, back, border }, i) => (
         <span key={i} aria-hidden="true" className={`${outer} ${pos} ${back}`}>
           <span className={`${inner} ${border}`} />
         </span>
       ))}
 
-      <Sun
+      <span
         aria-hidden="true"
-        size={19}
-        className={`${icon} ${
-          isDark ? "scale-50 rotate-90 opacity-0" : "scale-100 rotate-0 opacity-100"
+        className={`${icon} size-[22px] bg-[var(--color-text)] ${
+          isDark
+            ? `${iconOut} scale-50 rotate-90 opacity-0`
+            : `${iconIn} scale-100 rotate-0 opacity-100`
         }`}
+        style={{
+          mask: `url("${import.meta.env.BASE_URL}assets/origami-sun.svg") center / contain no-repeat`,
+          WebkitMask: `url("${import.meta.env.BASE_URL}assets/origami-sun.svg") center / contain no-repeat`,
+        }}
       />
-      <Moon
+      <span
         aria-hidden="true"
-        size={19}
-        className={`${icon} ${
-          isDark ? "scale-100 rotate-0 opacity-100" : "scale-50 -rotate-90 opacity-0"
+        className={`${icon} size-[22px] bg-[var(--color-text)] ${
+          isDark
+            ? `${iconIn} scale-100 rotate-0 opacity-100`
+            : `${iconOut} scale-50 -rotate-90 opacity-0`
         }`}
+        style={{
+          mask: `url("${import.meta.env.BASE_URL}assets/moon-origami.svg") center / contain no-repeat`,
+          WebkitMask: `url("${import.meta.env.BASE_URL}assets/moon-origami.svg") center / contain no-repeat`,
+        }}
       />
     </button>
   );

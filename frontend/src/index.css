@@ -713,3 +713,129 @@ p {
   from { transform: translate3d(-50%, 0, 0); }
   to   { transform: translate3d(0, 0, 0); }
 }
+.site-grid-background {
+  /* ...tumhara existing css same rahega... */
+  opacity: .40;
+  transition: opacity 400ms ease-out; /* hover hatne pe smooth wapas dim */
+}
+
+/* Bulb flicker: dim -> on -> off -> on */
+@keyframes grid-bulb {
+  0%   { opacity: .40; }
+  20%  { opacity: 1; }
+  45%  { opacity: .15; }
+  70%  { opacity: 1; }
+  100% { opacity: .85; }
+}
+
+/* Theme button pe hover/focus hote hi grid flicker kare */
+body:has(.theme-toggle-btn:hover) .site-grid-background,
+body:has(.theme-toggle-btn:focus-visible) .site-grid-background {
+  opacity: .85; /* flicker ke baad yahi rehta hai */
+  animation: grid-bulb 450ms linear;
+}
+/* Subtle comet dots: left line pe neeche se upar, right line pe upar se neeche, sirf ek baar.
+   Chhote dots, halki tail, kam opacity, bina shadow ke. */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  width: 2px;
+  height: 64px; /* tail ki length */
+  margin-left: -0.5px; /* 1px line ke center me rakhne ke liye */
+  z-index: -4;
+  pointer-events: none;
+  opacity: 0;
+  will-change: translate, scale, opacity;
+}
+
+/* Left: head upar, tail neeche (dot upar ja raha hai) */
+body::before {
+  left: calc(50% - 400px);
+  transform-origin: top center;
+  background:
+    radial-gradient(circle at 50% 1px, var(--color-text) 1px, transparent 1.3px),
+    linear-gradient(to bottom, var(--color-text), transparent 85%) center / 1px 100% no-repeat;
+}
+
+/* Right: head neeche, tail upar (dot neeche ja raha hai) */
+body::after {
+  left: calc(50% + 399px);
+  transform-origin: bottom center;
+  background:
+    radial-gradient(circle at 50% calc(100% - 1px), var(--color-text) 1px, transparent 1.3px),
+    linear-gradient(to top, var(--color-text), transparent 85%) center / 1px 100% no-repeat;
+}
+
+/* translate poore safar me ek smooth ease-in-out leta hai.
+   opacity/scale alag chalte hain: dheere aata hai, beech me hi thoda dikhta hai, dheere gayab hota hai. */
+@keyframes dot-up {
+  0% {
+    translate: 0 100vh;
+    scale: 1 0.4;
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    scale: 1 1;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    translate: 0 -80px;
+    scale: 1 0.4;
+    opacity: 0;
+  }
+}
+
+@keyframes dot-down {
+  0% {
+    translate: 0 -80px;
+    scale: 1 0.4;
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    scale: 1 1;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    translate: 0 100vh;
+    scale: 1 0.4;
+    opacity: 0;
+  }
+}
+
+/* Hover pe sirf ek baar chalta hai; right dot thoda late start hota hai (stagger) */
+body:has(.theme-toggle-btn:hover)::before,
+body:has(.theme-toggle-btn:focus-visible)::before {
+  animation: dot-up 1.8s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
+}
+
+body:has(.theme-toggle-btn:hover)::after,
+body:has(.theme-toggle-btn:focus-visible)::after {
+  animation: dot-down 1.8s cubic-bezier(0.45, 0, 0.2, 1) 0.2s 1 both;
+}
+
+/* Mobile/tablet: grid ki lines screen ke kinare (20px) pe hoti hain */
+@media (max-width: 1024px) {
+  body::before { left: 19px; }
+  body::after  { left: calc(100% - 20px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:has(.theme-toggle-btn:hover)::before,
+  body:has(.theme-toggle-btn:focus-visible)::before,
+  body:has(.theme-toggle-btn:hover)::after,
+  body:has(.theme-toggle-btn:focus-visible)::after {
+    animation: none;
+  }
+}
