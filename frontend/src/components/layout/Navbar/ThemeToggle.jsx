@@ -21,6 +21,10 @@ const ThemeToggle = ({ isDark, onToggle }) => {
     window.setTimeout(() => onToggle(!isDark), 500);
   };
 
+  const iconColorClass = isDark
+    ? "bg-[var(--color-secondary-text)] group-hover:bg-[var(--color-text)]"
+    : "bg-[#000000] group-hover:bg-[#111111]";
+
   const maskStyle = (file) => {
     const url = `url("${import.meta.env.BASE_URL}assets/${file}") center / contain no-repeat`;
     return { mask: url, WebkitMask: url };
@@ -50,15 +54,15 @@ const ThemeToggle = ({ isDark, onToggle }) => {
         className="relative flex size-full items-center justify-center transition-transform duration-300 ease-out group-hover:scale-110 group-active:scale-95 motion-reduce:transition-none"
       >
         <span
-          className={`${icon} size-[22px] bg-[var(--color-secondary-text)] group-hover:bg-[var(--color-text)] ${
+          className={`${icon} size-[22px] ${iconColorClass} ${
             isDark
               ? `${iconOut} scale-50 rotate-90 opacity-0`
               : `${iconIn} scale-100 rotate-0 opacity-100`
           }`}
-          style={maskStyle("origami-sun.svg")}
+          style={maskStyle("sun-theme.png")}
         />
         <span
-          className={`${icon} size-[22px] bg-[var(--color-secondary-text)] group-hover:bg-[var(--color-text)] ${
+          className={`${icon} size-[22px] ${iconColorClass} ${
             isDark
               ? `${iconIn} scale-100 rotate-0 opacity-100`
               : `${iconOut} scale-50 -rotate-90 opacity-0`
