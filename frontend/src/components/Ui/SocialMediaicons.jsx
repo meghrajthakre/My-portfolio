@@ -170,7 +170,7 @@ const StretchLink = ({ href, label, Icon }) => {
         <span ref={innerRef} className="flex will-change-transform">
           <Icon
             aria-hidden="true"
-            className="h-5 w-5 text-[var(--profile-icon-color)] transition-colors duration-300 group-data-[stuck=true]:text-[var(--profile-icon-hover)]"
+            className="h-6 w-6 text-[var(--profile-icon-color)] transition-colors duration-300 group-data-[stuck=true]:text-[var(--profile-icon-hover)]"
           />
         </span>
       </a>
