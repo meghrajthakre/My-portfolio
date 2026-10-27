@@ -8,6 +8,8 @@ const BREAK_DIST = 64;   // itni doori ke baad chipkan tootti hai (px)
 const PULL = 0.45;       // icon cursor ki taraf kitna khiske (0-1)
 const MAX_STRETCH = 2.2; // max lambai
 const HOVER_GROW = 1.1;
+const PULL_RAMP = 12;    // icon ke bahar itne px tak pull dheere dheere shuru hota hai
+const STRETCH_DIST = 24; // bahar ki itni doori par stretch +1x badhta hai
 
 // Stick: stiff spring, cursor ke saath glued
 const STICK = { k: 420, c: 30 };
@@ -105,10 +107,18 @@ const StretchLink = ({ href, label, Icon }) => {
       return;
     }
 
+    // Icon ke box se bahar kitna door hai (andar ho to 0)
+    const outX = Math.max(rect.left - clientX, 0, clientX - rect.right);
+    const outY = Math.max(rect.top - clientY, 0, clientY - rect.bottom);
+    const outside = Math.hypot(outX, outY);
+
+    // 0 -> andar (no stretch/pull), 1 -> bahar (full effect), smooth ramp
+    const t = clamp(outside / PULL_RAMP, 0, 1);
+
     st.angle = Math.atan2(dy, dx);
-    st.target.x = dx * PULL;
-    st.target.y = dy * PULL;
-    st.target.s = clamp(1 + dist / 24, 1, MAX_STRETCH);
+    st.target.x = dx * PULL * t;
+    st.target.y = dy * PULL * t;
+    st.target.s = clamp(1 + outside / STRETCH_DIST, 1, MAX_STRETCH);
     st.target.g = HOVER_GROW;
     start();
   };
