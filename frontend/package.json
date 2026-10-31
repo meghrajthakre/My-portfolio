@@ -12,6 +12,7 @@
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
     "@gsap/react": "^2.1.2",
+    "@react-three/fiber": "^9.8.2",
     "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/vite": "^4.1.16",
     "axios": "^1.13.2",
@@ -31,7 +32,8 @@
     "react-router-dom": "^7.9.5",
     "recharts": "^3.3.0",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.16"
+    "tailwindcss": "^4.1.16",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
