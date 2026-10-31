@@ -12,7 +12,7 @@ import MatrixRain from "./MatrixRain";
 const KONAMI_SEQUENCE = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "arrowleft", "arrowright", "b", "a"];
 
 // Two-key shortcuts shown in the search dialog: "G H" goes home, "T D" switches to dark mode, etc.
-const GO_SHORTCUTS = { h: "/", w: "/work", b: "/blogs", r: "/resume", s: "/human-scan" };
+const GO_SHORTCUTS = { h: "/", w: "/work", b: "/blogs", r: "/resume", c: "/components" };
 const THEME_SHORTCUTS = { l: false, d: true }; // value = "is dark"
 
 const IS_MAC = typeof navigator !== "undefined" && /mac|iphone|ipad/i.test(navigator.userAgentData?.platform ?? navigator.platform ?? "");

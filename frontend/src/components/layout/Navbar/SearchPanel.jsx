@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, FileText, Moon, Newspaper, ScanFace, Search, Sun } from "lucide-react";
+import { Blocks, BriefcaseBusiness, FileText, Moon, Newspaper, Search, Sun } from "lucide-react";
 import BrandLogo from "./BrandLogo";
 
 const ITEM_META = {
@@ -6,7 +6,7 @@ const ITEM_META = {
   "/work": { icon: BriefcaseBusiness, shortcut: "G W" },
   "/blogs": { icon: Newspaper, shortcut: "G B" },
   "/resume": { icon: FileText, shortcut: "G R" },
-  "/human-scan": { icon: ScanFace, shortcut: "G S" },
+  "/components": { icon: Blocks, shortcut: "G C" },
   "theme-light": { icon: Sun, shortcut: "T L" },
   "theme-dark": { icon: Moon, shortcut: "T D" },
 };

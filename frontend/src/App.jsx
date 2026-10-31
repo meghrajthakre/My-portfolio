@@ -15,7 +15,7 @@ const Resume = lazy(() => import("./Pages/Resume"));
 const Contact = lazy(() => import("./Pages/Contact/Contact"));
 const Gears = lazy(() => import("./Pages/Gears"));
 const VscodeSetup = lazy(() => import("./Pages/VscodeSetup"));
-const HumanScan = lazy(() => import("./Pages/HumanScan"));
+const Components = lazy(() => import("./Pages/Components/Components"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
 import BackToTop from "./components/Ui/BackToTop";
 import BottomBlur from "./components/Ui/BottomBlur";
@@ -41,7 +41,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/gears" element={<Gears />} />
           <Route path="/vscode-setup" element={<VscodeSetup />} />
-          <Route path="/human-scan" element={<HumanScan />} />
+          <Route path="/components" element={<Components />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

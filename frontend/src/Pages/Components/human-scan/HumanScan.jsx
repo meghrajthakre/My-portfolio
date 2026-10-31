@@ -5,9 +5,8 @@ import {
   Box3, DoubleSide, Group, HalfFloatType, LinearFilter, Mesh, NoBlending, OrthographicCamera,
   PlaneGeometry, Scene, ShaderMaterial, Vector2, Vector3, WebGLRenderTarget,
 } from "three";
-import "./HumanBackground.css";
-
 const MODEL_URL = "/models/human.glb";
+const INNER_MODEL_URL = "/models/skeleton.glb";
 
 const DEFAULTS = {
   fov: 70, height: 0.46, elevation: 12, spinSpeed: 4,
@@ -20,6 +19,13 @@ const DEFAULTS = {
   bloomPasses: 3, bloomScale: 0.55,
   debugInner: false,
   crt: true, scanCount: 370, scanDepth: 0.32, aberration: 0.0044, vignette: 1.0, contrast: 0.95, saturation: 2.0,
+};
+const HUMAN_SCAN_SETTINGS = {
+  radius: 0.035,
+  strength: 0.15,
+  innerScale: 1,
+  innerX: 0,
+  innerY: 0,
 };
 
 const MESH_VERT = /* glsl */ `
@@ -212,10 +218,10 @@ const normalise = (source, material) => {
   return { scene, holder };
 };
 
-function XrayFigure({ cfg, innerUrl, reducedMotion }) {
+function XrayFigure({ cfg, reducedMotion }) {
   const { gl, size } = useThree();
   const bodyGltf = useLoader(GLTFLoader, MODEL_URL);
-  const innerGltf = useLoader(GLTFLoader, innerUrl || MODEL_URL);
+  const innerGltf = useLoader(GLTFLoader, INNER_MODEL_URL);
   const pointer = useRef({ ax: -9, ay: -9, bx: -9, by: -9, moved: false });
   const spin = useRef(0);
   // drag-to-rotate: `check` is a press waiting to be tested against the figure
@@ -239,13 +245,6 @@ function XrayFigure({ cfg, innerUrl, reducedMotion }) {
     });
     const body = normalise(bodyGltf.scene, bodyMat);
     const inner = normalise(innerGltf.scene, innerMat);
-    if (innerUrl) {
-      let meshes = 0, skinned = 0;
-      innerGltf.scene.traverse((n) => { if (n.isMesh) meshes++; if (n.isSkinnedMesh) skinned++; });
-      console.info(`[HumanBackground] inner model "${innerUrl}": ${meshes} meshes, ${skinned} skinned`);
-    } else {
-      console.info("[HumanBackground] no innerUrl, so the reveal shows your own model, not a skeleton");
-    }
     // line a separate skeleton/anatomy model up with the body
     inner.holder.scale.multiplyScalar(cfg.innerScale);
     inner.holder.position.set(cfg.innerX, cfg.innerY, cfg.innerZ);
@@ -450,29 +449,64 @@ class HumanBackgroundErrorBoundary extends Component {
   }
 }
 
-function HumanBackground({ settings, innerUrl, fxColor = "#e8271c", fxOpacity = 0.14, ground = "#000000" }) {
-  const cfg = useMemo(() => ({ ...DEFAULTS, ...settings }), [settings]);
+function HumanScan() {
+  const cfg = useMemo(() => ({ ...DEFAULTS, ...HUMAN_SCAN_SETTINGS }), []);
   const reducedMotion = useMemo(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches, []);
   const fovRad = (cfg.fov * Math.PI) / 180;
   const dist = 1 / cfg.height / (2 * Math.tan(fovRad / 2));
   const tilt = (cfg.elevation * Math.PI) / 180;
   return (
-    <HumanBackgroundErrorBoundary>
-    <div className="human-background" aria-hidden="true" style={{ background: ground }}>
-      <Canvas
-        camera={{ fov: cfg.fov, near: 0.05, far: 40, position: [0, Math.sin(tilt) * dist, Math.cos(tilt) * dist] }}
-        dpr={[1, 1.5]}
-        gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
-        onCreated={({ gl, camera }) => { gl.setClearColor(0x000000, 0); camera.lookAt(0, 0, 0); }}
-      >
-        <Suspense fallback={null}>
-          <XrayFigure cfg={cfg} innerUrl={innerUrl} reducedMotion={reducedMotion} />
-        </Suspense>
-      </Canvas>
-      <div className="human-fx" style={{ background: fxColor, opacity: fxOpacity }} />
-    </div>
-    </HumanBackgroundErrorBoundary>
+    <>
+      <HumanBackgroundErrorBoundary>
+        <style>{`
+          .human-background {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            overflow: hidden;
+            pointer-events: none;
+            isolation: isolate;
+          }
+          .human-background canvas {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+          }
+          .human-fx {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            mix-blend-mode: saturation;
+          }
+        `}</style>
+        <div className="human-background" aria-hidden="true" style={{ background: "#000000" }}>
+          <Canvas
+            camera={{ fov: cfg.fov, near: 0.05, far: 40, position: [0, Math.sin(tilt) * dist, Math.cos(tilt) * dist] }}
+            dpr={[1, 1.5]}
+            gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
+            onCreated={({ gl, camera }) => { gl.setClearColor(0x000000, 0); camera.lookAt(0, 0, 0); }}
+          >
+            <Suspense fallback={null}>
+              <XrayFigure cfg={cfg} reducedMotion={reducedMotion} />
+            </Suspense>
+          </Canvas>
+          <div className="human-fx" style={{ background: "#e8271c", opacity: 0.14 }} />
+        </div>
+      </HumanBackgroundErrorBoundary>
+      <main className="relative z-0 mx-auto flex min-h-[65vh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center text-[var(--color-text)]">
+        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--color-muted)]">
+          Interactive 3D study
+        </p>
+        <h2 className="text-4xl font-bold sm:text-6xl">Human Scan</h2>
+        <p className="mt-5 max-w-lg text-base text-[var(--color-secondary-text)] sm:text-lg">
+          Move your pointer across the scan to reveal its inner structure.
+        </p>
+      </main>
+    </>
   );
 }
 
-export default HumanBackground;
+export default HumanScan;
