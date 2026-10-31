@@ -75,16 +75,18 @@ const LineNavItem = memo(function LineNavItem({
         whileHover="hover"
         onClick={onClick}
       >
-        <MotionLine
-          aria-hidden="true"
-          className="block h-px shrink-0 bg-[#3f3f46] transition-colors duration-300 ease-out group-hover:bg-white group-aria-[current=page]:bg-white"
-          variants={{
-            normal: { width: LINE_WIDTH.normal },
-            active: { width: LINE_WIDTH.active },
-            hover: { width: LINE_WIDTH.active },
-          }}
-          transition={LINE_TRANSITION}
-        />
+        <span className="flex w-[60px] shrink-0 items-center">
+          <MotionLine
+            aria-hidden="true"
+            className="block h-px shrink-0 bg-[#3f3f46] transition-colors duration-300 ease-out group-hover:bg-white group-aria-[current=page]:bg-white"
+            variants={{
+              normal: { width: LINE_WIDTH.normal },
+              active: { width: LINE_WIDTH.active },
+              hover: { width: LINE_WIDTH.active },
+            }}
+            transition={LINE_TRANSITION}
+          />
+        </span>
         <span
           className={cn(
             "text-sm transition-colors duration-300 ease-out group-hover:!text-white group-aria-[current=page]:font-medium group-aria-[current=page]:text-white",

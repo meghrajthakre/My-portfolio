@@ -54,12 +54,15 @@ function LineNavDemo() {
 
 const Components = () => {
   return (
-    <main className="mx-auto min-h-[70vh] w-full max-w-6xl px-4 py-8 text-[var(--color-text)] sm:px-6 lg:py-12">
+    <main className="mx-auto min-h-[70vh] w-full max-w-3xl px-4 py-8 text-[var(--color-text)] sm:px-8 lg:py-12">
       <header className="mb-6">
         <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-muted)]">
           Library
         </p>
         <h1 className="mt-2 text-3xl font-bold">Components</h1>
+        <p className="mt-2 text-[var(--color-secondary-text)]">
+          Components that I have made.
+        </p>
       </header>
       <LineNavDemo />
     </main>
