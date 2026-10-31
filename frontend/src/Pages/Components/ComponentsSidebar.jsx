@@ -111,13 +111,13 @@ export function ComponentsSidebar({
         aria-label={open ? "Collapse component list" : "Expand component list"}
         className="absolute top-4 left-[15px] z-10 -m-1 rounded-md p-1 text-foreground transition-opacity outline-hidden hover:opacity-70 focus-visible:ring-2 focus-visible:ring-foreground/30"
       >
-        <SidebarIcon className="h-3.5 w-[18px]" />
+        <SidebarIcon className="h-2.5 w-[18px]" />
       </button>
 
       <ScrollFade
         id={listId}
         className={cn(
-          "max-h-[min(60dvh,30rem)] px-[15px] lg:max-h-[calc(100dvh-6rem)]",
+          "max-h-[min(50dvh,24rem)] px-[15px] lg:max-h-[calc(100dvh-10rem)]",
           listClassName,
           !open && "hidden"
         )}

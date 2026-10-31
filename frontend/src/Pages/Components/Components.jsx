@@ -100,48 +100,52 @@ const Components = () => {
   }, []);
 
   return (
-    <div className="mx-auto flex min-h-[70vh] w-full max-w-6xl flex-col gap-6 px-4 py-8 text-[var(--color-text)] sm:px-6 lg:flex-row lg:gap-10 lg:py-12">
-      <aside className="w-full shrink-0 self-start lg:w-64">
-        <div
-          className="lg:fixed lg:top-24 lg:z-30 lg:w-64"
-          style={{
-            left: "max(1rem, calc((100vw - 72rem) / 2 - 1rem))",
-          }}
-        >
-          <ComponentsSidebar
-            items={COMPONENTS}
-            activeHref={active.href}
-            onItemClick={handleItemClick}
-          />
-        </div>
+    <div className="min-h-[70vh] py-8 text-[var(--color-text)] lg:py-12">
+      <aside
+        className="mx-auto mb-6 w-full max-w-64 px-4 xl:fixed xl:top-24 xl:z-30 xl:mb-0 xl:w-56 xl:max-w-none xl:px-0"
+        style={{
+          left: "max(1rem, calc((100vw - 48rem) / 2 - 15rem))",
+        }}
+      >
+        <ComponentsSidebar
+          items={COMPONENTS}
+          activeHref={active.href}
+          onItemClick={handleItemClick}
+        />
       </aside>
 
-      <article className="min-w-0 flex-1">
-        {ActiveComponent ? (
-          <ActiveComponent />
-        ) : (
-          <DemoPlaceholder
-            title={active.title}
-            description={active.description}
-          />
-        )}
-
-        <nav
-          aria-label="Pagination"
-          className="mt-12 flex items-center justify-between gap-4 border-t border-[var(--color-border)] pt-6"
-        >
-          {previous && (
-            <PagerLink
-              item={previous}
-              direction="previous"
-              onClick={handleItemClick}
+      <main className="mx-auto min-h-[70vh] w-full max-w-3xl px-8">
+        <article className="min-w-0">
+          {ActiveComponent ? (
+            <ActiveComponent />
+          ) : (
+            <DemoPlaceholder
+              title={active.title}
+              description={active.description}
             />
           )}
-          {next && (
-            <PagerLink item={next} direction="next" onClick={handleItemClick} />
-          )}
-        </nav>
-      </article>
+
+          <nav
+            aria-label="Pagination"
+            className="mt-12 flex items-center justify-between gap-4 border-t border-[var(--color-border)] pt-6"
+          >
+            {previous && (
+              <PagerLink
+                item={previous}
+                direction="previous"
+                onClick={handleItemClick}
+              />
+            )}
+            {next && (
+              <PagerLink
+                item={next}
+                direction="next"
+                onClick={handleItemClick}
+              />
+            )}
+          </nav>
+        </article>
+      </main>
     </div>
   );
 };
