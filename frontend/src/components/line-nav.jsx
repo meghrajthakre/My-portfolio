@@ -5,8 +5,8 @@ import { cn } from "../lib/utils"
 
 const MotionAnchor = motion.a
 const MotionLine = motion.span
-const LINE_WIDTH = { normal: 30, active: 50 }
-const LINE_TRANSITION = { type: "spring", stiffness: 500, damping: 32, mass: 0.6 }
+const LINE_WIDTH = { normal: 35, active: 60 }
+const LINE_TRANSITION = { type: "spring", stiffness: 280, damping: 30, mass: 0.8 }
 
 export function LineNav({
   className,
@@ -77,7 +77,7 @@ const LineNavItem = memo(function LineNavItem({
       >
         <MotionLine
           aria-hidden="true"
-          className="block h-px shrink-0 bg-[#3f3f46] transition-colors group-hover:bg-white group-aria-[current=page]:bg-white"
+          className="block h-px shrink-0 bg-[#3f3f46] transition-colors duration-300 ease-out group-hover:bg-white group-aria-[current=page]:bg-white"
           variants={{
             normal: { width: LINE_WIDTH.normal },
             active: { width: LINE_WIDTH.active },
@@ -87,7 +87,7 @@ const LineNavItem = memo(function LineNavItem({
         />
         <span
           className={cn(
-            "text-sm transition-colors group-hover:text-white group-aria-[current=page]:font-medium group-aria-[current=page]:text-white",
+            "text-sm transition-colors duration-300 ease-out group-hover:!text-white group-aria-[current=page]:font-medium group-aria-[current=page]:text-white",
             active ? "font-medium text-white" : "text-[#a1a1aa]"
           )}
         >
