@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
-import { LineNav } from "../../components/line-nav";
-import { ComponentsSidebar } from "./ComponentsSidebar";
+import { LineNav } from "../../../components/line-nav";
+import { ComponentsSidebar } from "./Sidebar";
 
 const slugify = (title) =>
   title

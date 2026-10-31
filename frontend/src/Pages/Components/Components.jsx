@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 
-import { ComponentsSidebar } from "./ComponentsSidebar";
-import { COMPONENTS } from "./Registry";
+import { ComponentsSidebar } from "./Sidebar/Sidebar";
+import { COMPONENTS } from "./Sidebar/Registry";
 
 // Tiny hash router: the URL hash picks the page, so it works with any framework
 // and gives every component a shareable link with working back/forward.

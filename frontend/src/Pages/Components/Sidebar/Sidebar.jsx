@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react"
 
-import { LineNav } from "../../components/line-nav"
-import { cn } from "../../lib/utils"
+import { LineNav } from "../../../components/line-nav"
+import { cn } from "../../../lib/utils"
 
 const FADE_TOP = 40
 const FADE_BOTTOM = 28
