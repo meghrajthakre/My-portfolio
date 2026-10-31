@@ -148,7 +148,7 @@ const LineNavItem = memo(function LineNavItem({
           />
         </span>
         <MotionSpan
-          className="flex items-center gap-2 text-base whitespace-nowrap text-muted-foreground transition-[color] ease-out group-hover:text-foreground group-focus-visible:text-foreground group-aria-[current=page]:text-foreground"
+          className="flex items-center gap-2 text-base whitespace-nowrap text-muted-foreground transition-[color] ease-out group-hover:!text-[var(--color-text)] group-focus-visible:!text-[var(--color-text)] group-aria-[current=page]:!text-[var(--color-text)]"
           variants={labelVariants}
           transition={transition}
         >

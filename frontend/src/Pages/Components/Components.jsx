@@ -102,9 +102,9 @@ const Components = () => {
   return (
     <div className="min-h-[70vh] py-8 text-[var(--color-text)] lg:py-12">
       <aside
-        className="mx-auto mb-6 w-full max-w-64 px-4 xl:fixed xl:top-24 xl:z-30 xl:mb-0 xl:w-56 xl:max-w-none xl:px-0"
+        className="mx-auto mb-6 w-full max-w-64 px-4 xl:fixed xl:top-24 xl:z-30 xl:mb-0 xl:w-64 xl:max-w-none xl:px-0"
         style={{
-          left: "max(1rem, calc((100vw - 48rem) / 2 - 15rem))",
+          left: "max(0.75rem, calc((100vw - 48rem) / 2 - 19rem))",
         }}
       >
         <ComponentsSidebar
