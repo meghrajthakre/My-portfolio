@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 
 import { ComponentsSidebar } from "./Sidebar/Sidebar";
 import { COMPONENTS } from "./Sidebar/Registry";
+import leftArrowIcon from "./assets/left-arrow-icon.svg";
+import rightArrowIcon from "./assets/right-arrow-icon.svg";
 
 // Tiny hash router: the URL hash picks the page, so it works with any framework
 // and gives every component a shareable link with working back/forward.
@@ -37,8 +39,24 @@ function PagerLink({ item, direction, onClick }) {
       <span className="text-xs text-[var(--color-muted)]">
         {isNext ? "Next" : "Previous"}
       </span>
-      <span className="truncate text-sm font-medium">
-        {isNext ? `${item.title} →` : `← ${item.title}`}
+      <span className="flex items-center gap-2 text-sm font-medium">
+        {!isNext && (
+          <img
+            src={leftArrowIcon}
+            alt=""
+            aria-hidden="true"
+            className="size-5 shrink-0 invert dark:invert-0"
+          />
+        )}
+        <span className="truncate">{item.title}</span>
+        {isNext && (
+          <img
+            src={rightArrowIcon}
+            alt=""
+            aria-hidden="true"
+            className="size-5 shrink-0 invert dark:invert-0"
+          />
+        )}
       </span>
     </a>
   );
