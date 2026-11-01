@@ -46,10 +46,9 @@ export function ToggleButton({ open, onClick, listId }) {
           whileTap={reduceMotion ? undefined : { scale: 0.92 }}
           transition={transition}
           className={cn(
-            // Ghost button: no background colour in any state. Only the icon
-            // brightens on hover / when open.
             "group relative flex size-9 cursor-pointer items-center justify-center rounded-lg bg-transparent outline-hidden",
-            "text-foreground/60 transition-[color] duration-200 ease-out",
+            "text-foreground/60 transition-[color,background-color] duration-200 ease-out",
+            "hover:bg-muted",
             "hover:text-foreground",
             "data-[state=open]:text-foreground",
             "focus-visible:ring-2 focus-visible:ring-foreground/30"
