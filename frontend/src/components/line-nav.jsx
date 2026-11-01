@@ -6,11 +6,11 @@ import { cn } from "../lib/utils"
 const MotionAnchor = motion.a
 const MotionSpan = motion.span
 
-// Idle ticks are 30px wide; the active / hovered tick stretches to 50px and
-// pushes its label 20px to the right. The line is drawn at its widest size and
+// Ruler-style rail: idle ticks are 24px wide; the active / hovered tick
+// stretches to 40px and pushes its label 16px to the right. The line is drawn at its widest size and
 // scaled with a transform, so the spring never forces a re-layout of the list.
-const LINE_IDLE = 30
-const LINE_ACTIVE = 50
+const LINE_IDLE = 15
+const LINE_ACTIVE = 30
 const LABEL_SHIFT = LINE_ACTIVE - LINE_IDLE
 
 const lineVariants = {
@@ -24,6 +24,8 @@ const labelVariants = {
   active: { x: LABEL_SHIFT },
   hover: { x: LABEL_SHIFT },
 }
+
+const FILLERS = [0, 1, 2]
 
 const SPRING = { type: "spring", stiffness: 600, damping: 30 }
 
@@ -74,8 +76,9 @@ export function LineNav({
   return (
     <nav
       aria-label={ariaLabel}
-      // 10.25px gap + three 1px ticks per item = the 33.75px row pitch.
-      className={cn("flex flex-col gap-[10.25px] py-5", className)}
+      // One 2px item tick + three 1px filler ticks, 10.25px apart: the same
+      // "1 bold, 3 light" ruler rhythm as the reference.
+      className={cn("flex flex-col gap-[8px] py-5", className)}
       style={{ "--line-nav-width": `${LINE_IDLE}px` }}
     >
       {items.map((item, index) => {
@@ -124,7 +127,7 @@ const LineNavItem = memo(function LineNavItem({
         ref={ref}
         aria-current={active ? "page" : undefined}
         className={cn(
-          "group relative flex h-px items-center gap-[15px] outline-hidden",
+          "group relative flex h-0.5 items-center gap-3 outline-hidden",
           // Oversized hit area (28px tall) around the 1px row; doubles as the focus ring.
           "after:absolute after:top-1/2 after:left-0 after:size-full after:-translate-y-1/2 after:rounded-md after:p-3.5",
           "focus-visible:after:ring-2 focus-visible:after:ring-foreground/30"
@@ -137,18 +140,18 @@ const LineNavItem = memo(function LineNavItem({
       >
         <span
           aria-hidden="true"
-          className="relative block h-px shrink-0"
+          className="relative block h-0.5 shrink-0"
           style={{ width: LINE_IDLE }}
         >
           <MotionSpan
-            className="absolute top-0 left-0 block h-px origin-left bg-foreground/25 transition-[background-color] ease-out group-hover:bg-foreground group-focus-visible:bg-foreground group-aria-[current=page]:bg-foreground"
+            className="absolute top-0 left-0 block h-0.5 origin-left bg-foreground/35 transition-[background-color] ease-out group-hover:bg-foreground group-focus-visible:bg-foreground group-aria-[current=page]:bg-foreground"
             style={{ width: LINE_ACTIVE }}
             variants={lineVariants}
             transition={transition}
           />
         </span>
         <MotionSpan
-          className="flex items-center gap-2 text-base whitespace-nowrap text-muted-foreground transition-[color] ease-out group-hover:!text-[var(--color-text)] group-focus-visible:!text-[var(--color-text)] group-aria-[current=page]:!text-[var(--color-text)]"
+          className="flex items-center gap-2 text-sm whitespace-nowrap text-muted-foreground transition-[color] ease-out group-hover:!text-[var(--color-text)] group-focus-visible:!text-[var(--color-text)] group-aria-[current=page]:!text-[var(--color-text)]"
           variants={labelVariants}
           transition={transition}
         >
@@ -164,18 +167,14 @@ const LineNavItem = memo(function LineNavItem({
           )}
         </MotionSpan>
       </MotionAnchor>
-      {!isLast && (
-        <>
+      {!isLast &&
+        FILLERS.map((key) => (
           <span
+            key={key}
             aria-hidden="true"
-            className="block h-px w-(--line-nav-width) bg-foreground/25"
+            className="block h-px w-(--line-nav-width) bg-foreground/20"
           />
-          <span
-            aria-hidden="true"
-            className="block h-px w-(--line-nav-width) bg-foreground/25"
-          />
-        </>
-      )}
+        ))}
     </>
   )
 })
