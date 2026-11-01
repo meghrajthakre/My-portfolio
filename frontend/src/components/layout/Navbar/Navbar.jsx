@@ -11,9 +11,9 @@ import MatrixRain from "./MatrixRain";
 
 const KONAMI_SEQUENCE = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "arrowleft", "arrowright", "b", "a"];
 
-// Two-key shortcuts shown in the search dialog: "G H" goes home, "T D" switches to dark mode, etc.
+// "D" toggles the theme; "T L" switches directly to light mode.
 const GO_SHORTCUTS = { h: "/", w: "/work", b: "/blogs", r: "/resume", c: "/components" };
-const THEME_SHORTCUTS = { l: false, d: true }; // value = "is dark"
+const THEME_SHORTCUTS = { l: false }; // value = "is dark"
 
 const IS_MAC = typeof navigator !== "undefined" && /mac|iphone|ipad/i.test(navigator.userAgentData?.platform ?? navigator.platform ?? "");
 const SEARCH_KEY = IS_MAC ? "⌘" : "Ctrl";
@@ -60,11 +60,22 @@ const Navbar = () => {
     window.setTimeout(() => setIsDark(nextIsDark), 500);
   };
 
+  const handleThemeToggle = () => {
+    window.dispatchEvent(new CustomEvent("darkModeToggle", {
+      detail: { x: window.innerWidth, y: 0 },
+    }));
+    window.setTimeout(() => setIsDark((current) => !current), 500);
+  };
+
   const handleMatrixDone = useCallback(() => setIsMatrixActive(false), []);
 
   // The keyboard handler is registered once, so it reads the latest actions through a ref
   useEffect(() => {
-    actionsRef.current = { go: handleSelect, theme: handleThemeSelect };
+    actionsRef.current = {
+      go: handleSelect,
+      theme: handleThemeSelect,
+      toggleTheme: handleThemeToggle,
+    };
   });
 
   useEffect(() => {
@@ -92,7 +103,15 @@ const Navbar = () => {
 
       const key = event.key.toLowerCase();
 
-      // Second key of a chord: G then H/W/B/R, or T then L/D
+      if (key === "d" && !event.repeat) {
+        event.preventDefault();
+        chord = null;
+        window.clearTimeout(chordTimer);
+        actionsRef.current.toggleTheme?.();
+        return;
+      }
+
+      // Second key of a chord: G then H/W/B/R, or T then L.
       if (chord) {
         const activeChord = chord;
         chord = null;
