@@ -32,7 +32,7 @@ export function ToggleButton({ open, onClick, listId }) {
 
   return (
     <div className="absolute top-2.5 left-[5px] z-10">
-      <Tooltip text={label} placement="right">
+      <Tooltip text={label} placement="right" hoverOnly>
         <MotionButton
           type="button"
           onClick={onClick}
