@@ -78,7 +78,7 @@ export function LineNav({
       aria-label={ariaLabel}
       // One 2px item tick + three 1px filler ticks, 10.25px apart: the same
       // "1 bold, 3 light" ruler rhythm as the reference.
-      className={cn("flex flex-col gap-[8px] py-5", className)}
+      className={cn("flex flex-col gap-[7.5px] py-5", className)}
       style={{ "--line-nav-width": `${LINE_IDLE}px` }}
     >
       {items.map((item, index) => {
@@ -144,7 +144,7 @@ const LineNavItem = memo(function LineNavItem({
           style={{ width: LINE_IDLE }}
         >
           <MotionSpan
-            className="absolute top-0 left-0 block h-0.5 origin-left bg-foreground/35 transition-[background-color] ease-out group-hover:bg-foreground group-focus-visible:bg-foreground group-aria-[current=page]:bg-foreground"
+            className="absolute top-0 left-0 block h-0.5 origin-left rounded-full bg-foreground/35 transition-[background-color] ease-out group-hover:bg-foreground group-focus-visible:bg-foreground group-aria-[current=page]:bg-foreground"
             style={{ width: LINE_ACTIVE }}
             variants={lineVariants}
             transition={transition}
