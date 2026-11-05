@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Search } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import CircleCanvas from "../../Ui/CircleCanvas";
 import BrandLogo from "./BrandLogo";
@@ -38,6 +38,7 @@ const Navbar = () => {
   const progressRef = useRef(null);
   const actionsRef = useRef({});
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isRetroActive, setIsRetroActive] = useState(false);
   const [isMatrixActive, setIsMatrixActive] = useState(false);
   const [showMatrixNotice, setShowMatrixNotice] = useState(false);
@@ -47,6 +48,7 @@ const Navbar = () => {
 
   const handleSelect = (path) => {
     setIsSearchOpen(false);
+    setIsMobileMenuOpen(false);
     navigate(path);
   };
 
@@ -86,6 +88,7 @@ const Navbar = () => {
     const handleKeyboard = (event) => {
       if (event.key === "Escape") {
         setIsSearchOpen(false);
+        setIsMobileMenuOpen(false);
         setIsRetroActive(false);
         return;
       }
@@ -263,7 +266,7 @@ const Navbar = () => {
             <BrandLogo className="h-7 w-auto sm:h-8" />
           </NavLink>
 
-          <div className="ml-auto flex h-full items-center">
+          <div className="ml-auto hidden h-full items-center sm:flex">
             {NAV_ITEMS.map(({ label, to }) => (
               <NavLink
                 key={to}
@@ -276,7 +279,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className="ml-2 flex shrink-0 items-center gap-1 sm:ml-4 sm:gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-1 sm:ml-4 sm:gap-2">
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
@@ -291,8 +294,38 @@ const Navbar = () => {
               </span>
             </button>
             <ThemeToggle isDark={isDark} onToggle={setIsDark} />
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation"
+              className="inline-flex size-9 items-center justify-center rounded-md text-[var(--color-secondary-text)] transition-colors hover:bg-[var(--color-icons-bg)] hover:text-[var(--color-text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:hidden"
+            >
+              {isMobileMenuOpen ? <X aria-hidden="true" size={19} /> : <Menu aria-hidden="true" size={19} />}
+            </button>
           </div>
         </nav>
+
+        {isMobileMenuOpen && (
+          <nav
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
+            className="absolute inset-x-0 top-full z-30 border-y border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2 shadow-lg sm:hidden"
+          >
+            {NAV_ITEMS.map(({ label, to }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={to === "/"}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={({ isActive }) => `flex min-h-11 items-center border-b border-[var(--color-border)] px-2 text-sm font-medium last:border-b-0 ${isActive ? "text-[var(--color-text)]" : "text-[var(--color-secondary-text)]"} hover:text-[var(--color-accent)]`}
+              >
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+        )}
 
         {/* Reading progress */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-px z-20 h-0.5 overflow-hidden">

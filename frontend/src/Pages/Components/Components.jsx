@@ -1,7 +1,8 @@
 import { Suspense, useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 
-import { ComponentsSidebar } from "./Sidebar/Sidebar";
 import { COMPONENTS } from "./Sidebar/Registry";
+import { ComponentsSidebar } from "./Sidebar/Sidebar";
+import ComponentsDirectory from "./ComponentsDirectory";
 import leftArrowIcon from "./assets/left-arrow-icon.svg";
 import rightArrowIcon from "./assets/right-arrow-icon.svg";
 
@@ -96,21 +97,21 @@ function ComponentLoading({ title }) {
 const Components = () => {
   const hash = useSyncExternalStore(subscribe, getHash, getServerHash);
   const foundIndex = COMPONENTS.findIndex((item) => item.href === hash);
-  const activeIndex = foundIndex === -1 ? 0 : foundIndex;
-  const active = COMPONENTS[activeIndex];
-  const previous = COMPONENTS[activeIndex - 1];
-  const next = COMPONENTS[activeIndex + 1];
-  const ActiveComponent = active.component;
+  const active = foundIndex === -1 ? null : COMPONENTS[foundIndex];
+  const activeTitle = active?.title;
+  const previous = foundIndex > 0 ? COMPONENTS[foundIndex - 1] : null;
+  const next = foundIndex >= 0 ? COMPONENTS[foundIndex + 1] : null;
+  const ActiveComponent = active?.component;
 
   const isFirstRender = useRef(true);
 
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = `${active.title} · Components`;
+    document.title = activeTitle ? `${activeTitle} · Components` : "Components";
     return () => {
       document.title = previousTitle;
     };
-  }, [active.title]);
+  }, [activeTitle]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -118,7 +119,7 @@ const Components = () => {
       return;
     }
     window.scrollTo({ top: 0 });
-  }, [active.id]);
+  }, [active?.id]);
 
   const handleItemClick = useCallback((item, event) => {
     // Leave modified / middle clicks to the browser (open in new tab, etc.).
@@ -128,6 +129,14 @@ const Components = () => {
     event.preventDefault();
     navigate(item.href);
   }, []);
+
+  if (!active) {
+    return (
+      <div className="text-[var(--color-text)]">
+        <ComponentsDirectory onItemClick={handleItemClick} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[70vh] py-8 text-[var(--color-text)] lg:py-12">
@@ -141,10 +150,23 @@ const Components = () => {
           items={COMPONENTS}
           activeHref={active.href}
           onItemClick={handleItemClick}
+          collapseOnSelect={false}
         />
       </aside>
 
-      <main className="mx-auto min-h-[70vh] w-full max-w-3xl px-8">
+      <main className="mx-auto w-full max-w-3xl px-6 sm:px-8">
+        <a
+          href="/components"
+          onClick={(event) => {
+            event.preventDefault();
+            navigate("");
+          }}
+          className="mb-8 inline-flex items-center gap-2 rounded-md text-sm text-[var(--color-secondary-text)] transition-colors hover:text-[var(--color-accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)]"
+        >
+          <span aria-hidden="true">←</span>
+          All components
+        </a>
+
         <article className="min-w-0">
           {ActiveComponent ? (
             <Suspense fallback={<ComponentLoading title={active.title} />}>
@@ -158,7 +180,7 @@ const Components = () => {
           )}
 
           <nav
-            aria-label="Pagination"
+            aria-label="Component pagination"
             className="mt-12 flex items-center justify-between gap-4 border-t border-[var(--color-border)] pt-6"
           >
             {previous && (
