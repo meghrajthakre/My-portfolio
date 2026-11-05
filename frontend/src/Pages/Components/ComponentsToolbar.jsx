@@ -1,0 +1,214 @@
+import { useEffect, useRef, useState, useCallback } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Copy,
+  Linkedin,
+  MoreHorizontal,
+  Share2,
+  Twitter,
+} from "lucide-react";
+
+import Tooltip from "../../common/Tooltip";
+
+const BUTTON =
+  "inline-flex h-8 w-8 select-none items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--color-text)_6%,transparent)] text-[var(--color-text)] transition-[transform,background-color] duration-150 ease-out hover:bg-[color-mix(in_srgb,var(--color-text)_12%,transparent)] active:scale-90 active:bg-[color-mix(in_srgb,var(--color-text)_18%,transparent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] motion-reduce:transition-none motion-reduce:active:scale-100";
+
+const MENU_ITEM =
+  "flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-left text-sm transition-[transform,background-color] duration-150 hover:bg-[color-mix(in_srgb,var(--color-accent)_14%,transparent)] active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-[var(--color-accent)] motion-reduce:transition-none motion-reduce:active:scale-100";
+
+const ICON = "h-3.5 w-3.5 shrink-0";
+
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function useFlash(ms = 1600) {
+  const [on, setOn] = useState(false);
+  const timer = useRef(null);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  const flash = useCallback(() => {
+    setOn(true);
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setOn(false), ms);
+  }, [ms]);
+  return [on, flash];
+}
+
+function ShareButton({ title }) {
+  const [copied, flash] = useFlash();
+  const [open, setOpen] = useState(false);
+  const [status, setStatus] = useState("");
+  const wrapRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDown = (event) => {
+      if (wrapRef.current && !wrapRef.current.contains(event.target)) setOpen(false);
+    };
+    const onKey = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const copyLink = async () => {
+    const success = await copyToClipboard(window.location.href);
+    setStatus(success ? "Link copied" : "Could not copy link");
+    if (success) flash();
+    setOpen(false);
+  };
+
+  const shareTo = (service) => {
+    const url = window.location.href;
+    const encodedUrl = encodeURIComponent(url);
+    const encodedTitle = encodeURIComponent(title);
+    const shareUrl =
+      service === "x"
+        ? `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`
+        : `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+    window.open(shareUrl, "_blank", "noopener,noreferrer");
+    setOpen(false);
+  };
+
+  const shareOther = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url: window.location.href });
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error("Unable to share the component link.", error);
+          setStatus("Could not share link");
+        }
+      }
+    } else {
+      await copyLink();
+    }
+    setOpen(false);
+  };
+
+  return (
+    <div ref={wrapRef} className="relative">
+      <Tooltip text={copied ? "Link copied" : "Share"} hoverOnly>
+        <button
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          aria-label={copied ? "Link copied" : "Share"}
+          aria-haspopup="true"
+          aria-expanded={open}
+          className={BUTTON}
+        >
+          {copied ? (
+            <Check className={`${ICON} text-[var(--color-accent)]`} aria-hidden="true" />
+          ) : (
+            <Share2 className={ICON} aria-hidden="true" />
+          )}
+        </button>
+      </Tooltip>
+
+      {open && (
+        <div className="absolute right-0 top-full z-50 mt-2 w-52 origin-top-right rounded-2xl border border-dashed border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-bg)_78%,transparent)] p-1.5 text-[var(--color-text)] shadow-xl backdrop-blur-2xl">
+          <button type="button" onClick={copyLink} className={MENU_ITEM}>
+            {copied ? (
+              <Check className={ICON} aria-hidden="true" />
+            ) : (
+              <Copy className={ICON} aria-hidden="true" />
+            )}
+            Copy link
+          </button>
+          <button type="button" onClick={() => shareTo("x")} className={MENU_ITEM}>
+            <Twitter className={ICON} aria-hidden="true" />
+            Share on X
+          </button>
+          <button type="button" onClick={() => shareTo("linkedin")} className={MENU_ITEM}>
+            <Linkedin className={ICON} aria-hidden="true" />
+            Share on LinkedIn
+          </button>
+          <button type="button" onClick={shareOther} className={MENU_ITEM}>
+            <MoreHorizontal className={ICON} aria-hidden="true" />
+            Other app
+          </button>
+          <span className="sr-only" role="status" aria-live="polite">{status}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function StepButton({ item, direction, onClick }) {
+  const isNext = direction === "next";
+  const label = isNext ? "Next component" : "Previous component";
+  const icon = isNext
+    ? <ArrowRight className={ICON} aria-hidden="true" />
+    : <ArrowLeft className={ICON} aria-hidden="true" />;
+
+  if (!item) {
+    return (
+      <Tooltip text={label} hoverOnly>
+        <span
+          aria-disabled="true"
+          aria-label={label}
+          className="inline-flex h-8 w-8 cursor-not-allowed items-center justify-center rounded-lg text-[var(--color-text)] opacity-40"
+        >
+          {icon}
+        </span>
+      </Tooltip>
+    );
+  }
+
+  return (
+    <Tooltip text={`${label}: ${item.title}`} hoverOnly>
+      <a
+        href={item.href}
+        onClick={(event) => onClick(item, event)}
+        aria-label={`${label}: ${item.title}`}
+        className={BUTTON}
+      >
+        {icon}
+      </a>
+    </Tooltip>
+  );
+}
+
+export default function ComponentsToolbar({
+  title,
+  previous,
+  next,
+  onItemClick,
+  onBack,
+}) {
+  return (
+    <div className="mb-8 flex items-center justify-between gap-3">
+      <a
+        href="/components"
+        onClick={(event) => {
+          event.preventDefault();
+          onBack();
+        }}
+        className="inline-flex items-center gap-2 rounded-md text-sm font-medium text-[var(--color-secondary-text)] transition-colors hover:text-[var(--color-text)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)]"
+      >
+        <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
+        Components
+      </a>
+
+      <div className="flex items-center gap-2">
+        <ShareButton title={title} />
+        <div className="flex items-center gap-1">
+          <StepButton item={previous} direction="previous" onClick={onItemClick} />
+          <StepButton item={next} direction="next" onClick={onItemClick} />
+        </div>
+      </div>
+    </div>
+  );
+}
