@@ -24,6 +24,7 @@
 :root {
   /* 🌞 Light Mode Colors */
   --color-bg: #FAFAFA;
+  --color-preview-bg: #f4f4f4;
   --color-text: #1d212a;
   --color-secondary-text: #4c4747d4;
   --color-accent: #000000;
@@ -103,6 +104,7 @@
 ============================= */
 :root.dark {
   --color-bg: #000000;
+  --color-preview-bg: #0b0b0b;
   --color-text: #E0E2E6;
   --color-secondary-text: #909092;
   --color-accent: #ffffff;
@@ -132,6 +134,7 @@
 
 :root.retro-mode {
   --color-bg: #07120b;
+  --color-preview-bg: #09150d;
   --color-text: #c8ffd2;
   --color-secondary-text: #79bd88;
   --color-accent: #39ff75;

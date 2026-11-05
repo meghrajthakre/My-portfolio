@@ -5,6 +5,7 @@ import { COMPONENTS } from "./Sidebar/Registry";
 import { ComponentsSidebar } from "./Sidebar/Sidebar";
 import ComponentsDirectory from "./ComponentsDirectory";
 import ComponentsToolbar from "./ComponentsToolbar";
+import ComponentPreview from "./ComponentPreview";
 
 // Tiny hash router: the URL hash picks the page, so it works with any framework
 // and gives every component a shareable link with working back/forward.
@@ -164,13 +165,17 @@ const Components = () => {
         <article className="min-w-0">
           {ActiveComponent ? (
             <Suspense fallback={<ComponentLoading title={active.title} />}>
-              <ActiveComponent />
+              <ComponentPreview sourceLoader={active.sourceLoader}>
+                <ActiveComponent />
+              </ComponentPreview>
             </Suspense>
           ) : (
-            <DemoPlaceholder
-              title={active.title}
-              description={active.description}
-            />
+            <ComponentPreview sourceLoader={active.sourceLoader}>
+              <DemoPlaceholder
+                title={active.title}
+                description={active.description}
+              />
+            </ComponentPreview>
           )}
 
           {/* -mx-3 cancels the links' own px-3, so the Previous / Next text

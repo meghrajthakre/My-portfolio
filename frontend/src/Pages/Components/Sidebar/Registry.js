@@ -17,10 +17,18 @@ const define = ({ title, ...rest }) => {
 };
 
 export const COMPONENTS = [
-  define({ title: "Line Nav", component: LineNavDemo, badge: true }),
+  define({
+    title: "Line Nav",
+    component: LineNavDemo,
+    sourceLoader: () =>
+      import("./LineNavDemo.jsx?raw").then((module) => module.default),
+    badge: true,
+  }),
   define({
     title: "Human Scan",
     component: HumanScan,
+    sourceLoader: () =>
+      import("../human-scan/HumanScan.jsx?raw").then((module) => module.default),
     description: "An interactive 3D scan that reveals its inner structure as you move your pointer across it.",
   }),
   ...[
