@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
+import { Suspense, useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 
 import { ComponentsSidebar } from "./Sidebar/Sidebar";
 import { COMPONENTS } from "./Sidebar/Registry";
@@ -81,6 +81,18 @@ function DemoPlaceholder({ title, description }) {
   );
 }
 
+function ComponentLoading({ title }) {
+  return (
+    <div
+      className="grid min-h-64 place-items-center rounded-xl border border-[var(--color-border)] text-sm text-[var(--color-secondary-text)]"
+      role="status"
+      aria-live="polite"
+    >
+      Loading {title}...
+    </div>
+  );
+}
+
 const Components = () => {
   const hash = useSyncExternalStore(subscribe, getHash, getServerHash);
   const foundIndex = COMPONENTS.findIndex((item) => item.href === hash);
@@ -135,7 +147,9 @@ const Components = () => {
       <main className="mx-auto min-h-[70vh] w-full max-w-3xl px-8">
         <article className="min-w-0">
           {ActiveComponent ? (
-            <ActiveComponent />
+            <Suspense fallback={<ComponentLoading title={active.title} />}>
+              <ActiveComponent />
+            </Suspense>
           ) : (
             <DemoPlaceholder
               title={active.title}
