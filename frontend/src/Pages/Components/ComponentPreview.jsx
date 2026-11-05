@@ -66,7 +66,7 @@ export default function ComponentPreview({ children, sourceLoader }) {
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card-bg)] p-1.5">
+    <section className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-preview-frame-bg)] p-1.5">
       <div
         role="tablist"
         aria-label="Component preview"
