@@ -102,7 +102,7 @@
    🌙 Dark Theme
 ============================= */
 :root.dark {
-  --color-bg: black;
+  --color-bg: #000000;
   --color-text: #E0E2E6;
   --color-secondary-text: #909092;
   --color-accent: #ffffff;
@@ -425,7 +425,7 @@ p {
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: #000000;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);

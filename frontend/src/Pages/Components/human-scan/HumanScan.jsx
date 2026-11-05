@@ -14,7 +14,7 @@ const DEFAULTS = {
   light: [-0.6, 0.8, 1],
   radius: 0.05, strength: 0.22, decay: 0.975, displace: 0.006, noiseScale: 12, noiseSpeed: 0.46,
   edge: 0.55, soft: 0.25, simScale: 0.5,
-  bodyKeep: 0.5, innerGain: 1.5, innerTint: "#ff3b30", innerScale: 1, innerX: 0, innerY: 0, innerZ: 0, fresnelPower: 1.6, fresnelGain: 1.8, core: 0.3,
+  bodyKeep: 0.5, innerGain: 1.5, innerScale: 1, innerX: 0, innerY: 0, innerZ: 0, fresnelPower: 1.6, fresnelGain: 1.8, core: 0.3,
   bloom: true, bloomThreshold: 0.79, bloomKnee: 1, bloomIntensity: 0.85, bloomRadius: 0.85,
   bloomPasses: 3, bloomScale: 0.55,
   debugInner: false,
@@ -72,7 +72,6 @@ const INNER_FRAG = /* glsl */ `
   precision highp float;
   varying vec3 vNormalV;
   varying vec3 vPosV;
-  uniform vec3 uTint;
   uniform float uPower, uGain, uCore;
 
   // Vertex normal when the model has one; otherwise a flat normal from screen
@@ -85,7 +84,13 @@ const INNER_FRAG = /* glsl */ `
     vec3 n = safeNormal(vNormalV, vPosV);
     vec3 toEye = normalize(-vPosV);
     float f = pow(1.0 - abs(dot(n, toEye)), uPower);
-    gl_FragColor = vec4(clamp(vec3(uCore + uGain * f) * uTint, 0.0, 1.0), 1.0);
+    float height = clamp(vPosV.y + 0.5, 0.0, 1.0);
+    vec3 blue = vec3(0.13, 0.42, 1.0);
+    vec3 lavender = vec3(0.72, 0.62, 1.0);
+    vec3 acid = vec3(0.68, 1.0, 0.08);
+    vec3 color = mix(blue, lavender, smoothstep(0.18, 0.55, height));
+    color = mix(color, acid, smoothstep(0.55, 0.88, height));
+    gl_FragColor = vec4(clamp(vec3(uCore + uGain * f) * color, 0.0, 1.0), 1.0);
   }
 `;
 const FLUID_FRAG = /* glsl */ `
@@ -239,7 +244,7 @@ function XrayFigure({ cfg, reducedMotion }) {
     const innerMat = new ShaderMaterial({
       vertexShader: MESH_VERT, fragmentShader: INNER_FRAG, side: DoubleSide,
       uniforms: {
-        uTint: { value: tintVec(cfg.innerTint) }, uPower: { value: cfg.fresnelPower },
+        uPower: { value: cfg.fresnelPower },
         uGain: { value: cfg.fresnelGain }, uCore: { value: cfg.core },
       },
     });
@@ -440,7 +445,7 @@ class HumanBackgroundErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div role="alert" className="fixed inset-0 z-10 flex items-center justify-center bg-black px-6 text-center text-sm text-white">
+        <div role="alert" className="fixed inset-0 z-10 flex items-center justify-center bg-[var(--color-bg)] px-6 text-center text-sm text-[var(--color-text)]">
           <p>Human scan could not be loaded. Check <code className="font-mono">public/models/human.glb</code> and the skeleton file path.</p>
         </div>
       );
@@ -475,14 +480,8 @@ function HumanScan() {
             height: 100%;
             pointer-events: none;
           }
-          .human-fx {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            mix-blend-mode: saturation;
-          }
         `}</style>
-        <div className="human-background" aria-hidden="true" style={{ background: "#000000" }}>
+        <div className="human-background" aria-hidden="true" style={{ backgroundColor: "var(--color-bg)" }}>
           <Canvas
             camera={{ fov: cfg.fov, near: 0.05, far: 40, position: [0, Math.sin(tilt) * dist, Math.cos(tilt) * dist] }}
             dpr={[1, 1.5]}
@@ -493,7 +492,6 @@ function HumanScan() {
               <XrayFigure cfg={cfg} reducedMotion={reducedMotion} />
             </Suspense>
           </Canvas>
-          <div className="human-fx" style={{ background: "#e8271c", opacity: 0.14 }} />
         </div>
       </HumanBackgroundErrorBoundary>
       <main className="relative z-0 mx-auto flex min-h-[65vh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center text-[var(--color-text)]">

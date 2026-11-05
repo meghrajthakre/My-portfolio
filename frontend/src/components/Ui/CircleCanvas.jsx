@@ -24,7 +24,7 @@ const CircleCanvas = ({ isDark }) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.arc(circleCenter.current.x, circleCenter.current.y, targetRadius * eased, 0, 2 * Math.PI);
-      ctx.fillStyle = isDark ? "#fff" : "#111";
+      ctx.fillStyle = isDark ? "#fff" : "#000";
       ctx.fill();
 
       if (progress < 1) animationFrameId.current = requestAnimationFrame(render);
@@ -66,7 +66,7 @@ const CircleCanvas = ({ isDark }) => {
       ref={canvasRef}
       aria-hidden="true"
       className="fixed inset-0 -z-10 h-screen w-screen pointer-events-none"
-      style={{ background: isDark ? "#111" : "#fff", transition: "background 0.8s ease-in-out" }}
+      style={{ background: isDark ? "#000" : "#fff", transition: "background 0.8s ease-in-out" }}
     />
   );
 };
