@@ -153,7 +153,7 @@ const Components = () => {
         </div>
       </aside>
 
-      <main className="mx-auto w-full max-w-3xl px-6 sm:px-8">
+      <main className="mx-auto w-full max-w-3xl px-4 sm:px-8">
         <ComponentsToolbar
           title={active.title}
           previous={previous}

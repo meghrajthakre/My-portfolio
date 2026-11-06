@@ -66,11 +66,11 @@ export default function ComponentPreview({ children, sourceLoader }) {
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-dashed border-[var(--color-border)] bg-[var(--color-preview-frame-bg)] p-1.5">
+    <section className="w-full min-w-0 overflow-hidden rounded-2xl border border-dashed border-[var(--color-border)] bg-[var(--color-preview-frame-bg)] p-1.5">
       <div
         role="tablist"
         aria-label="Component preview"
-        className="flex items-center gap-1 px-2"
+        className="flex items-center gap-1 px-4"
       >
         <PreviewTab active={tab === "preview"} onClick={() => setTab("preview")}>
           Preview
@@ -82,7 +82,7 @@ export default function ComponentPreview({ children, sourceLoader }) {
 
       <div
         role="tabpanel"
-        className="relative mt-1 min-h-80 overflow-hidden rounded-xl border border-dashed border-[color-mix(in_srgb,var(--color-border)_70%,transparent)] bg-[var(--color-preview-bg)]"
+        className="relative mt-1 min-h-80 w-full min-w-0 overflow-hidden rounded-xl border border-dashed border-[color-mix(in_srgb,var(--color-border)_70%,transparent)] bg-[var(--color-preview-bg)]"
       >
         {tab === "preview" ? (
           <div className="min-h-80 px-4 py-8 sm:px-6">{children}</div>
@@ -107,7 +107,7 @@ export default function ComponentPreview({ children, sourceLoader }) {
                 Loading source...
               </p>
             ) : source ? (
-              <pre className="max-h-[36rem] min-h-80 overflow-auto p-5 pt-16 text-xs leading-6 text-[var(--color-text)] sm:text-sm">
+              <pre className="box-border max-h-[36rem] min-h-80 w-full max-w-full overflow-auto p-5 pt-16 text-xs leading-6 text-[var(--color-text)] sm:text-sm">
                 <code>{source}</code>
               </pre>
             ) : (

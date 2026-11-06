@@ -256,7 +256,7 @@ const Navbar = () => {
         <div aria-hidden="true" className={`navbar-blur-fade pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 ${isScrolled ? "opacity-100" : "opacity-0"}`} />
         <nav
           aria-label="Main navigation"
-          className="relative z-10 flex h-[60px] w-full items-center px-2 sm:px-8"
+          className="relative z-10 flex h-[60px] w-full items-center px-4 sm:px-6"
         >
           <NavLink
             to="/"
