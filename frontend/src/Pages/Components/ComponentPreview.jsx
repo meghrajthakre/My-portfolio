@@ -66,7 +66,7 @@ export default function ComponentPreview({ children, sourceLoader }) {
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-preview-frame-bg)] p-1.5">
+    <section className="overflow-hidden rounded-2xl border border-dashed border-[var(--color-border)] bg-[var(--color-preview-frame-bg)] p-1.5">
       <div
         role="tablist"
         aria-label="Component preview"
@@ -82,7 +82,7 @@ export default function ComponentPreview({ children, sourceLoader }) {
 
       <div
         role="tabpanel"
-        className="relative mt-1 min-h-80 overflow-hidden rounded-xl border border-[color-mix(in_srgb,var(--color-border)_70%,transparent)] bg-[var(--color-preview-bg)]"
+        className="relative mt-1 min-h-80 overflow-hidden rounded-xl border border-dashed border-[color-mix(in_srgb,var(--color-border)_70%,transparent)] bg-[var(--color-preview-bg)]"
       >
         {tab === "preview" ? (
           <div className="min-h-80 px-4 py-8 sm:px-6">{children}</div>
