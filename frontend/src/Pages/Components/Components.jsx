@@ -101,7 +101,7 @@ const Components = () => {
 
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = activeTitle ? `${activeTitle} · Components` : "Components";
+    document.title = "MT - A Full Stack Web Developer";
     return () => {
       document.title = previousTitle;
     };
