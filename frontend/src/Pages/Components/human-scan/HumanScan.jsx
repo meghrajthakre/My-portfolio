@@ -312,8 +312,10 @@ function XrayFigure({ cfg, reducedMotion }) {
   useEffect(() => {
     const p = pointer.current;
     const move = (e) => {
-      const x = e.clientX / window.innerWidth;
-      const y = 1 - e.clientY / window.innerHeight;
+      const canvas = gl.domElement;
+      const bounds = canvas.getBoundingClientRect();
+      const x = (e.clientX - bounds.left) / Math.max(bounds.width, 1);
+      const y = 1 - (e.clientY - bounds.top) / Math.max(bounds.height, 1);
       if (!p.moved) { p.ax = x; p.ay = y; }
       p.bx = x; p.by = y; p.moved = true;
     };
@@ -323,6 +325,8 @@ function XrayFigure({ cfg, reducedMotion }) {
     const SENS = 0.008; // radians per pixel dragged
     const down = (e) => {
       if (e.button !== 0) return;
+      const bounds = gl.domElement.getBoundingClientRect();
+      if (e.clientX < bounds.left || e.clientX > bounds.right || e.clientY < bounds.top || e.clientY > bounds.bottom) return;
       d.check = { x: e.clientX, y: e.clientY }; // tested against the figure next frame
       d.lastX = e.clientX;
     };
@@ -358,7 +362,7 @@ function XrayFigure({ cfg, reducedMotion }) {
       document.body.style.userSelect = "";
       document.body.style.cursor = "";
     };
-  }, []);
+  }, [gl]);
 
   useEffect(() => () => {
     Object.values(rig.t).forEach((r) => r.dispose());
@@ -405,8 +409,9 @@ function XrayFigure({ cfg, reducedMotion }) {
     run(mats.comp, t.comp);
 
     if (d.check) {
-      const px = Math.floor((d.check.x / window.innerWidth) * t.comp.width);
-      const py = Math.floor((1 - d.check.y / window.innerHeight) * t.comp.height);
+      const bounds = gl.domElement.getBoundingClientRect();
+      const px = Math.floor(((d.check.x - bounds.left) / Math.max(bounds.width, 1)) * t.comp.width);
+      const py = Math.floor((1 - (d.check.y - bounds.top) / Math.max(bounds.height, 1)) * t.comp.height);
       const px4 = new Uint8Array(4);
       gl.readRenderTargetPixels(t.comp, px, py, 1, 1, px4);
       d.check = null;
@@ -454,7 +459,7 @@ class HumanBackgroundErrorBoundary extends Component {
   }
 }
 
-function HumanScan() {
+function HumanScan({ preview = true }) {
   const cfg = useMemo(() => ({ ...DEFAULTS, ...HUMAN_SCAN_SETTINGS }), []);
   const reducedMotion = useMemo(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches, []);
   const fovRad = (cfg.fov * Math.PI) / 180;
@@ -465,12 +470,15 @@ function HumanScan() {
       <HumanBackgroundErrorBoundary>
         <style>{`
           .human-background {
-            position: fixed;
-            inset: 0;
-            z-index: -3;
+            position: ${preview ? "relative" : "fixed"};
+            inset: ${preview ? "auto" : "0"};
+            z-index: ${preview ? "0" : "-3"};
+            width: 100%;
+            height: ${preview ? "24rem" : "100%"};
             overflow: hidden;
-            pointer-events: none;
+            pointer-events: ${preview ? "auto" : "none"};
             isolation: isolate;
+            border-radius: ${preview ? "0.75rem" : "0"};
           }
           .human-background canvas {
             position: absolute;
@@ -478,10 +486,10 @@ function HumanScan() {
             display: block;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            pointer-events: ${preview ? "auto" : "none"};
           }
         `}</style>
-        <div className="human-background" aria-hidden="true" style={{ backgroundColor: "var(--color-bg)" }}>
+        <div className="human-background" aria-hidden={preview}>
           <Canvas
             camera={{ fov: cfg.fov, near: 0.05, far: 40, position: [0, Math.sin(tilt) * dist, Math.cos(tilt) * dist] }}
             dpr={[1, 1.5]}
@@ -494,7 +502,7 @@ function HumanScan() {
           </Canvas>
         </div>
       </HumanBackgroundErrorBoundary>
-      <main className="relative z-0 mx-auto flex min-h-[65vh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center text-[var(--color-text)]">
+      <main className={`relative z-0 mx-auto flex w-full max-w-3xl flex-col items-center justify-center px-6 ${preview ? "py-6" : "min-h-[65vh] py-24"} text-center text-[var(--color-text)]`}>
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--color-muted)]">
           Interactive 3D study
         </p>
