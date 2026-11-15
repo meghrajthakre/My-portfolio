@@ -1,6 +1,7 @@
 import { lazy } from "react";
 
 import LineNavDemo from "./LineNavDemo";
+import ColorRailNav from "../ColorRailNav/ColorRailNav";
 
 const HumanScan = lazy(() => import("../human-scan/HumanScan"));
 
@@ -22,6 +23,14 @@ export const COMPONENTS = [
     component: LineNavDemo,
     sourceLoader: () =>
       import("./LineNavDemo.jsx?raw").then((module) => module.default),
+    badge: true,
+  }),
+  define({
+    title: "Color Rail Nav",
+    component: ColorRailNav,
+    sourceLoader: () =>
+      import("../ColorRailNav/ColorRailNav.jsx?raw").then((module) => module.default),
+    description: "A compact menu bar with a vivid color rail and an animated navigation panel.",
     badge: true,
   }),
   define({
