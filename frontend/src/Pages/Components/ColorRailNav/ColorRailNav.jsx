@@ -90,21 +90,21 @@ const tower = svg(
 );
 
 /*
- * COLORS: har column ka apna rang (bg) + text color (fg).
- * Palette: ink / bone / midnight / sand / vermilion.
+ * Default columns use the site's active theme palette. Custom links can still
+ * provide their own `bg` and `fg` values.
  */
 const DEFAULT_LINKS = [
-  { label: "Home", bg: "#0f1115", fg: "#f6f1e7", image: facade },
-  { label: "Projects", bg: "#f6f1e7", fg: "#0f1115", image: slab },
-  { label: "About us", bg: "#1b2547", fg: "#f6f1e7", image: hall },
-  { label: "News and insights", bg: "#e8dcc8", fg: "#1b2547", image: fluted },
-  { label: "Vacancies", bg: "#ff5b2e", fg: "#0f1115", image: blocks },
-  { label: "Contact", bg: "#f6f1e7", fg: "#0f1115", image: tower },
+  { label: "Home", bg: "#ff4d2e", fg: "#ffffff", image: facade },
+  { label: "Projects", bg: "#ffc933", fg: "#111111", image: slab },
+  { label: "About us", bg: "#1e5bff", fg: "#ffffff", image: hall },
+  { label: "News and insights", bg: "#17c37b", fg: "#06281a", image: fluted },
+  { label: "Vacancies", bg: "#8b5cf6", fg: "#ffffff", image: blocks },
+  { label: "Contact", bg: "#ff7ab8", fg: "#111111", image: tower },
 ];
 
 /* Hamburger / X icon colors */
-const ICON_COLOR_CLOSED = "#ff6a3d";
-const ICON_COLOR_OPEN = "#0f1115";
+const ICON_COLOR_CLOSED = "var(--color-accent)";
+const ICON_COLOR_OPEN = "var(--color-text)";
 
 /*
  * SIZE: navbar ko bada/chhota karna ho to niche ke --bar-w, --bar-h, --rail-h,
@@ -128,28 +128,13 @@ const CSS = `
   --title-pad:max(1cqw,16px);
   --dot:max(.7cqw,10px);
 
-  --ink:#0f1115;--bone:#f6f1e7;--accent:#ff5b2e;--muted:#5d584b;
+  --ink:var(--color-text);--bone:var(--color-card-bg);--accent:var(--color-accent);--muted:var(--color-secondary-text);
   --tbg:var(--ink);--tfg:var(--bone);--icon:${ICON_COLOR_CLOSED};
 
   position:relative;width:100%;min-height:max(56.25cqw,520px);overflow:hidden;isolation:isolate;
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;
-  background:
-    radial-gradient(60cqw 40cqw at 88% 8%,#ffd9c4 0,transparent 62%),
-    radial-gradient(50cqw 40cqw at 4% 92%,#d6ddf6 0,transparent 62%),
-    linear-gradient(180deg,#f8f4ea 0%,#ece4d3 100%)}
+  background:transparent}
 .crn-stage[data-state="open"]{--tbg:var(--bone);--tfg:var(--ink);--icon:${ICON_COLOR_OPEN}}
-
-/* ---------- background: soft grid + floating color orbs ---------- */
-.crn-grid{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.55;
-  background-image:linear-gradient(#0f111512 1px,transparent 1px),linear-gradient(90deg,#0f111512 1px,transparent 1px);
-  background-size:max(4cqw,48px) max(4cqw,48px);
-  -webkit-mask-image:radial-gradient(70% 70% at 30% 30%,#000 20%,transparent 85%);
-  mask-image:radial-gradient(70% 70% at 30% 30%,#000 20%,transparent 85%)}
-.crn-orb{position:absolute;z-index:0;border-radius:50%;filter:blur(40px);pointer-events:none;opacity:.55;
-  animation:crn-float 14s ease-in-out infinite}
-.crn-orb.a{width:max(22cqw,220px);height:max(22cqw,220px);right:8%;top:14%;background:#ff8a5c}
-.crn-orb.b{width:max(18cqw,180px);height:max(18cqw,180px);left:46%;top:46%;background:#8fa3ee;
-  animation-duration:18s;animation-delay:-6s}
 
 /* ---------- component heading ---------- */
 .crn-heading{position:absolute;top:9%;left:8%;z-index:3;max-width:min(80%,720px);color:var(--ink);
@@ -157,24 +142,18 @@ const CSS = `
 .crn-stage[data-state="open"] .crn-heading{opacity:.28;filter:blur(3px);transform:translateY(-10px)}
 
 .crn-kicker{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-size:12px;font-weight:700;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--accent);
+  letter-spacing:.24em;text-transform:uppercase;color:var(--ink);
   animation:crn-rise .9s cubic-bezier(.2,.8,.2,1) .1s backwards}
 .crn-kicker-line{display:inline-block;height:2px;width:36px;background:currentColor;transform-origin:left;
   animation:crn-line .9s cubic-bezier(.65,0,0,1) .3s backwards}
 
 .crn-heading h2{margin:0;font-size:clamp(32px,5.2cqw,68px);font-weight:700;line-height:1;letter-spacing:-.05em}
 .crn-word{display:inline-block;animation:crn-rise 1s cubic-bezier(.2,.8,.2,1) calc(.25s + var(--w) * .12s) backwards}
-.crn-accent{background:linear-gradient(100deg,#ff5b2e 0%,#ff9a5c 35%,#5b6cff 70%,#ff5b2e 100%);
-  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:transparent;
-  animation:crn-rise 1s cubic-bezier(.2,.8,.2,1) calc(.25s + var(--w) * .12s) backwards,
-    crn-sheen 6s ease-in-out 1.4s infinite}
 
 .crn-desc{max-width:540px;margin:18px 0 0;color:var(--muted);font-size:clamp(14px,1.25cqw,18px);line-height:1.65;
   animation:crn-rise 1s cubic-bezier(.2,.8,.2,1) .7s backwards}
 .crn-hint{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:9px 16px;border-radius:999px;
-  background:#ffffffb8;border:1px solid #0f11151f;font-size:13px;font-weight:600;color:var(--ink);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  background:transparent;border:1px solid color-mix(in srgb,var(--color-border) 50%,transparent);font-size:13px;font-weight:600;color:var(--ink);
   animation:crn-rise 1s cubic-bezier(.2,.8,.2,1) .9s backwards}
 .crn-hint i{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:crn-pulse 2s ease-out infinite}
 .crn-hint kbd{font:inherit;font-size:11px;padding:2px 7px;border-radius:6px;background:var(--ink);color:var(--bone)}
@@ -219,9 +198,6 @@ const CSS = `
 .crn-stage[data-state="open"] .crn-title{transform:none;opacity:1;transition-delay:calc(.45s + var(--i) * 70ms)}
 .crn-dot{flex-shrink:0;display:inline-block;width:var(--dot);height:var(--dot);border-radius:50%;
   background:currentColor;animation:crn-dot 2.2s ease-out infinite}
-.crn-num{position:absolute;top:var(--title-pad);right:var(--title-pad);font-size:calc(var(--title-fs) * .62);
-  font-weight:600;letter-spacing:.14em;opacity:0;transition:opacity .6s ease}
-.crn-stage[data-state="open"] .crn-num{opacity:.55;transition-delay:calc(.6s + var(--i) * 70ms)}
 
 /* ---------- image (grayscale + column color tint, hover pe asli color) ---------- */
 .crn-img{position:absolute;left:17.5%;width:65%;aspect-ratio:1/1;overflow:hidden;
@@ -295,7 +271,7 @@ const CSS = `
 @keyframes crn-float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-4cqw,3cqw) scale(1.12)}}
 @keyframes crn-sheen{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 @keyframes crn-shimmer{0%,55%{left:-40%}100%{left:130%}}
-@keyframes crn-pulse{0%{box-shadow:0 0 0 0 #ff5b2e99}100%{box-shadow:0 0 0 10px #ff5b2e00}}
+@keyframes crn-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--color-accent) 60%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
 @keyframes crn-dot{0%{box-shadow:0 0 0 0 currentColor}70%,100%{box-shadow:0 0 0 7px transparent}}
 
 @media (prefers-reduced-motion:reduce){
@@ -333,10 +309,6 @@ export default function ColorRailNav({
     <div className="crn-root">
       <style>{CSS}</style>
       <div className="crn-stage" data-state={state}>
-        <div className="crn-grid" aria-hidden="true" />
-        <div className="crn-orb a" aria-hidden="true" />
-        <div className="crn-orb b" aria-hidden="true" />
-
         <header className="crn-heading">
           <p className="crn-kicker">
             <span className="crn-kicker-line" />
@@ -389,7 +361,6 @@ export default function ColorRailNav({
                   {active === item.label && <span className="crn-dot" />}
                   {item.label}
                 </span>
-                <span className="crn-num">{String(i + 1).padStart(2, "0")}</span>
                 {item.image && (
                   <div className="crn-img">
                     <img src={item.image} alt="" decoding="async" />
