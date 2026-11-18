@@ -502,15 +502,6 @@ function HumanScan({ preview = true }) {
           </Canvas>
         </div>
       </HumanBackgroundErrorBoundary>
-      <main className={`relative z-0 mx-auto flex w-full max-w-3xl flex-col items-center justify-center px-6 ${preview ? "py-6" : "min-h-[65vh] py-24"} text-center text-[var(--color-text)]`}>
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--color-muted)]">
-          Interactive 3D study
-        </p>
-        <h2 className="text-4xl font-bold sm:text-6xl">Human Scan</h2>
-        <p className="mt-5 max-w-lg text-base text-[var(--color-secondary-text)] sm:text-lg">
-          Move your pointer across the scan to reveal its inner structure.
-        </p>
-      </main>
     </>
   );
 }

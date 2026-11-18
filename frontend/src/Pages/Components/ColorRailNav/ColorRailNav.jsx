@@ -131,32 +131,10 @@ const CSS = `
   --ink:var(--color-text);--bone:var(--color-card-bg);--accent:var(--color-accent);--muted:var(--color-secondary-text);
   --tbg:var(--ink);--tfg:var(--bone);--icon:${ICON_COLOR_CLOSED};
 
-  position:relative;width:100%;min-height:max(56.25cqw,520px);overflow:hidden;isolation:isolate;
+  position:relative;width:100%;min-height:max(56.25cqw,400px);overflow:hidden;isolation:isolate;
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;
   background:transparent}
 .crn-stage[data-state="open"]{--tbg:var(--bone);--tfg:var(--ink);--icon:${ICON_COLOR_OPEN}}
-
-/* ---------- component heading ---------- */
-.crn-heading{position:absolute;top:9%;left:8%;z-index:3;max-width:min(80%,720px);color:var(--ink);
-  transition:opacity .7s ease,filter .7s ease,transform .9s cubic-bezier(.65,0,0,1)}
-.crn-stage[data-state="open"] .crn-heading{opacity:.28;filter:blur(3px);transform:translateY(-10px)}
-
-.crn-kicker{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-size:12px;font-weight:700;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--ink);
-  animation:crn-rise .9s cubic-bezier(.2,.8,.2,1) .1s backwards}
-.crn-kicker-line{display:inline-block;height:2px;width:36px;background:currentColor;transform-origin:left;
-  animation:crn-line .9s cubic-bezier(.65,0,0,1) .3s backwards}
-
-.crn-heading h2{margin:0;font-size:clamp(32px,5.2cqw,68px);font-weight:700;line-height:1;letter-spacing:-.05em}
-.crn-word{display:inline-block;animation:crn-rise 1s cubic-bezier(.2,.8,.2,1) calc(.25s + var(--w) * .12s) backwards}
-
-.crn-desc{max-width:540px;margin:18px 0 0;color:var(--muted);font-size:clamp(14px,1.25cqw,18px);line-height:1.65;
-  animation:crn-rise 1s cubic-bezier(.2,.8,.2,1) .7s backwards}
-.crn-hint{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:9px 16px;border-radius:999px;
-  background:transparent;border:1px solid color-mix(in srgb,var(--color-border) 50%,transparent);font-size:13px;font-weight:600;color:var(--ink);
-  animation:crn-rise 1s cubic-bezier(.2,.8,.2,1) .9s backwards}
-.crn-hint i{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:crn-pulse 2s ease-out infinite}
-.crn-hint kbd{font:inherit;font-size:11px;padding:2px 7px;border-radius:6px;background:var(--ink);color:var(--bone)}
 
 /* ---------- dim backdrop (click = close) ---------- */
 .crn-backdrop{position:absolute;inset:0;z-index:1;background:var(--ink);opacity:0;
@@ -283,14 +261,10 @@ const CSS = `
 
 export default function ColorRailNav({
   links = DEFAULT_LINKS,
-  kicker = "Components / Navigation",
-  title = "Color Rail Navigation",
-  description = "A full-width menu that unfolds from a single strip of color. Open it, hover a column to bring its image to life, and jump to any section in one move.",
 }) {
   const [state, setState] = useState("initial"); // initial | visible | open
   const [active, setActive] = useState(links[0]?.label ?? "");
   const open = state === "open";
-  const words = title.trim().split(" ");
 
   // mount hone ke baad rail "andar aaye"
   useEffect(() => {
@@ -309,31 +283,6 @@ export default function ColorRailNav({
     <div className="crn-root">
       <style>{CSS}</style>
       <div className="crn-stage" data-state={state}>
-        <header className="crn-heading">
-          <p className="crn-kicker">
-            <span className="crn-kicker-line" />
-            {kicker}
-          </p>
-          <h2 aria-label={title}>
-            {words.map((w, i) => (
-              <span key={i}>
-                <span
-                  className={"crn-word" + (i === words.length - 1 ? " crn-accent" : "")}
-                  style={{ "--w": i }}
-                  aria-hidden="true"
-                >
-                  {w}
-                </span>{" "}
-              </span>
-            ))}
-          </h2>
-          <p className="crn-desc">{description}</p>
-          <span className="crn-hint">
-            <i />
-            Click <b>Open</b> to explore · <kbd>Esc</kbd> to close
-          </span>
-        </header>
-
         <div className="crn-backdrop" onClick={() => setState("visible")} />
 
         <nav className="crn-nav" aria-label="Color Rail navigation" aria-hidden={!open}>

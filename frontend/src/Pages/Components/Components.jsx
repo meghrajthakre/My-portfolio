@@ -57,21 +57,10 @@ function PagerLink({ item, direction, onClick }) {
   );
 }
 
-function DemoPlaceholder({ title, description }) {
+function DemoPlaceholder() {
   return (
-    <div>
-      <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-muted)]">
-        Components
-      </p>
-      <h1 className="mt-2 text-3xl font-bold tracking-tight">{title}</h1>
-      {description && (
-        <p className="mt-2 max-w-prose text-[var(--color-secondary-text)]">
-          {description}
-        </p>
-      )}
-      <div className="mt-8 grid min-h-64 place-items-center rounded-xl border border-dashed border-[var(--color-border)] text-sm text-[var(--color-muted)]">
-        Demo preview coming soon
-      </div>
+    <div className="grid min-h-64 place-items-center rounded-xl border border-dashed border-[var(--color-border)] text-sm text-[var(--color-muted)]">
+      Demo preview coming soon
     </div>
   );
 }
@@ -162,6 +151,12 @@ const Components = () => {
           onBack={() => navigate("")}
         />
 
+        <header className="mb-8">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-muted)]">Components</p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight">{active.title}</h1>
+          {active.description && <p className="mt-2 max-w-prose text-[var(--color-secondary-text)]">{active.description}</p>}
+        </header>
+
         <article className="min-w-0">
           {ActiveComponent ? (
             <Suspense fallback={<ComponentLoading title={active.title} />}>
@@ -171,10 +166,7 @@ const Components = () => {
             </Suspense>
           ) : (
             <ComponentPreview sourceLoader={active.sourceLoader}>
-              <DemoPlaceholder
-                title={active.title}
-                description={active.description}
-              />
+              <DemoPlaceholder />
             </ComponentPreview>
           )}
 

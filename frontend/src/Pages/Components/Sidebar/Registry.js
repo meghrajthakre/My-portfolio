@@ -30,7 +30,7 @@ export const COMPONENTS = [
     component: ColorRailNav,
     sourceLoader: () =>
       import("../ColorRailNav/ColorRailNav.jsx?raw").then((module) => module.default),
-    description: "A compact animated navigation panel with alternating black and white rails.",
+    description: "A full-width menu that unfolds from a single strip of color. Open it, hover a column to bring its image to life, and jump to any section in one move.",
     badge: true,
   }),
   define({
