@@ -123,11 +123,9 @@ const Components = () => {
 
   return (
     <div className="min-h-[70vh] py-8 text-[var(--color-text)] lg:py-12">
-      {/* Below xl the sidebar sits in the same column as the content (same
-          max width + side padding) so its left edge lines up with everything
-          else. From xl up it floats fixed in the left gutter. */}
+      {/* The sidebar is desktop-only and floats in the left gutter at xl. */}
       <aside
-        className="mx-auto mb-6 w-full max-w-3xl px-6 sm:px-8 xl:fixed xl:top-24 xl:z-30 xl:mb-0 xl:w-64 xl:max-w-none xl:px-0"
+        className="hidden xl:fixed xl:top-24 xl:z-30 xl:block xl:w-64 xl:max-w-none xl:px-0"
         style={{
           left: "max(0.75rem, calc((100vw - 48rem) / 2 - 19rem))",
         }}
