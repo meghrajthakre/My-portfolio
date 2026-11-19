@@ -2,6 +2,7 @@ import { lazy } from "react";
 
 import LineNavDemo from "./LineNavDemo";
 import ColorRailNav from "../ColorRailNav/ColorRailNav";
+import ClientSphereGrid from "../ClientSphereGrid/ClientSphereGrid";
 
 const HumanScan = lazy(() => import("../human-scan/HumanScan"));
 
@@ -39,6 +40,13 @@ export const COMPONENTS = [
     sourceLoader: () =>
       import("../human-scan/HumanScan.jsx?raw").then((module) => module.default),
     description: "An interactive 3D scan that reveals its inner structure as you move your pointer across it.",
+  }),
+  define({
+    title: "Client Sphere Grid",
+    component: ClientSphereGrid,
+    sourceLoader: () =>
+      import("../ClientSphereGrid/ClientSphereGrid.jsx?raw").then((module) => module.default),
+    description: "A 3D curved wall of client logos with pointer tilt and single-tile hover focus.",
   }),
   ...[
     "Mobius Loop Icon",
